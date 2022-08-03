@@ -7,6 +7,8 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
     public abstract class BaseSensor : MonoBehaviour
     {
         protected WorldInterfaceData Data;
+        [SerializeField]
+        protected LayerMask layer;
         public void Initialize(WorldInterfaceData Data)
         {
             this.Data = Data;

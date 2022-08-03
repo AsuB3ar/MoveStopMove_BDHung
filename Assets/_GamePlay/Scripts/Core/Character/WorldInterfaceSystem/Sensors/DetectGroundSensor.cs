@@ -4,11 +4,10 @@ using UnityEngine;
 
 namespace MoveStopMove.Core.Character.WorldInterfaceSystem
 {
-    public class CheckGroundSensor : BaseSensor
+    public class DetectGroundSensor : BaseSensor
     {
         public Transform groundCheck;
         public float distance = 0.4f;
-        public LayerMask layer;
         public override void UpdateData()
         {
             Data.IsGrounded = Physics.CheckSphere(groundCheck.position, distance, layer);

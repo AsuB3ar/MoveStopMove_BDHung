@@ -11,9 +11,11 @@ namespace MoveStopMove.Core.Character.LogicSystem
         public Vector3 Velocity;
         public Vector3 MoveDirection;
 
-        public bool Attack;
         public bool Die;
-        public CharacterData CharacterData;
+        public bool IsGrounded;
+        public bool IsHaveGround;
+        public Transform PlayerTF;
+        public List<Vector3> CharacterPositions;
         
     }
 }

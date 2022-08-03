@@ -4,14 +4,12 @@ using UnityEngine;
 
 namespace MoveStopMove.Core.Character.WorldInterfaceSystem
 {
-    public class HaveGroundCheckSensor : BaseSensor
+    public class DetectHaveGroundSensor : BaseSensor
     {
         [SerializeField]
         Transform checkHaveGroundPoint;
         [SerializeField]
         float distance;
-        [SerializeField]
-        LayerMask layer;
         Ray ray = new Ray(Vector3.zero,Vector3.down);
         public override void UpdateData()
         {

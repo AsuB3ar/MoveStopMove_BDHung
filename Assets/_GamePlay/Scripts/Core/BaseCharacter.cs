@@ -45,7 +45,7 @@ namespace MoveStopMove.Core
             PhysicSystem = new CharacterPhysicSystem(PhysicModule);
 
             Data = ScriptableObject.CreateInstance(typeof(CharacterData)) as CharacterData;
-            LogicSystem.SetCharacterInformation(Data);
+            LogicSystem.SetCharacterInformation(Data, gameObject.transform);
         }
         protected virtual void OnEnable()
         {
@@ -59,10 +59,11 @@ namespace MoveStopMove.Core
             LogicSystem.Event.SetVelocity += PhysicSystem.SetVelocity;
             LogicSystem.Event.SetRotation += PhysicSystem.SetRotation;
             LogicSystem.Event.SetSmoothRotation += PhysicSystem.SetSmoothRotation;
-            LogicSystem.Event.SetBool_Anim += SetBool_Anim;
-            LogicSystem.Event.SetFloat_Anim += SetFloat_Anim;
-            LogicSystem.Event.SetInt_Anim += SetInt_Anim;
+            LogicSystem.Event.SetBool_Anim += AnimModule.SetBool;
+            LogicSystem.Event.SetFloat_Anim += AnimModule.SetFloat;
+            LogicSystem.Event.SetInt_Anim += AnimModule.SetInt;
 
+            AnimModule.UpdateEventAnimationState += LogicSystem.ReceiveInformation;
             ((CharacterLogicModule)LogicModule).StartStateMachine();
             #endregion
         }
@@ -79,9 +80,11 @@ namespace MoveStopMove.Core
             LogicSystem.Event.SetVelocity -= PhysicSystem.SetVelocity;
             LogicSystem.Event.SetRotation -= PhysicSystem.SetRotation;
             LogicSystem.Event.SetSmoothRotation -= PhysicSystem.SetSmoothRotation;
-            LogicSystem.Event.SetBool_Anim -= SetBool_Anim;
-            LogicSystem.Event.SetFloat_Anim -= SetFloat_Anim;
-            LogicSystem.Event.SetInt_Anim -= SetInt_Anim;
+            LogicSystem.Event.SetBool_Anim -= AnimModule.SetBool;
+            LogicSystem.Event.SetFloat_Anim -= AnimModule.SetFloat;
+            LogicSystem.Event.SetInt_Anim -= AnimModule.SetInt;
+
+            AnimModule.UpdateEventAnimationState -= LogicSystem.ReceiveInformation;
             #endregion
         }
 
@@ -97,23 +100,6 @@ namespace MoveStopMove.Core
         {
             LogicSystem.FixedUpdateData();
         }
-
-        protected virtual void SetInt_Anim(string animName, int value)
-        {
-            
-        }
-
-        protected virtual void SetFloat_Anim(string animName, float value)
-        {
-            
-        }
-
-        protected virtual void SetBool_Anim(string animName, bool value)
-        {
-            
-        }
-
-
 
         //TODO: Combat Function(Covert to a system
     }

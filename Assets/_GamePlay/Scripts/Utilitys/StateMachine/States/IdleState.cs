@@ -18,6 +18,7 @@ namespace Utilitys.AI
             base.Enter();
             //TODO: Play Animation 
             Event.SetVelocity(Vector3.zero);
+            Event.SetBool_Anim(GameConst.ANIM_IS_IDLE, true);
         }
 
         public override void Exit()
@@ -28,7 +29,12 @@ namespace Utilitys.AI
 
         public override int LogicUpdate()
         {
-            if (Parameter.Attack)
+            base.LogicUpdate();
+            if (Parameter.Die)
+            {
+                StateMachine.ChangeState(States.GetState(State.Die));
+            }
+            else if (Parameter.CharacterPositions.Count > 0 && Data.AttackCount > 0)
             {
                 StateMachine.ChangeState(States.GetState(State.Attack));
             }

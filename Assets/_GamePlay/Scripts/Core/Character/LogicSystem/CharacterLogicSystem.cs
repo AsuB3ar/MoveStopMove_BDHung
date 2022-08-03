@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace MoveStopMove.Core.Character.LogicSystem
 {
+    using System;
     using WorldInterfaceSystem;
     using NavigationSystem;
     using PhysicSystem;
@@ -20,13 +21,17 @@ namespace MoveStopMove.Core.Character.LogicSystem
             module.Initialize(Data,Parameter,Event);
         }
 
-        public void SetCharacterInformation(CharacterData CharacterData)
+        public void SetCharacterInformation(CharacterData CharacterData, Transform PlayerTF)
         {
             Data.CharacterData = CharacterData;
+            Parameter.PlayerTF = PlayerTF;
         }
         public void ReceiveInformation(WorldInterfaceData Data)
         {
-            
+            Parameter.CharacterPositions = Data.CharacterPositions;
+            Parameter.IsGrounded = Data.IsGrounded;
+            Parameter.IsHaveGround = Data.IsHaveGround;
+            //Debug.Log("Logic:" + Data.CharacterPositions.Count);
         }
 
         public void ReceiveInformation(NavigationData Data)
@@ -37,6 +42,11 @@ namespace MoveStopMove.Core.Character.LogicSystem
         public void ReceiveInformation(PhysicData Data)
         {
             Parameter.Velocity = Data.Velocity;
+        }
+
+        public void ReceiveInformation(string code)
+        {
+            ((CharacterLogicModule)module).StateMachine.CurrentState.EventUpdate(null, code);
         }
     }
 }

@@ -8,9 +8,9 @@ public class AnimationModule : MonoBehaviour
     public event Action<string> UpdateEventAnimationState;
 
     //NOTE: Specific for game,change to reuse
-    public static readonly string ANIM_FALL = "isFall";
-    public static readonly string ANIM_VELOCITY = "velocity";
-    public static readonly string ANIM_RESULT = "Result";
+
+
+ 
     [SerializeField]
     private Animator Anim;
     public void Activate(string AnimBoolName)
@@ -38,6 +38,10 @@ public class AnimationModule : MonoBehaviour
     {
         ExitAnimator();
         Anim.SetInteger(name, value);
+    }
+    public void SetBool(string name, bool value)
+    {
+        Anim.SetBool(name, value);
     }
     public void SetActive(bool p)
     {

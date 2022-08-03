@@ -2,16 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MoveStopMove.Core
+
+public static class GameConst
 {
-    public static class GameConst
+
+    public enum Type
     {
-        public static readonly string CHARACTER_ROT = "CharacterRotation";
-        public static readonly string SENSOR_ROT = "SensorRotation";
-        public static readonly string MODEL_ROT = "ModelRotation";
-
-        
-
-            
+        Character = 0,
+        Sensor = 1,
+        Model = 2
     }
+
+    public static readonly string ANIM_IS_IDLE = "IsIdle";
+    public static readonly string ANIM_IS_DEAD = "IsDead";
+    public static readonly string ANIM_IS_ATTACK = "IsAttack";
+    public static readonly string ANIM_IS_WIN = "IsWin";
+    public static readonly string ANIM_IS_DANCE = "IsDance";
+    public static readonly string ANIM_IS_ULTI = "IsUlti";
+
+    public static readonly int ANIM_IS_ATTACK_FRAMES = 33;
 }

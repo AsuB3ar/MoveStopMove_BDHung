@@ -118,7 +118,7 @@ namespace Utilitys
         public static Quaternion GetQuaternion2Vector(Vector2 vec1, Vector2 vec2)
         {
             float angle = Vector2.SignedAngle(vec1, vec2); //angle is the angle between vector face and vector vectorToPoint
-            Quaternion quaternion = Quaternion.Euler(0, 0, angle); // Convert from Euler to Quaternion
+            Quaternion quaternion = Quaternion.Euler(0, angle, 0); // Convert from Euler to Quaternion
             return quaternion;
         }
 

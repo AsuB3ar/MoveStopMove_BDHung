@@ -16,6 +16,7 @@ namespace Utilitys.AI
         public override void Enter()
         {
             Event.SetVelocity(Vector3.zero);
+            Event.SetBool_Anim(GameConst.ANIM_IS_DEAD, true);
             base.Enter();
         }
 

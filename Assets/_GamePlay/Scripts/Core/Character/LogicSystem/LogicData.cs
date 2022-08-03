@@ -8,6 +8,7 @@ namespace MoveStopMove.Core.Character.LogicSystem
     public class LogicData : AbstractDataSystem<LogicData>
     {
         public CharacterData CharacterData;
+        public int AttackCount = 1;
         protected override void UpdateDataClone()
         {
             if(Clone == null)

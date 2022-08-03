@@ -20,14 +20,14 @@ namespace MoveStopMove.Core.Character.PhysicSystem
             module.SetVelocity(velocity);
         }
 
-        public void SetRotation(string gameObj,Quaternion rotation)
+        public void SetRotation(GameConst.Type type,Quaternion rotation)
         {
-            module.SetRotation(gameObj,rotation);
+            module.SetRotation(type,rotation);
         }
 
-        public void SetSmoothRotation(string gameObj, Vector3 direction)
+        public void SetSmoothRotation(GameConst.Type type, Vector3 direction)
         {
-            module.SetSmoothRotation(gameObj, direction);
+            module.SetSmoothRotation(type, direction);
         }
     }
 }

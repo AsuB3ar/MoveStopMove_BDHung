@@ -15,6 +15,8 @@ namespace Utilitys.AI
         public override void Enter()
         {
             base.Enter();
+            Event.SetBool_Anim(GameConst.ANIM_IS_IDLE, false);
+            Data.AttackCount = 1;
             //TODO: Play Move Animation
             //TODO: Set up Timer
         }
@@ -36,17 +38,41 @@ namespace Utilitys.AI
             }
             else if(Parameter.MoveDirection.sqrMagnitude < 0.001)
             {
-                StateMachine.ChangeState(States.GetState(State.Idle));                
+                StateMachine.ChangeState(States.GetState(State.Idle));
+                return 0;
             }
 
-            Event.SetVelocity(Parameter.MoveDirection * Data.CharacterData.Speed);
+
+            RotationHandle();
+            
+            
+            
             return 0;
         }
-
         public override int PhysicUpdate()
         {
-            return base.PhysicUpdate();
+            MovementHandle();
+            return 0;
         }
+        private void MovementHandle()
+        {
+            if(Parameter.IsHaveGround && Parameter.IsGrounded)
+            {
+                Event.SetVelocity(Parameter.MoveDirection * Data.CharacterData.Speed * Time.fixedDeltaTime * 60);
+            }
+            else if(!Parameter.IsHaveGround && Parameter.IsGrounded)
+            {
+                Event.SetVelocity(-Parameter.PlayerTF.forward * Time.deltaTime);
+            }
+            
+        }
+
+        private void RotationHandle()
+        {
+            Event.SetSmoothRotation(GameConst.Type.Model, Parameter.MoveDirection);
+            Event.SetSmoothRotation(GameConst.Type.Sensor, Parameter.MoveDirection);
+        }
+        
 
     }
 }

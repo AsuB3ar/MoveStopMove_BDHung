@@ -9,7 +9,7 @@ namespace MoveStopMove.Core.Character.LogicSystem
     public class CharacterLogicModule : AbstractLogicModule
     {
         public readonly List<State> StateName = new List<State>() { State.Idle, State.Move, State.Attack, State.Die };
-        StateMachine StateMachine;
+        public StateMachine StateMachine;
         BasicStateInsts States;
 
         public override void Initialize(LogicData Data, LogicParameter Parameter, LogicEvent Event)
@@ -18,7 +18,7 @@ namespace MoveStopMove.Core.Character.LogicSystem
             StateMachine = new StateMachine();
             States = new BasicStateInsts(StateName, StateMachine, Parameter, Data, Event);
 
-            StateMachine.Report = true;            
+            //StateMachine.Report = true;            
         }
 
         public override void UpdateData()

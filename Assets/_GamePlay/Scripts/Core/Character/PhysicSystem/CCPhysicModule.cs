@@ -29,36 +29,37 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
             Data.Velocity = velocity;
         }
 
-        public override void SetRotation(string gameObj,Quaternion rotation)
+        public override void SetRotation(GameConst.Type type,Quaternion rotation)
         {
-            if(gameObj == GameConst.CHARACTER_ROT)
+            controller.enabled = false;
+            if(type == GameConst.Type.Character)
             {
                 gameObject.transform.rotation = rotation;
             }
-            else if(gameObj == GameConst.MODEL_ROT)
+            else if(type == GameConst.Type.Model)
             {
                 charModel.transform.rotation = rotation;
             }
-            else if(gameObj == GameConst.SENSOR_ROT)
+            else if(type == GameConst.Type.Sensor)
             {
                 charSensor.transform.rotation = rotation;
             }
-            
+            controller.enabled = true;
         }
 
-        public override void SetSmoothRotation(string gameObj, Vector3 direction)
+        public override void SetSmoothRotation(GameConst.Type type, Vector3 direction)
         {
-            if (gameObj == GameConst.CHARACTER_ROT)
+            if (type == GameConst.Type.Character)
             {
                 rotGoal = Quaternion.LookRotation(direction);
                 gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, rotGoal, rotateSpeed * Time.deltaTime);
             }
-            else if (gameObj == GameConst.MODEL_ROT)
+            else if (type == GameConst.Type.Model)
             {
                 rotGoal = Quaternion.LookRotation(direction);
                 charModel.transform.rotation = Quaternion.Slerp(charModel.transform.rotation, rotGoal, rotateSpeed * Time.deltaTime);
             }
-            else if (gameObj == GameConst.SENSOR_ROT)
+            else if (type == GameConst.Type.Sensor)
             {
                 rotGoal = Quaternion.LookRotation(direction);
                 charSensor.transform.rotation = Quaternion.Slerp(charSensor.transform.rotation, rotGoal, rotateSpeed * Time.deltaTime);

@@ -6,6 +6,6 @@ using UnityEngine;
 namespace MoveStopMove.Core.Data {
     public class CharacterData : ScriptableObject
     {
-        public float Speed = 5;
+        public float Speed = 3;
     }
 }

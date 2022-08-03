@@ -59,6 +59,10 @@ namespace Utilitys.AI
             {
                 return new DieState(StateMachine,this,Parameter, Data, Event);
             }
+            else if(state == State.Attack)
+            {
+                return new AttackState(StateMachine, this, Parameter, Data, Event);
+            }
             else
             {
                 return null;
