@@ -34,7 +34,7 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
             {
                 if (characters[i] == null || characters[i] == parentCollider)
                     continue;
-                Debug.Log((characters[i].transform.position - checkPoint.position).sqrMagnitude);
+                //Debug.Log((characters[i].transform.position - checkPoint.position).sqrMagnitude);
 
                 if ((characters[i].transform.position - checkPoint.position).sqrMagnitude < checkRadius * checkRadius)
                 {

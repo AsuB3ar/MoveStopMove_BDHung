@@ -9,6 +9,7 @@ namespace MoveStopMove.Core
     using MoveStopMove.Core.Character.NavigationSystem;
     using MoveStopMove.Core.Character.PhysicSystem;
     using MoveStopMove.Core.Character.LogicSystem;
+    using ContentCreation.Weapon;
     using System;
 
     public class BaseCharacter : MonoBehaviour
@@ -36,6 +37,7 @@ namespace MoveStopMove.Core
         protected CharacterLogicSystem LogicSystem;
         protected CharacterPhysicSystem PhysicSystem;
 
+        public BaseWeapon Weapon;
 
         private void Awake()
         {
@@ -62,6 +64,7 @@ namespace MoveStopMove.Core
             LogicSystem.Event.SetBool_Anim += AnimModule.SetBool;
             LogicSystem.Event.SetFloat_Anim += AnimModule.SetFloat;
             LogicSystem.Event.SetInt_Anim += AnimModule.SetInt;
+            LogicSystem.Event.DealDamage += DealDamage;
 
             AnimModule.UpdateEventAnimationState += LogicSystem.ReceiveInformation;
             ((CharacterLogicModule)LogicModule).StartStateMachine();
@@ -83,6 +86,7 @@ namespace MoveStopMove.Core
             LogicSystem.Event.SetBool_Anim -= AnimModule.SetBool;
             LogicSystem.Event.SetFloat_Anim -= AnimModule.SetFloat;
             LogicSystem.Event.SetInt_Anim -= AnimModule.SetInt;
+            LogicSystem.Event.DealDamage -= DealDamage;
 
             AnimModule.UpdateEventAnimationState -= LogicSystem.ReceiveInformation;
             #endregion
@@ -101,6 +105,10 @@ namespace MoveStopMove.Core
             LogicSystem.FixedUpdateData();
         }
 
+        protected virtual void DealDamage(float value, Vector3 direction)
+        {
+            Weapon.DealDamage(value, direction);
+        }
         //TODO: Combat Function(Covert to a system
     }
 }
