@@ -67,8 +67,38 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
 
         }
 
+        public override void SetScale(GameConst.Type type, Vector3 scale)
+        {
+            if (type == GameConst.Type.Character)
+            {
+                gameObject.transform.localScale = scale;
+            }
+            else if (type == GameConst.Type.Model)
+            {
+                charModel.transform.localScale = scale;
+            }
+            else if (type == GameConst.Type.Sensor)
+            {
+                charSensor.transform.localScale = scale;
+            }
+        }
 
+        public override void SetScale(GameConst.Type type, float ratio)
+        {
+            if (type == GameConst.Type.Character)
+            {
+                gameObject.transform.localScale = gameObject.transform.localScale * ratio;
+            }
+            else if (type == GameConst.Type.Model)
+            {
+                charModel.transform.localScale = charModel.transform.localScale = gameObject.transform.localScale * ratio;
 
+            }
+            else if (type == GameConst.Type.Sensor)
+            {
+                charSensor.transform.localScale = charSensor.transform.localScale = gameObject.transform.localScale * ratio;
+            }
+        }
 
         public override void UpdateData()
         {
@@ -82,5 +112,7 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
             }
             
         }
+
+        
     }
 }

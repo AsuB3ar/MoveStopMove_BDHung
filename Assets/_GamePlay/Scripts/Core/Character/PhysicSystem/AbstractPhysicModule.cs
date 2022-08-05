@@ -16,5 +16,8 @@ namespace MoveStopMove.Core.Character.PhysicSystem
         public abstract void SetVelocity(Vector3 velocity);
         public abstract void SetRotation(GameConst.Type type,Quaternion rotation);
         public abstract void SetSmoothRotation(GameConst.Type type, Vector3 direction);
+
+        public abstract void SetScale(GameConst.Type type, Vector3 scale);
+        public abstract void SetScale(GameConst.Type type, float ratio);
     }
 }

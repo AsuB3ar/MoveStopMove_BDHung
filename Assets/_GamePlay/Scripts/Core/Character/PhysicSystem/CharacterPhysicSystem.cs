@@ -29,5 +29,15 @@ namespace MoveStopMove.Core.Character.PhysicSystem
         {
             module.SetSmoothRotation(type, direction);
         }
+
+        public void SetScale(GameConst.Type type,Vector3 scale)
+        {
+            module.SetScale(type, scale);
+        }
+
+        public void SetScale(GameConst.Type type, float ratio)
+        {
+            module.SetScale(type, ratio);
+        }
     }
 }

@@ -51,6 +51,8 @@ namespace MoveStopMove.Core
             Data = ScriptableObject.CreateInstance(typeof(CharacterData)) as CharacterData;
             LogicSystem.SetCharacterInformation(Data, gameObject.transform);
             WorldInterfaceSystem.SetCharacterInformation(Data);
+
+            //NOTE: When change wepon need to set this line of code
             Weapon.Character = this;
         }
         protected virtual void OnEnable()
@@ -123,9 +125,13 @@ namespace MoveStopMove.Core
             }
         }
 
-        public void IncreaseSize()
+        public void AddStatus()
         {
             Data.Size *= 1.1f;
+
+            //TODO: Increase Size of character
+            //TODO: Increase Size of Attack Range Indicator
+            PhysicModule.SetScale(GameConst.Type.Character, 1.1f);                        
         }
         //TODO: Combat Function(Covert to a system
     }

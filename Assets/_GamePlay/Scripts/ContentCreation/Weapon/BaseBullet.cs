@@ -59,10 +59,7 @@ namespace MoveStopMove.ContentCreation.Weapon
                 {
                     PrefabManager.Inst.PushToPool(this.gameObject, PoolName.Axe1, false);
                     character.TakeDamage(1);
-                    parentCharacter.IncreaseSize();
-
-                    //TODO: Increase Size of character
-                    //TODO: Increase Size of Attack Range Indicator
+                    parentCharacter.AddStatus(); 
                 }
                 
             }
