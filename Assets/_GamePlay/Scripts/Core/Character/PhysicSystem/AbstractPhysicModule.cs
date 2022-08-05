@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace MoveStopMove.Core.Character.PhysicSystem
 {
-    public abstract class AbstractPhysicModule : AbstractModuleSystem<PhysicData,PhysicParameter>
+    public abstract class AbstractPhysicModule : AbstractModuleSystem<PhysicData,PhysicParameter>,IInit
     {
 
         protected PhysicData Data;
@@ -19,5 +19,9 @@ namespace MoveStopMove.Core.Character.PhysicSystem
 
         public abstract void SetScale(GameConst.Type type, Vector3 scale);
         public abstract void SetScale(GameConst.Type type, float ratio);
+        public abstract void SetActive(bool value);
+
+        public abstract void OnInit();
+
     }
 }

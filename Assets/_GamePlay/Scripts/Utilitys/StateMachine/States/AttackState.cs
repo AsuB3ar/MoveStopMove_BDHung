@@ -6,28 +6,27 @@ using UnityEngine;
 namespace Utilitys.AI
 {
     using MoveStopMove.Core.Character.LogicSystem;
-    public class AttackState : BaseState
+    public class AttackState : BaseState<LogicParameter,LogicData>
     {
-        private float currentTime;
+        private int timeFrames;
         Vector3 direction;
-        public AttackState(StateMachine StateMachine, BasicStateInsts States, LogicParameter Parameter, LogicData Data, LogicEvent Event) : base(StateMachine,States ,Parameter, Data, Event)
+        public AttackState(StateMachine<LogicParameter,LogicData> StateMachine, BasicStateInsts<LogicParameter,LogicData> States, LogicParameter Parameter, LogicData Data, LogicEvent Event) : base(StateMachine,States ,Parameter, Data, Event)
         {
 
         }
         public override void Enter()
-        {
-            //TODO: Play Attack Animation
+        {   
             base.Enter();
             Event.SetBool_Anim(GameConst.ANIM_IS_ATTACK, true);
             Event.SetVelocity(Vector3.zero);
 
+            //TODO: Need to change here
             direction = Parameter.CharacterPositions[0] - Parameter.PlayerTF.position;
             Quaternion rot = MathHelper.GetQuaternion2Vector(Vector2.up, new Vector2(-direction.x, direction.z));
 
-            
+            timeFrames = 0;
             Event.SetRotation(GameConst.Type.Model, rot);
-            Event.SetRotation(GameConst.Type.Sensor, rot);
-            
+            Event.SetRotation(GameConst.Type.Sensor, rot);        
             Data.AttackCount = 0;
         }
 
@@ -41,23 +40,25 @@ namespace Utilitys.AI
             return 0;
         }
 
-
-        public override void EventUpdate(Type type, string code)
+        public override int PhysicUpdate()
         {
-            if (code.IndexOf("EndAnimation") != -1)
+            if(timeFrames >= GameConst.ANIM_IS_ATTACK_FRAMES)
             {
                 StateMachine.ChangeState(States.GetState(State.Idle));
             }
-            else if (code.IndexOf("AttackAnimation") != -1)
+            else if(timeFrames == 14)
             {
                 Event.DealDamage(direction.normalized, Data.CharacterData.AttackRange);
             }
 
+            timeFrames++;
+            return 0;
         }
+
+
         public override void Exit()
         {
-            base.Exit();
-            
+            base.Exit();           
             Event.SetBool_Anim(GameConst.ANIM_IS_ATTACK, false);
         }
 

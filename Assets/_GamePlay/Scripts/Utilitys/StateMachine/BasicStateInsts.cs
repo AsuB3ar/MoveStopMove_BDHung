@@ -1,71 +1,43 @@
-
-
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Utilitys.AI
 {
     using MoveStopMove.Core.Character.LogicSystem;
+    using MoveStopMove.Core.Character;
     public enum State
     {
         Idle = 0,
         Move = 1,
         Jump = 2,
         Die = 3,
-        Attack = 4
+        Attack = 4,
+        Wandering = 100,
+        Combat = 101,
     }
-    public class BasicStateInsts
+
+    public class BasicStateInsts<P,D>
+        where P : AbstractParameterSystem
+        where D : AbstractDataSystem<D>
     {
-        Dictionary<State,BaseState> states = new Dictionary<State,BaseState>();
-        StateMachine StateMachine;
-        LogicParameter Parameter;
-        LogicData Data;
-        LogicEvent Event;
-
+        Dictionary<State,BaseState<P,D>> states = new Dictionary<State,BaseState<P,D>>();
         //DEVELOP:Change condition to "If Name = null -> State = null"
-        public BasicStateInsts(List<State> StateNames,StateMachine StateMachine,LogicParameter Parameter, LogicData Data, LogicEvent Event)
+        public BasicStateInsts()
         {
-            this.StateMachine = StateMachine;
-            this.Parameter = Parameter;
-            this.Data = Data;
-            this.Event = Event;
-
-            for(int i = 0; i < StateNames.Count; i++)
-            {
-                if (!states.ContainsKey(StateNames[i]))
-                {
-                    BaseState stateScripts = InitStateScripts(StateNames[i]);
-                    states.Add(StateNames[i], stateScripts);                                      
-                }
-            }
         }
-        public BaseState GetState(State name)
+        public BaseState<P, D> GetState(State name)
         {
             return states[name];
         }
 
-        private BaseState InitStateScripts(State state)
+        public void PushState(State state,BaseState<P,D> stateScript)
         {
-            if(state == State.Idle)
+            if (states.ContainsKey(state))
             {
-                return new IdleState(StateMachine,this,Parameter, Data, Event);
-            }
-            else if(state == State.Move)
-            {
-                return new MoveState(StateMachine,this,Parameter, Data, Event);
-            }
-            else if(state == State.Die)
-            {
-                return new DieState(StateMachine,this,Parameter, Data, Event);
-            }
-            else if(state == State.Attack)
-            {
-                return new AttackState(StateMachine, this, Parameter, Data, Event);
+                return;
             }
             else
             {
-                return null;
+                states.Add(state, stateScript);
             }
         }
     }

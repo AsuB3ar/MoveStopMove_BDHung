@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Utilitys.AI
 {
     using MoveStopMove.Core.Character.LogicSystem;
-    public class DieState : BaseState
+    public class DieState : BaseState<LogicParameter,LogicData>
     {
-        public DieState(StateMachine StateMachine, BasicStateInsts States , LogicParameter Parameter, LogicData Data, LogicEvent Event) 
+        public DieState(StateMachine<LogicParameter,LogicData> StateMachine, BasicStateInsts<LogicParameter,LogicData> States , LogicParameter Parameter, LogicData Data, LogicEvent Event) 
             : base(StateMachine, States,Parameter, Data, Event)
         {
 

@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbstractParameterSystem : ScriptableObject
+namespace MoveStopMove.Core.Character
 {
-    
+    public class AbstractParameterSystem : ScriptableObject
+    {
+
+    }
 }

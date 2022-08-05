@@ -28,6 +28,10 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
             controller.Move(velocity * Time.deltaTime);
             Data.Velocity = velocity;
         }
+        public override void OnInit()
+        {
+            SetActive(true);
+        }
 
         public override void SetRotation(GameConst.Type type,Quaternion rotation)
         {
@@ -99,7 +103,10 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
                 charSensor.transform.localScale = charSensor.transform.localScale = gameObject.transform.localScale * ratio;
             }
         }
-
+        public override void SetActive(bool value)
+        {
+            controller.enabled = value;
+        }
         public override void UpdateData()
         {
             if (useGravity)

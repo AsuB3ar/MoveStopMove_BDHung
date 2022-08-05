@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace MoveStopMove.Core.Character.LogicSystem
 {
-    using MoveStopMove.Core.Data;
     public class LogicParameter : AbstractParameterSystem
     {
         public Vector3 Velocity;

@@ -4,18 +4,21 @@ using UnityEngine;
 
 namespace Utilitys.AI
 {
-    public class StateMachine
+    using MoveStopMove.Core.Character;
+    public class StateMachine<P,D>
+        where P : AbstractParameterSystem
+        where D : AbstractDataSystem<D>
     {
-        public BaseState CurrentState { get; private set; }
+        public BaseState<P,D> CurrentState { get; private set; }
         public bool IsStarted { get; private set; } = false; 
         public bool Report = false;
-        public void Initialize(BaseState initState)
+        public void Initialize(BaseState<P,D> initState)
         {
             CurrentState = initState;
             CurrentState.Enter();
             IsStarted = true;
         }
-        public void ChangeState(BaseState newState)
+        public void ChangeState(BaseState<P, D> newState)
         {
             if (newState != null)
             {

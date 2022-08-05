@@ -6,21 +6,23 @@ namespace Utilitys.AI
 {
     using System;
     using MoveStopMove.Core.Character.LogicSystem;
+    using MoveStopMove.Core.Character;
 
-
-    public abstract class BaseState
+    public abstract class BaseState<P,D>
+        where P : AbstractParameterSystem
+        where D : AbstractDataSystem<D>
     {
-        protected StateMachine StateMachine;
-        protected LogicParameter Parameter;
-        protected LogicData Data;
+        protected StateMachine<P,D> StateMachine;
+        protected P Parameter;
+        protected D Data;
         protected LogicEvent Event;
-        protected BasicStateInsts States;
+        protected BasicStateInsts<P,D> States;
         protected float StartTime { get; private set; }
         public string AnimBoolName { get; private set; }
 
         protected bool isEndState;
         //protected Rigidbody2D Rb;
-        public BaseState(StateMachine StateMachine,BasicStateInsts States, LogicParameter Parameter, LogicData Data, LogicEvent Event)
+        public BaseState(StateMachine<P,D> StateMachine,BasicStateInsts<P,D> States, P Parameter, D Data, LogicEvent Event)
         {
             this.StateMachine = StateMachine;
             this.Parameter = Parameter;

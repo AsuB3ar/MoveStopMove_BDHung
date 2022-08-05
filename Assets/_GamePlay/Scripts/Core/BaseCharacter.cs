@@ -122,9 +122,11 @@ namespace MoveStopMove.Core
             if(Data.Hp <= 0)
             {
                 isDie = true;
+                PhysicModule.SetActive(false);
             }
         }
 
+        //TODO: Combat Function(Covert to a system)
         public void AddStatus()
         {
             Data.Size *= 1.1f;
@@ -133,6 +135,5 @@ namespace MoveStopMove.Core
             //TODO: Increase Size of Attack Range Indicator
             PhysicModule.SetScale(GameConst.Type.Character, 1.1f);                        
         }
-        //TODO: Combat Function(Covert to a system
     }
 }
