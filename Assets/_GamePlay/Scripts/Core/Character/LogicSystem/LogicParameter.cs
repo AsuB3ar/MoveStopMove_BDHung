@@ -11,7 +11,6 @@ namespace MoveStopMove.Core.Character.LogicSystem
         public Vector3 Velocity;
         public Vector3 MoveDirection;
 
-        public bool Die;
         public bool IsGrounded;
         public bool IsHaveGround;
         public Transform PlayerTF;

@@ -31,7 +31,7 @@ namespace Utilitys.AI
 
         public override int LogicUpdate()
         {
-            if (Parameter.Die)
+            if (Data.CharacterData.Hp <= 0)
             {
                 StateMachine.ChangeState(States.GetState(State.Die));
                 return -1;

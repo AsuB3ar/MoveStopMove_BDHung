@@ -13,6 +13,6 @@ namespace MoveStopMove.Core.Character.LogicSystem
         public Action<string, bool> SetBool_Anim;
         public Action<string, float> SetFloat_Anim;
         public Action<string, int> SetInt_Anim;
-        public Action<float, Vector3> DealDamage;
+        public Action<Vector3, float> DealDamage;
     }
 }

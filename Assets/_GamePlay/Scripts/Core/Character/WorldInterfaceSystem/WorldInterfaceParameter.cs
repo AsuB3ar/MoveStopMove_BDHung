@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace MoveStopMove.Core.Character.WorldInterfaceSystem
 {
+    using Data;
     public class WorldInterfaceParameter : AbstractParameterSystem
     {
-        
+        public CharacterData CharacterData;
     }
 }

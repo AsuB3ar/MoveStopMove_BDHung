@@ -20,5 +20,5 @@ public static class GameConst
     public static readonly string ANIM_IS_DANCE = "IsDance";
     public static readonly string ANIM_IS_ULTI = "IsUlti";
 
-    public static readonly int ANIM_IS_ATTACK_FRAMES = 33;
+    public static readonly float ANIM_IS_DIE_TIME = 1.02f;
 }

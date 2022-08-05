@@ -14,7 +14,7 @@ namespace MoveStopMove.Core
 
     public class BaseCharacter : MonoBehaviour
     {
-
+        protected bool isDie = false;
         [SerializeField]
         protected SkinnedMeshRenderer mesh;
         [SerializeField]
@@ -38,6 +38,8 @@ namespace MoveStopMove.Core
         protected CharacterPhysicSystem PhysicSystem;
 
         public BaseWeapon Weapon;
+        public bool IsDie => isDie;
+        
 
         private void Awake()
         {
@@ -48,6 +50,8 @@ namespace MoveStopMove.Core
 
             Data = ScriptableObject.CreateInstance(typeof(CharacterData)) as CharacterData;
             LogicSystem.SetCharacterInformation(Data, gameObject.transform);
+            WorldInterfaceSystem.SetCharacterInformation(Data);
+            Weapon.Character = this;
         }
         protected virtual void OnEnable()
         {
@@ -105,9 +109,23 @@ namespace MoveStopMove.Core
             LogicSystem.FixedUpdateData();
         }
 
-        protected virtual void DealDamage(float value, Vector3 direction)
+        protected virtual void DealDamage(Vector3 direction, float range)
         {
-            Weapon.DealDamage(value, direction);
+            Weapon.DealDamage(direction,range);
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Data.Hp -= damage;
+            if(Data.Hp <= 0)
+            {
+                isDie = true;
+            }
+        }
+
+        public void IncreaseSize()
+        {
+            Data.Size *= 1.1f;
         }
         //TODO: Combat Function(Covert to a system
     }

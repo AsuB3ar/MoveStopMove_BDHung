@@ -8,7 +8,7 @@ namespace Utilitys.AI
     using MoveStopMove.Core.Character.LogicSystem;
     public class AttackState : BaseState
     {
-        private int timeFrames;
+        private float currentTime;
         Vector3 direction;
         public AttackState(StateMachine StateMachine, BasicStateInsts States, LogicParameter Parameter, LogicData Data, LogicEvent Event) : base(StateMachine,States ,Parameter, Data, Event)
         {
@@ -27,35 +27,32 @@ namespace Utilitys.AI
             
             Event.SetRotation(GameConst.Type.Model, rot);
             Event.SetRotation(GameConst.Type.Sensor, rot);
-            timeFrames = GameConst.ANIM_IS_ATTACK_FRAMES;
             
             Data.AttackCount = 0;
         }
 
         public override int LogicUpdate()
         {
-            if (Parameter.Die)
+            if (Data.CharacterData.Hp <= 0)
             {
                 StateMachine.ChangeState(States.GetState(State.Die));
-            }
-            else if (timeFrames == 0)
-            {
-                StateMachine.ChangeState(States.GetState(State.Idle));
             }
 
             return 0;
         }
 
-        public override int PhysicUpdate()
-        {
-            if (timeFrames == 15)
-            {
-                Event.DealDamage(1, direction.normalized);
-            }
-            
 
-            timeFrames--;
-            return 0;
+        public override void EventUpdate(Type type, string code)
+        {
+            if (code.IndexOf("EndAnimation") != -1)
+            {
+                StateMachine.ChangeState(States.GetState(State.Idle));
+            }
+            else if (code.IndexOf("AttackAnimation") != -1)
+            {
+                Event.DealDamage(direction.normalized, Data.CharacterData.AttackRange);
+            }
+
         }
         public override void Exit()
         {

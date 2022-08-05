@@ -30,7 +30,7 @@ namespace Utilitys.AI
         public override int LogicUpdate()
         {
             base.LogicUpdate();
-            if (Parameter.Die)
+            if (Data.CharacterData.Hp <= 0)
             {
                 StateMachine.ChangeState(States.GetState(State.Die));
             }

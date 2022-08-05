@@ -11,7 +11,6 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
 
         [SerializeField]
         Transform checkPoint;
-        [SerializeField]
         float checkRadius;
         [SerializeField]
         Collider parentCollider;
@@ -20,6 +19,7 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
         private Queue<Collider> oldCharacters = new Queue<Collider>();
         public override void UpdateData()
         {
+            checkRadius = Parameter.CharacterData.AttackRange;
             Array.Clear(temp, 0, temp.Length);
             Physics.OverlapBoxNonAlloc(checkPoint.position, unit * checkRadius, temp, Quaternion.identity, layer);
             EnterCheck(temp);

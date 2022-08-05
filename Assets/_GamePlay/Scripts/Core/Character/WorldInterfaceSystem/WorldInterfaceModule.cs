@@ -16,7 +16,7 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
             this.Parameter = Parameter;
             for(int i = 0; i < sensors.Count; i++)
             {
-                sensors[i].Initialize(this.Data);
+                sensors[i].Initialize(this.Data,this.Parameter);
             }
         }
         public override void UpdateData()

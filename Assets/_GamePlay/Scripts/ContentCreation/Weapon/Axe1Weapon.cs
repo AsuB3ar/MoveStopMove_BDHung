@@ -5,9 +5,11 @@ using UnityEngine;
 namespace MoveStopMove.ContentCreation.Weapon
 {
     using Manager;
+
     public class Axe1Weapon : BaseWeapon
     {
-        public override void DealDamage(float value, Vector3 direction)
+        
+        public override void DealDamage(Vector3 direction, float range)
         {
             if(WeaponType == WeaponType.Normal)
             {
@@ -16,7 +18,7 @@ namespace MoveStopMove.ContentCreation.Weapon
                 bullet.transform.rotation = Quaternion.Euler(-90, 0, bullet.transform.rotation.eulerAngles.z);
 
                 BaseBullet bulletScript = Cache.GetBaseBullet(bullet);
-                bulletScript.OnFire(direction);
+                bulletScript.OnFire(direction,range,Character);
             }
         }
     }
