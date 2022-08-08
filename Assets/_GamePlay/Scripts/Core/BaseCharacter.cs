@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace MoveStopMove.Core
 {
+    using Manager;
     using Utilitys.Timer;
     using MoveStopMove.Core.Data;
     using MoveStopMove.Core.Character.WorldInterfaceSystem;
@@ -21,7 +22,6 @@ namespace MoveStopMove.Core
     public class BaseCharacter : MonoBehaviour,IInit,IDespawn
     {
         public event Action<BaseCharacter> OnDie;
-        protected bool isDie = false;
         [SerializeField]
         protected SkinnedMeshRenderer mesh;
         [SerializeField]
@@ -50,8 +50,15 @@ namespace MoveStopMove.Core
         public BaseWeapon Weapon;
         [SerializeField]
         CharacterType type;
-        public bool IsDie => isDie;
-        
+        public bool IsDie
+        {
+            get
+            {
+                if (Data.Hp > 0) return false;
+                else return true;
+            }
+        }
+        public float Size => Data.Size;
 
         private void Awake()
         {
@@ -74,7 +81,7 @@ namespace MoveStopMove.Core
         {
             PhysicModule.SetActive(true);
             Data.Hp = 1;
-            isDie = false;
+            transform.localScale = Vector3.one * Data.Size;
         }
 
         public void OnDespawn()
@@ -159,12 +166,16 @@ namespace MoveStopMove.Core
             Weapon.DealDamage(direction, range ,Data.Size);
         }
 
+        public void ChangeColor(Color color)
+        {
+            Material mat = GameplayManager.Inst.GetMaterial(color);
+            mesh.material = mat;
+        }
         public void TakeDamage(int damage)
         {
             Data.Hp -= damage;
             if(Data.Hp <= 0)
             {
-                isDie = true;
                 timerDie.Start(GameConst.ANIM_IS_DEAD_TIME + 2f, 0);
                 if (type == CharacterType.Enemy)
                 {

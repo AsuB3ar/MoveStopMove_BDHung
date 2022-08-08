@@ -9,6 +9,7 @@ using UnityEditor;
 
 namespace MoveStopMove.Manager
 {
+    using System;
     using Utilitys;
     public class GameManager : Singleton<GameManager>
     {
@@ -76,6 +77,7 @@ namespace MoveStopMove.Manager
             gameIsRun = false;
             Time.timeScale = 0;
         }
+
 
         //public static void ChangeState(GameState state)
         //{

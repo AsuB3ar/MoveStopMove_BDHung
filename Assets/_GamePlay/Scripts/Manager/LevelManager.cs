@@ -46,12 +46,18 @@ namespace MoveStopMove.Manager
         private void SpawnCharacter()
         {
             GameObject character = PrefabManager.Inst.PopFromPool(PoolName.Character);
-            character.transform.parent = Level;
-            character.transform.localPosition = GetRandomPositionLevel();
+
+            character.transform.parent = Level;           
 
             BaseCharacter characterScript = Cache.GetBaseCharacter(character);
             characterScript.OnInit();
             characterScript.OnDie += OnDie;
+
+            Vector3 randomPos = GetRandomPositionLevel();
+            character.transform.localPosition = randomPos;
+
+            Color color = GameplayManager.Inst.GetRandomColor();
+            characterScript.ChangeColor(color);
 
             characters.Add(characterScript);
         }
