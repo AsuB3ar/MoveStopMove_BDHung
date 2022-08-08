@@ -28,7 +28,7 @@ namespace Utilitys.AI
             timeFrames = 0;
             Event.SetRotation(GameConst.Type.Model, rot);
             Event.SetRotation(GameConst.Type.Sensor, rot);        
-            Data.AttackCount = 0;
+            Data.CharacterData.AttackCount = 0;
         }
 
         public override int LogicUpdate()

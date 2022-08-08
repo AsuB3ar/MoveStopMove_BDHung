@@ -11,7 +11,7 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
         [SerializeField]
         GameObject charSensor;     
         [SerializeField]
-        bool detectCollisions;
+        bool active;
         [SerializeField]
         bool useGravity;
         [SerializeField]
@@ -19,9 +19,9 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
         
 
         Quaternion rotGoal;
-        private void Start()
+        private void Awake()
         {
-            controller.detectCollisions = detectCollisions;
+            SetActive(active);
         }
         public override void SetVelocity(Vector3 velocity)
         {
@@ -105,6 +105,7 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
         }
         public override void SetActive(bool value)
         {
+            active = value;
             controller.enabled = value;
             controller.detectCollisions = value;
         }

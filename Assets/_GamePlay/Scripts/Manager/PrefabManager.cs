@@ -6,6 +6,7 @@ public enum PoolName
 {
     Character = 0,
     Axe1 = 1,
+    Knife1 = 2,
 }
 namespace MoveStopMove.Manager
 {
@@ -19,6 +20,8 @@ namespace MoveStopMove.Manager
         GameObject Character;
         [SerializeField]
         GameObject Axe1;
+        [SerializeField]
+        GameObject Knife1;
         
         //-----
 
@@ -28,7 +31,8 @@ namespace MoveStopMove.Manager
         {
             base.Awake();
             CreatePool(Character, PoolName.Character, Quaternion.Euler(0, 0, 0), 15);
-            CreatePool(Axe1, PoolName.Axe1, Quaternion.Euler(0,0,0));
+            CreatePool(Axe1, PoolName.Axe1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Knife1, PoolName.Knife1, Quaternion.Euler(0, 0, 0));
         }
 
 

@@ -20,6 +20,9 @@ namespace MoveStopMove.ContentCreation.Weapon
         [SerializeField]
         BulletType Type;
         [SerializeField]
+        PoolName poolName;
+
+        [SerializeField]
         float rotationSpeed = 30f;
         [SerializeField]
         float speed = 0.1f;
@@ -43,7 +46,7 @@ namespace MoveStopMove.ContentCreation.Weapon
             
             if(range < 0)
             {
-                PrefabManager.Inst.PushToPool(this.gameObject, PoolName.Axe1, false);
+                PrefabManager.Inst.PushToPool(this.gameObject, poolName, false);
             }
             else
             {
@@ -72,6 +75,11 @@ namespace MoveStopMove.ContentCreation.Weapon
             this.direction.y = 0;
             this.range = range - lastSpeed * 6;
             this.parentCharacter = parentCharacter;
+
+            if(Type == BulletType.Normal)
+            {
+                transform.rotation = Quaternion.LookRotation(direction);
+            }
         }
 
         private void OnTriggerEnter(Collider col)

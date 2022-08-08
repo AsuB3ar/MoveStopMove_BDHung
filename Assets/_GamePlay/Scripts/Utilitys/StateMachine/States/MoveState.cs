@@ -17,7 +17,7 @@ namespace Utilitys.AI
         {
             base.Enter();
             Event.SetBool_Anim(GameConst.ANIM_IS_IDLE, false);
-            Data.AttackCount = 1;
+            Data.CharacterData.AttackCount = 1;
             //TODO: Play Move Animation
             //TODO: Set up Timer
         }

@@ -73,9 +73,9 @@ namespace Utilitys.AI
 
         private void ChangeRandomDirection()
         {
-            int value = Random.Range(0, 2);
+            int value = Random.Range(0, 5);
             Vector2 newDirection;
-            if (value == 0)
+            if (value < 3.5)
             {
                 newDirection = MathHelper.GetRandomDirection();
             }

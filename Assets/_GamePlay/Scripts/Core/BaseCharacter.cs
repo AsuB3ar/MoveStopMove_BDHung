@@ -59,6 +59,7 @@ namespace MoveStopMove.Core
             }
         }
         public float Size => Data.Size;
+        public float AttackRange => Data.AttackRange;
 
         private void Awake()
         {
@@ -80,8 +81,16 @@ namespace MoveStopMove.Core
         public void OnInit()
         {
             PhysicModule.SetActive(true);
-            Data.Hp = 1;
             transform.localScale = Vector3.one * Data.Size;
+            Data.Hp = 1;
+            Data.AttackCount = 1;
+
+            ((CharacterLogicModule)LogicModule).StartStateMachine();
+
+            if (type == CharacterType.Enemy)
+            {
+                ((CharacterAI)NavigationModule).StartStateMachine();
+            }
         }
 
         public void OnDespawn()
@@ -109,16 +118,7 @@ namespace MoveStopMove.Core
             LogicSystem.Event.DealDamage += DealDamage;
             AnimModule.UpdateEventAnimationState += LogicSystem.ReceiveInformation;
 
-            OnInit();
-            #endregion
-
-
-            ((CharacterLogicModule)LogicModule).StartStateMachine();
-
-            if (type == CharacterType.Enemy)
-            {
-                ((CharacterAI)NavigationModule).StartStateMachine();
-            }
+            #endregion           
             
             timerDie.TimeOut1 += TimerEvent;
         }
@@ -187,7 +187,7 @@ namespace MoveStopMove.Core
         //TODO: Combat Function(Covert to a system)
         public void AddStatus()
         {
-            Data.Size *= 1.1f;
+            Data.Level += 1;
 
             //TODO: Increase Size of character
             //TODO: Increase Size of Attack Range Indicator

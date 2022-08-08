@@ -8,12 +8,14 @@ namespace MoveStopMove.Manager
     using Utilitys;
     public class LevelManager : Singleton<LevelManager>,IInit
     {
+        public const int MARGIN = 2;
         public Transform Level;
         public Transform StaticEnvironment;
 
         private List<BaseCharacter> characters = new List<BaseCharacter>();
         [SerializeField]
         private GameObject Player;
+        private BaseCharacter PlayerScript;
         private Vector3 position = Vector3.zero;
         [SerializeField]
         private Vector3 size;
@@ -24,12 +26,13 @@ namespace MoveStopMove.Manager
             {
                 SpawnCharacter();
             }
+            PlayerScript.OnInit();
         }
 
         protected override void Awake()
         {
             base.Awake();
-            
+            PlayerScript = Cache.GetBaseCharacter(Player);
         }
         private void Start()
         {
@@ -50,11 +53,19 @@ namespace MoveStopMove.Manager
             character.transform.parent = Level;           
 
             BaseCharacter characterScript = Cache.GetBaseCharacter(character);
+            Vector3 randomPos;
+            do
+            {
+                randomPos = GetRandomPositionLevel();
+            } while ((randomPos - Player.transform.position).sqrMagnitude < 2 * PlayerScript.AttackRange);
+            
+            
+            character.transform.localPosition = randomPos;
+
             characterScript.OnInit();
             characterScript.OnDie += OnDie;
 
-            Vector3 randomPos = GetRandomPositionLevel();
-            character.transform.localPosition = randomPos;
+            
 
             Color color = GameplayManager.Inst.GetRandomColor();
             characterScript.ChangeColor(color);
@@ -69,23 +80,23 @@ namespace MoveStopMove.Manager
             float vecZ;
             if (value == 0)
             {
-                vecX = size.x - 1;
-                vecZ = Random.Range(-(size.z - 1) + position.z, size.z - 1 + position.z);
+                vecX = size.x - MARGIN;
+                vecZ = Random.Range(-(size.z - MARGIN) + position.z, size.z - MARGIN + position.z);
             }
             else if(value == 1)
             {
-                vecX = -(size.x - 1);
-                vecZ = Random.Range(-(size.z - 1) + position.z, size.z - 1 + position.z);
+                vecX = -(size.x - MARGIN);
+                vecZ = Random.Range(-(size.z - MARGIN) + position.z, size.z - MARGIN + position.z);
             }
             else if(value == 2)
             {
-                vecZ = size.z - 1;
-                vecX = Random.Range(-(size.x - 1) + position.x, size.x - 1 + position.x);
+                vecZ = size.z - MARGIN;
+                vecX = Random.Range(-(size.x - MARGIN) + position.x, size.x - MARGIN + position.x);
             }
             else
             {
-                vecZ = -(size.z - 1);
-                vecX = Random.Range(-(size.x - 1) + position.x, size.x - 1 + position.x);
+                vecZ = -(size.z - MARGIN);
+                vecX = Random.Range(-(size.x - MARGIN) + position.x, size.x - MARGIN + position.x);
             }
             return new Vector3(vecX, GameConst.INIT_CHARACTER_HEIGHT, vecZ);
         }
