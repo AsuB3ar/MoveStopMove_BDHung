@@ -14,6 +14,8 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
         float checkRadius;
         [SerializeField]
         Collider parentCollider;
+        //[SerializeField]
+        //SensorType type;
 
         Collider[] temp = new Collider[10];
         private Queue<Collider> oldCharacters = new Queue<Collider>();

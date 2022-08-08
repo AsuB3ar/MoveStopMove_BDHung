@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace MoveStopMove.Core.Character.WorldInterfaceSystem
 {
+    public enum SensorType
+    {
+        Detect = 0,
+        Vision = 1
+    }
     public abstract class BaseSensor : MonoBehaviour
     {
         protected WorldInterfaceData Data;

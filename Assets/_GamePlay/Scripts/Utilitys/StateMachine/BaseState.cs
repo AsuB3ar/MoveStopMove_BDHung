@@ -16,19 +16,17 @@ namespace Utilitys.AI
         protected P Parameter;
         protected D Data;
         protected LogicEvent Event;
-        protected BasicStateInsts<P,D> States;
         protected float StartTime { get; private set; }
         public string AnimBoolName { get; private set; }
 
         protected bool isEndState;
         //protected Rigidbody2D Rb;
-        public BaseState(StateMachine<P,D> StateMachine,BasicStateInsts<P,D> States, P Parameter, D Data, LogicEvent Event)
+        public BaseState(StateMachine<P,D> StateMachine, P Parameter, D Data, LogicEvent Event)
         {
             this.StateMachine = StateMachine;
             this.Parameter = Parameter;
             this.Data = Data;
             this.Event = Event;
-            this.States = States;
             //Rb = player.MovementModule.Rb;
         }      
         public virtual void Enter()

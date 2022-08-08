@@ -106,6 +106,7 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
         public override void SetActive(bool value)
         {
             controller.enabled = value;
+            controller.detectCollisions = value;
         }
         public override void UpdateData()
         {

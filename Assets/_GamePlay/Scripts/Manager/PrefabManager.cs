@@ -4,17 +4,22 @@ using UnityEngine;
 
 public enum PoolName
 {
-    Axe1 = 0,
+    Character = 0,
+    Axe1 = 1,
 }
 namespace MoveStopMove.Manager
 {
     using Utilitys;
-    
+
+    [DefaultExecutionOrder(-1)]
     public class PrefabManager : Singleton<PrefabManager>
     {
         //NOTE:Specific for game,remove to reuse
         [SerializeField]
+        GameObject Character;
+        [SerializeField]
         GameObject Axe1;
+        
         //-----
 
         public GameObject pool;
@@ -22,6 +27,7 @@ namespace MoveStopMove.Manager
         protected override void Awake()
         {
             base.Awake();
+            CreatePool(Character, PoolName.Character, Quaternion.Euler(0, 0, 0), 15);
             CreatePool(Axe1, PoolName.Axe1, Quaternion.Euler(0,0,0));
         }
 

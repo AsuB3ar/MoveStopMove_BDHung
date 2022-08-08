@@ -16,12 +16,11 @@ namespace MoveStopMove.Core.Character.LogicSystem
         {
             base.Initialize(Data, Parameter, Event);
             StateMachine = new StateMachine<LogicParameter,LogicData>();
-            States = new BasicStateInsts<LogicParameter,LogicData>();
 
-            States.PushState(State.Idle,new IdleState(StateMachine, States, Parameter, Data, Event));
-            States.PushState(State.Move,new MoveState(StateMachine, States, Parameter, Data, Event));
-            States.PushState(State.Attack,new AttackState(StateMachine, States, Parameter, Data, Event));
-            States.PushState(State.Die,new DieState(StateMachine, States, Parameter, Data, Event));
+            StateMachine.PushState(State.Idle,new IdleState(StateMachine, Parameter, Data, Event));
+            StateMachine.PushState(State.Move,new MoveState(StateMachine, Parameter, Data, Event));
+            StateMachine.PushState(State.Attack,new AttackState(StateMachine, Parameter, Data, Event));
+            StateMachine.PushState(State.Die,new DieState(StateMachine, Parameter, Data, Event));
 
             //StateMachine.Report = true;            
         }
@@ -45,7 +44,12 @@ namespace MoveStopMove.Core.Character.LogicSystem
 
         public void StartStateMachine()
         {
-            StateMachine.Initialize(States.GetState(State.Idle));          
+            StateMachine.Start(State.Idle);          
+        }
+
+        public void StopStateMachine()
+        {
+            StateMachine.Stop();
         }
     }
 }

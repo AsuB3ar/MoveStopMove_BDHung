@@ -10,7 +10,8 @@ namespace Utilitys.AI
     {
         private int timeFrames;
         Vector3 direction;
-        public AttackState(StateMachine<LogicParameter,LogicData> StateMachine, BasicStateInsts<LogicParameter,LogicData> States, LogicParameter Parameter, LogicData Data, LogicEvent Event) : base(StateMachine,States ,Parameter, Data, Event)
+        public AttackState(StateMachine<LogicParameter,LogicData> StateMachine, LogicParameter Parameter, LogicData Data, LogicEvent Event) 
+            : base(StateMachine ,Parameter, Data, Event)
         {
 
         }
@@ -34,7 +35,7 @@ namespace Utilitys.AI
         {
             if (Data.CharacterData.Hp <= 0)
             {
-                StateMachine.ChangeState(States.GetState(State.Die));
+                StateMachine.ChangeState(State.Die);
             }
 
             return 0;
@@ -44,7 +45,7 @@ namespace Utilitys.AI
         {
             if(timeFrames >= GameConst.ANIM_IS_ATTACK_FRAMES)
             {
-                StateMachine.ChangeState(States.GetState(State.Idle));
+                StateMachine.ChangeState(State.Idle);
             }
             else if(timeFrames == 14)
             {

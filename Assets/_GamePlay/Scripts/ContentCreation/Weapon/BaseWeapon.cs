@@ -20,7 +20,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         protected WeaponType WeaponType;
 
         public BaseCharacter Character;
-        public abstract void DealDamage(Vector3 direction, float range);
+        public abstract void DealDamage(Vector3 direction, float range, float scale);
 
     }
 }

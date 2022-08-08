@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace MoveStopMove.Core
 {
+    using Utilitys.Timer;
     using MoveStopMove.Core.Data;
     using MoveStopMove.Core.Character.WorldInterfaceSystem;
     using MoveStopMove.Core.Character.NavigationSystem;
@@ -11,9 +12,15 @@ namespace MoveStopMove.Core
     using MoveStopMove.Core.Character.LogicSystem;
     using ContentCreation.Weapon;
     using System;
-
-    public class BaseCharacter : MonoBehaviour
+    public enum CharacterType
     {
+        Player = 0,
+        Enemy = 1
+    }
+
+    public class BaseCharacter : MonoBehaviour,IInit,IDespawn
+    {
+        public event Action<BaseCharacter> OnDie;
         protected bool isDie = false;
         [SerializeField]
         protected SkinnedMeshRenderer mesh;
@@ -31,13 +38,18 @@ namespace MoveStopMove.Core
         AbstractPhysicModule PhysicModule;
         [SerializeField]
         AnimationModule AnimModule;
+        
+
 
         protected CharacterWorldInterfaceSystem WorldInterfaceSystem;
         protected CharacterNavigationSystem NavigationSystem;
         protected CharacterLogicSystem LogicSystem;
         protected CharacterPhysicSystem PhysicSystem;
+        protected STimer timerDie = new STimer();
 
         public BaseWeapon Weapon;
+        [SerializeField]
+        CharacterType type;
         public bool IsDie => isDie;
         
 
@@ -51,9 +63,24 @@ namespace MoveStopMove.Core
             Data = ScriptableObject.CreateInstance(typeof(CharacterData)) as CharacterData;
             LogicSystem.SetCharacterInformation(Data, gameObject.transform);
             WorldInterfaceSystem.SetCharacterInformation(Data);
+            NavigationSystem.SetCharacterInformation(transform, SensorTF, GetInstanceID());
 
             //NOTE: When change wepon need to set this line of code
             Weapon.Character = this;
+
+        }
+
+        public void OnInit()
+        {
+            PhysicModule.SetActive(true);
+            Data.Hp = 1;
+            isDie = false;
+        }
+
+        public void OnDespawn()
+        {
+            OnDie?.Invoke(this);
+            ((CharacterLogicModule)LogicModule).StopStateMachine();
         }
         protected virtual void OnEnable()
         {
@@ -66,15 +93,27 @@ namespace MoveStopMove.Core
 
             LogicSystem.Event.SetVelocity += PhysicSystem.SetVelocity;
             LogicSystem.Event.SetRotation += PhysicSystem.SetRotation;
+            LogicSystem.Event.SetActive += PhysicModule.SetActive;
+
             LogicSystem.Event.SetSmoothRotation += PhysicSystem.SetSmoothRotation;
             LogicSystem.Event.SetBool_Anim += AnimModule.SetBool;
             LogicSystem.Event.SetFloat_Anim += AnimModule.SetFloat;
             LogicSystem.Event.SetInt_Anim += AnimModule.SetInt;
             LogicSystem.Event.DealDamage += DealDamage;
-
             AnimModule.UpdateEventAnimationState += LogicSystem.ReceiveInformation;
-            ((CharacterLogicModule)LogicModule).StartStateMachine();
+
+            OnInit();
             #endregion
+
+
+            ((CharacterLogicModule)LogicModule).StartStateMachine();
+
+            if (type == CharacterType.Enemy)
+            {
+                ((CharacterAI)NavigationModule).StartStateMachine();
+            }
+            
+            timerDie.TimeOut1 += TimerEvent;
         }
 
         protected virtual void OnDisable()
@@ -88,6 +127,8 @@ namespace MoveStopMove.Core
 
             LogicSystem.Event.SetVelocity -= PhysicSystem.SetVelocity;
             LogicSystem.Event.SetRotation -= PhysicSystem.SetRotation;
+            LogicSystem.Event.SetActive -= PhysicModule.SetActive;
+
             LogicSystem.Event.SetSmoothRotation -= PhysicSystem.SetSmoothRotation;
             LogicSystem.Event.SetBool_Anim -= AnimModule.SetBool;
             LogicSystem.Event.SetFloat_Anim -= AnimModule.SetFloat;
@@ -96,6 +137,8 @@ namespace MoveStopMove.Core
 
             AnimModule.UpdateEventAnimationState -= LogicSystem.ReceiveInformation;
             #endregion
+            
+            timerDie.TimeOut1 -= TimerEvent;
         }
 
         protected virtual void Update()
@@ -113,7 +156,7 @@ namespace MoveStopMove.Core
 
         protected virtual void DealDamage(Vector3 direction, float range)
         {
-            Weapon.DealDamage(direction,range);
+            Weapon.DealDamage(direction, range ,Data.Size);
         }
 
         public void TakeDamage(int damage)
@@ -122,7 +165,11 @@ namespace MoveStopMove.Core
             if(Data.Hp <= 0)
             {
                 isDie = true;
-                PhysicModule.SetActive(false);
+                timerDie.Start(GameConst.ANIM_IS_DEAD_TIME + 2f, 0);
+                if (type == CharacterType.Enemy)
+                {
+                    ((CharacterAI)NavigationModule).StopStateMachine();
+                }
             }
         }
 
@@ -135,5 +182,19 @@ namespace MoveStopMove.Core
             //TODO: Increase Size of Attack Range Indicator
             PhysicModule.SetScale(GameConst.Type.Character, 1.1f);                        
         }
+
+        private void Die()
+        {
+            OnDespawn();
+        }
+
+        private void TimerEvent(int code)
+        {
+            if(code == 0)
+            {
+                Die();
+            }
+        }
+        
     }
 }

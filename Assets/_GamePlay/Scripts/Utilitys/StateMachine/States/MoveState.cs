@@ -8,7 +8,8 @@ namespace Utilitys.AI
     using MoveStopMove.Core.Character.LogicSystem;
     public class MoveState : BaseState<LogicParameter,LogicData>
     {
-        public MoveState(StateMachine<LogicParameter, LogicData> StateMachine, BasicStateInsts<LogicParameter,LogicData> States, LogicParameter Parameter, LogicData Data, LogicEvent Event) : base(StateMachine, States ,Parameter, Data, Event)
+        public MoveState(StateMachine<LogicParameter, LogicData> StateMachine, LogicParameter Parameter, LogicData Data, LogicEvent Event) 
+            : base(StateMachine ,Parameter, Data, Event)
         {
 
         }
@@ -33,12 +34,12 @@ namespace Utilitys.AI
         {
             if (Data.CharacterData.Hp <= 0)
             {
-                StateMachine.ChangeState(States.GetState(State.Die));
+                StateMachine.ChangeState(State.Die);
                 return -1;
             }
             else if(Parameter.MoveDirection.sqrMagnitude < 0.001)
             {
-                StateMachine.ChangeState(States.GetState(State.Idle));
+                StateMachine.ChangeState(State.Idle);
                 return 0;
             }
 

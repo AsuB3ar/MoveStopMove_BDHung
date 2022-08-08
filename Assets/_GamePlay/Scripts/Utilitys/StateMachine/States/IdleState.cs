@@ -8,8 +8,8 @@ namespace Utilitys.AI
     using MoveStopMove.Core.Character.LogicSystem;
     public class IdleState : BaseState<LogicParameter,LogicData>
     {
-        public IdleState(StateMachine<LogicParameter,LogicData> StateMachine,BasicStateInsts<LogicParameter,LogicData> States,LogicParameter Parameter, LogicData Data, LogicEvent Event) 
-            : base(StateMachine, States ,Parameter, Data, Event)
+        public IdleState(StateMachine<LogicParameter,LogicData> StateMachine,LogicParameter Parameter, LogicData Data, LogicEvent Event) 
+            : base(StateMachine, Parameter, Data, Event)
         {
            
         }
@@ -32,15 +32,15 @@ namespace Utilitys.AI
             base.LogicUpdate();
             if (Data.CharacterData.Hp <= 0)
             {
-                StateMachine.ChangeState(States.GetState(State.Die));
+                StateMachine.ChangeState(State.Die);
             }
             else if (Parameter.CharacterPositions.Count > 0 && Data.AttackCount > 0)
             {
-                StateMachine.ChangeState(States.GetState(State.Attack));
+                StateMachine.ChangeState(State.Attack);
             }
             else if(Parameter.MoveDirection.sqrMagnitude > 0.001)
             {
-                StateMachine.ChangeState(States.GetState(State.Move));
+                StateMachine.ChangeState(State.Move);
             }
             return 0;
         }

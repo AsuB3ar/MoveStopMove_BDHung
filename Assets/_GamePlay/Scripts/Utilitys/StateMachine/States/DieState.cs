@@ -8,8 +8,8 @@ namespace Utilitys.AI
     using MoveStopMove.Core.Character.LogicSystem;
     public class DieState : BaseState<LogicParameter,LogicData>
     {
-        public DieState(StateMachine<LogicParameter,LogicData> StateMachine, BasicStateInsts<LogicParameter,LogicData> States , LogicParameter Parameter, LogicData Data, LogicEvent Event) 
-            : base(StateMachine, States,Parameter, Data, Event)
+        public DieState(StateMachine<LogicParameter,LogicData> StateMachine, LogicParameter Parameter, LogicData Data, LogicEvent Event) 
+            : base(StateMachine,Parameter, Data, Event)
         {
 
         }
@@ -17,6 +17,7 @@ namespace Utilitys.AI
         {
             Event.SetVelocity(Vector3.zero);
             Event.SetBool_Anim(GameConst.ANIM_IS_DEAD, true);
+            Event.SetActive(false);
             base.Enter();
         }
 
