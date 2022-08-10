@@ -61,7 +61,7 @@ namespace MoveStopMove.ContentCreation.Weapon
             {
                 if (!character.IsDie)
                 {
-                    PrefabManager.Inst.PushToPool(this.gameObject, PoolName.Axe1Bullet, false);
+                    PrefabManager.Inst.PushToPool(this.gameObject, poolName, false);
                     character.TakeDamage(1);
                     parentCharacter.AddStatus(); 
                 }

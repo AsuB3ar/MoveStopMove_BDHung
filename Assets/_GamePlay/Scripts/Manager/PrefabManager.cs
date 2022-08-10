@@ -5,17 +5,24 @@ using UnityEngine;
 public enum PoolName
 {
     Character = 0,
+    #region Bullet
     Axe1Bullet = 1,
     Knife1Bullet = 2,
     Axe2Bullet = 3,
+    #endregion
 
+    #region Weapon
     Axe1 = 100,
     Knife1 = 101,
     Axe2 = 102,
+    #endregion
 
+    #region Skins
     Hair_Arrow = 1000,
     Hair_Cowboy = 1001,
-    Hair_Headphone = 1002
+    Hair_Headphone = 1002,
+    #endregion
+    None = 10000
 
 }
 namespace MoveStopMove.Manager

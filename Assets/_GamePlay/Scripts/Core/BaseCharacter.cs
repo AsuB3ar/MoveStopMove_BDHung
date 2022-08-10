@@ -26,13 +26,14 @@ namespace MoveStopMove.Core
         protected SkinnedMeshRenderer meshCharacter;
         [SerializeField]
         protected SkinnedMeshRenderer meshPant;
-        
+        [SerializeField]
+        protected GameObject hair;
         [SerializeField]
         protected Transform SensorTF;
         [SerializeField]
         protected Transform ContainWeaponTF;
         [SerializeField]
-        protected Transform ContainSkinTF;
+        protected Transform ContainHairTF;
         protected CharacterData Data;
 
         [SerializeField]
@@ -202,9 +203,19 @@ namespace MoveStopMove.Core
         }
         public void ChangeHair(PoolName hair)
         {
-            GameObject hairObject = PrefabManager.Inst.PopFromPool(hair);
-            hairObject.transform.parent = ContainSkinTF;
-            Cache.GetItem(hairObject).SetTranformData();
+            if(hair != PoolName.None)
+            {
+                GameObject hairObject = PrefabManager.Inst.PopFromPool(hair);
+                hairObject.transform.parent = ContainHairTF;
+                Cache.GetItem(hairObject).SetTranformData();
+
+                if(this.hair != null)
+                {
+                    Cache.GetItem(this.hair).OnDespawn();
+                }
+                this.hair = hairObject;
+            }
+            
         }
         public void ChangeWeapon(BaseWeapon weapon)
         {

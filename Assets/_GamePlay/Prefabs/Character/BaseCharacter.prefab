@@ -568,6 +568,36 @@ Transform:
   m_Father: {fileID: 6087861537541638875}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.000015360547, y: 0.0000017910963, z: 0.0000011940635}
+--- !u!1 &2333253691166648792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6595828003968469383}
+  m_Layer: 0
+  m_Name: ContainHair
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6595828003968469383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2333253691166648792}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7205505984818083346}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2519000884586389621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,6 +1583,7 @@ Transform:
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
   m_Children:
   - {fileID: 3371408734315015500}
+  - {fileID: 6595828003968469383}
   m_Father: {fileID: 1856903038338743234}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.00000015469976, y: -0.00000011349832, z: -0.0000000590813}
@@ -1655,9 +1686,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshCharacter: {fileID: 1032434236312950549}
   meshPant: {fileID: 8824928195836492804}
+  hair: {fileID: 0}
   SensorTF: {fileID: 4516260988997187901}
   ContainWeaponTF: {fileID: 3603346951696897283}
-  ContainSkinTF: {fileID: 949047527078885343}
+  ContainHairTF: {fileID: 6595828003968469383}
   WorldInterfaceModule: {fileID: 8684538965717568146}
   NavigationModule: {fileID: 0}
   LogicModule: {fileID: 3092809192485204286}

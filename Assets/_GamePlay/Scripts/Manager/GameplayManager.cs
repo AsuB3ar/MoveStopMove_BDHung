@@ -36,6 +36,10 @@ namespace MoveStopMove.Manager
         List<Material> materials;
         [SerializeField]
         List<Material> pantSkins;
+        [SerializeField]
+        CameraMove cameraMove;
+        public readonly List<PoolName> hairSkins = new List<PoolName>() { PoolName.Hair_Arrow, PoolName.Hair_Cowboy, PoolName.Hair_Headphone, PoolName.None };
+
 
         public Material GetMaterial(Color color)
         {
@@ -55,6 +59,17 @@ namespace MoveStopMove.Manager
         {
             int index = Random.Range(0, materials.Count);
             return (Color)index;
+        }
+
+        public PoolName GetRandomHair()
+        {
+            int index = Random.Range(0, hairSkins.Count);
+            return hairSkins[index];
+        }
+
+        public void SetCameraPosition(CameraPosition position)
+        {
+            cameraMove.MoveTo(position);
         }
     }
 }

@@ -72,8 +72,10 @@ namespace MoveStopMove.Manager
 
             Color color = GameplayManager.Inst.GetRandomColor();
             characterScript.ChangeColor(color);
-            PantSkin name = GameplayManager.Inst.GetRandomPantSkin();
-            characterScript.ChangePant(name);
+            PantSkin pantName = GameplayManager.Inst.GetRandomPantSkin();
+            characterScript.ChangePant(pantName);
+            PoolName hairname = GameplayManager.Inst.GetRandomHair();
+            characterScript.ChangeHair(hairname);
 
             characters.Add(characterScript);
         }

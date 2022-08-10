@@ -5,14 +5,18 @@ using UnityEngine;
 namespace MoveStopMove.Core.Character.NavigationSystem
 {
     using Utilitys.Input;
+    using Utilitys;
     public class InputModule : AbstractNavigationModule
     {
         [SerializeField]
         JoyStick joyStick;
         Vector2 moveDirection = Vector2.zero;
-        private void Awake()
+        private void Start()
         {
+            CanvasGameplay gameplay = (CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay);
+            joyStick = gameplay.joyStick;
             joyStick.OnMove += UpdateMoveDirection;
+            gameplay.Close();
         }
         public override void UpdateData()
         {

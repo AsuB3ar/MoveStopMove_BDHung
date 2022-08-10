@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57108dbb4a6e43e4398ee215cfe56bf5, type: 3}
   m_Name: Hair_Headphone
   m_EditorClassIdentifier: 
-  position: {x: 0.035, y: 2.26, z: 0.2}
+  position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0}
   scale: {x: 1, y: 1, z: 1}

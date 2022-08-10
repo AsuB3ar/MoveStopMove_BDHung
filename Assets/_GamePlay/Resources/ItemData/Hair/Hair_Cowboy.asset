@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57108dbb4a6e43e4398ee215cfe56bf5, type: 3}
   m_Name: Hair_Cowboy
   m_EditorClassIdentifier: 
-  position: {x: 0.015, y: 2.23, z: 0.165}
+  position: {x: 0.005, y: -0.01, z: 0.025}
   rotation: {x: 0, y: 0, z: 0}
   scale: {x: 1, y: 1, z: 1}
