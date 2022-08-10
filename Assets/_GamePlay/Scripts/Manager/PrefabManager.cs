@@ -5,8 +5,18 @@ using UnityEngine;
 public enum PoolName
 {
     Character = 0,
-    Axe1 = 1,
-    Knife1 = 2,
+    Axe1Bullet = 1,
+    Knife1Bullet = 2,
+    Axe2Bullet = 3,
+
+    Axe1 = 100,
+    Knife1 = 101,
+    Axe2 = 102,
+
+    Hair_Arrow = 1000,
+    Hair_Cowboy = 1001,
+    Hair_Headphone = 1002
+
 }
 namespace MoveStopMove.Manager
 {
@@ -19,10 +29,27 @@ namespace MoveStopMove.Manager
         [SerializeField]
         GameObject Character;
         [SerializeField]
+        GameObject Axe1Bullet;
+        [SerializeField]
+        GameObject Knife1Bullet;
+        [SerializeField]
+        GameObject Axe2Bullet;
+
+        [SerializeField]
         GameObject Axe1;
         [SerializeField]
         GameObject Knife1;
-        
+        [SerializeField]
+        GameObject Axe2;
+
+        [SerializeField]
+        GameObject Hair_Arrow;
+        [SerializeField]
+        GameObject Hair_Cowboy;
+        [SerializeField]
+        GameObject Hair_Headphone;
+
+        public readonly List<PoolName> WeaponNames = new List<PoolName>() { PoolName.Axe1, PoolName.Knife1, PoolName.Axe2 };
         //-----
 
         public GameObject pool;
@@ -31,8 +58,17 @@ namespace MoveStopMove.Manager
         {
             base.Awake();
             CreatePool(Character, PoolName.Character, Quaternion.Euler(0, 0, 0), 15);
+            CreatePool(Axe1Bullet, PoolName.Axe1Bullet, Quaternion.Euler(0, 0, 0));
+            CreatePool(Knife1Bullet, PoolName.Knife1Bullet, Quaternion.Euler(0, 0, 0));
+            CreatePool(Axe2Bullet, PoolName.Axe2Bullet, Quaternion.Euler(0, 0, 0));
+
             CreatePool(Axe1, PoolName.Axe1, Quaternion.Euler(0, 0, 0));
             CreatePool(Knife1, PoolName.Knife1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Axe2, PoolName.Axe2, Quaternion.Euler(0, 0, 0));
+
+            CreatePool(Hair_Arrow, PoolName.Hair_Arrow);
+            CreatePool(Hair_Cowboy, PoolName.Hair_Cowboy);
+            CreatePool(Hair_Headphone, PoolName.Hair_Headphone);
         }
 
 

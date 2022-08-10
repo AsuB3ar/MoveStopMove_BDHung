@@ -47,7 +47,7 @@ namespace Utilitys.AI
             {
                 StateMachine.ChangeState(State.Idle);
             }
-            else if(timeFrames == 14)
+            else if(timeFrames == 12)
             {
                 Event.DealDamage(direction.normalized, Data.CharacterData.AttackRange);
             }

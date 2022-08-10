@@ -17,16 +17,40 @@ namespace MoveStopMove.Manager
         Brown = 6,
         Aqua = 7
     }
+
+    public enum PantSkin
+    {
+        Batman = 0,
+        Chambi = 1,
+        Comy = 2,
+        Dabao = 3,
+        Onion = 4,
+        Pokemon = 5,
+        Rainbow = 6,
+        Skull = 7,
+        Vantim = 8
+    }
     public class GameplayManager : Singleton<GameplayManager>
     {
         [SerializeField]
         List<Material> materials;
+        [SerializeField]
+        List<Material> pantSkins;
 
         public Material GetMaterial(Color color)
         {
             return materials[(int)color];
         }
 
+        public Material GetMaterial(PantSkin name)
+        {
+            return pantSkins[(int)name];
+        }
+        public PantSkin GetRandomPantSkin()
+        {
+            int index = Random.Range(0, pantSkins.Count);
+            return (PantSkin)index;
+        }
         public Color GetRandomColor()
         {
             int index = Random.Range(0, materials.Count);

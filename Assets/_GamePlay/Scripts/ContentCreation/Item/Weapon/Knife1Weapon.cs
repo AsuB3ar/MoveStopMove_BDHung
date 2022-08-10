@@ -12,7 +12,7 @@ namespace MoveStopMove.ContentCreation.Weapon
             if (WeaponType == WeaponType.Normal)
             {
                 GameObject bullet = PrefabManager.Inst.PopFromPool(BulletPoolName);
-                bullet.transform.position = transform.position;
+                bullet.transform.position = firePoint.position;
                 bullet.transform.localScale = Vector3.one * size;
 
                 BaseBullet bulletScript = Cache.GetBaseBullet(bullet);

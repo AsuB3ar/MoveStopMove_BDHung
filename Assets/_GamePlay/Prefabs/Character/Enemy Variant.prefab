@@ -570,6 +570,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2689206920248707063, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+      propertyPath: Weapon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2689206920248707063, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: NavigationModule
       value: 
       objectReference: {fileID: 1282303763}

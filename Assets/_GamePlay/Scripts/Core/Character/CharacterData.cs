@@ -6,6 +6,7 @@ using UnityEngine;
 namespace MoveStopMove.Core.Data {
     public class CharacterData : ScriptableObject
     {
+        #region Stats
         private float size = 1;
         private int level = 1;
 
@@ -26,5 +27,16 @@ namespace MoveStopMove.Core.Data {
             }
         }
         public float AttackRange => BaseAttackRange * Size;
+
+        public int Weapon;
+        #endregion
+
+        #region Skin
+        public int Color;
+        public int Pant;
+        public int Hair;
+        public int Set = 0;
+        #endregion
+
     }
 }

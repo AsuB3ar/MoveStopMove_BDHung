@@ -11,16 +11,21 @@ public enum WeaponType
 }
 namespace MoveStopMove.ContentCreation.Weapon
 {
-    public abstract class BaseWeapon : MonoBehaviour
+    using Manager;
+    public abstract class BaseWeapon : Item
     {
         float Range;
         [SerializeField]
         protected PoolName BulletPoolName;
         [SerializeField]
         protected WeaponType WeaponType;
-
+        [SerializeField]
+        protected Transform firePoint;
+        
+        [HideInInspector]
         public BaseCharacter Character;
+        public PoolName Name => BulletPoolName;
+             
         public abstract void DealDamage(Vector3 direction, float range, float scale);
-
     }
 }

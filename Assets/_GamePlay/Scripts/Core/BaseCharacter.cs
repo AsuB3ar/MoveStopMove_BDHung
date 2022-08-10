@@ -23,9 +23,16 @@ namespace MoveStopMove.Core
     {
         public event Action<BaseCharacter> OnDie;
         [SerializeField]
-        protected SkinnedMeshRenderer mesh;
+        protected SkinnedMeshRenderer meshCharacter;
+        [SerializeField]
+        protected SkinnedMeshRenderer meshPant;
+        
         [SerializeField]
         protected Transform SensorTF;
+        [SerializeField]
+        protected Transform ContainWeaponTF;
+        [SerializeField]
+        protected Transform ContainSkinTF;
         protected CharacterData Data;
 
         [SerializeField]
@@ -74,15 +81,29 @@ namespace MoveStopMove.Core
             NavigationSystem.SetCharacterInformation(transform, SensorTF, GetInstanceID());
 
             //NOTE: When change wepon need to set this line of code
-            Weapon.Character = this;
-
+            if(Weapon != null)
+            {
+                Weapon.Character = this;
+                Data.Weapon = (int)Weapon.Name;
+            }
+            
         }
 
         public void OnInit()
         {
             PhysicModule.SetActive(true);
             transform.localScale = Vector3.one * Data.Size;
-            Data.Hp = 1;
+
+            //TEST: Test Player Have Hp = 10
+            if(type == CharacterType.Player)
+            {
+                Data.Hp = 10;
+            }
+            else
+            {
+                Data.Hp = 1;
+            }
+            
             Data.AttackCount = 1;
 
             ((CharacterLogicModule)LogicModule).StartStateMachine();
@@ -169,7 +190,37 @@ namespace MoveStopMove.Core
         public void ChangeColor(Color color)
         {
             Material mat = GameplayManager.Inst.GetMaterial(color);
-            mesh.material = mat;
+            meshCharacter.material = mat;
+            Data.Color = (int)color;
+        }
+
+        public void ChangePant(PantSkin name)
+        {
+            Material mat = GameplayManager.Inst.GetMaterial(name);
+            meshPant.material = mat;
+            Data.Pant = (int)name;
+        }
+        public void ChangeHair(PoolName hair)
+        {
+            GameObject hairObject = PrefabManager.Inst.PopFromPool(hair);
+            hairObject.transform.parent = ContainSkinTF;
+            Cache.GetItem(hairObject).SetTranformData();
+        }
+        public void ChangeWeapon(BaseWeapon weapon)
+        {
+            if(weapon != null)
+            {
+                if(Weapon != null)
+                {
+                    Weapon.OnDespawn();
+                }
+                
+                Weapon = weapon;
+                Weapon.Character = this;
+                Weapon.gameObject.transform.parent = ContainWeaponTF;
+                Weapon.SetTranformData();
+                Data.Weapon = (int)Weapon.Name;
+            }          
         }
         public void TakeDamage(int damage)
         {

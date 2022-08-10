@@ -1498,7 +1498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5614459181001223723, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: m_Center.y
-      value: 0.6
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 5654369632037256341, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1514,7 +1514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5862903821006261929, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: m_Name
-      value: Character
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5990895583703040092, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -30,6 +30,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         Vector3 direction = Vector3.zero;
 
         float lastSpeed => speed * Time.fixedDeltaTime * amplifyParameter;
+        [HideInInspector]
         public Collider SelfCharacterCollider;
 
         private void FixedUpdate()
@@ -60,7 +61,7 @@ namespace MoveStopMove.ContentCreation.Weapon
             {
                 if (!character.IsDie)
                 {
-                    PrefabManager.Inst.PushToPool(this.gameObject, PoolName.Axe1, false);
+                    PrefabManager.Inst.PushToPool(this.gameObject, PoolName.Axe1Bullet, false);
                     character.TakeDamage(1);
                     parentCharacter.AddStatus(); 
                 }
@@ -78,7 +79,8 @@ namespace MoveStopMove.ContentCreation.Weapon
 
             if(Type == BulletType.Normal)
             {
-                transform.rotation = Quaternion.LookRotation(direction);
+                direction.y = 1;
+                transform.localRotation = Quaternion.LookRotation(Vector3.up,-direction);
             }
         }
 

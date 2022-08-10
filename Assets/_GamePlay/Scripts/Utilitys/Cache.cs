@@ -3,7 +3,7 @@ using MoveStopMove.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoveStopMove.ContentCreation;
 public static class Cache 
 {
     private static Dictionary<int, List<Vector3>> hashCodeToList = new Dictionary<int, List<Vector3>>();
@@ -12,6 +12,8 @@ public static class Cache
 
     private static Dictionary<GameObject, BaseWeapon> gameObj2BaseWeapon = new Dictionary<GameObject, BaseWeapon>();
     private static Dictionary<GameObject, BaseBullet> gameObj2BaseBullet = new Dictionary<GameObject, BaseBullet>();
+
+    private static Dictionary<GameObject, Item> gameObj2Item = new Dictionary<GameObject, Item>();
      
     public static List<Vector3> GetCacheList(int hashCode)
     {
@@ -73,5 +75,14 @@ public static class Cache
             gameObj2BaseWeapon.Add(obj, obj.GetComponent<BaseWeapon>());
         }
         return gameObj2BaseWeapon[obj];
+    }
+
+    public static Item GetItem(GameObject obj)
+    {
+        if (!gameObj2Item.ContainsKey(obj))
+        {
+            gameObj2Item.Add(obj, obj.GetComponent<Item>());
+        }
+        return gameObj2Item[obj];
     }
 }
