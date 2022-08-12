@@ -18,11 +18,11 @@ public class CameraMove : MonoBehaviour
     public readonly Vector3 GameplayPosition = new Vector3(0.05f, 8.9f, -6.914f);
     public readonly Vector3 GameplayRotation = new Vector3(45, 0, 0);
 
-    public readonly Vector3 ShopSkinPosition = new Vector3(0, 1.26f, 1.79f);
-    public readonly Vector3 ShopSkinRotation = new Vector3(15, 180, 0);
+    public readonly Vector3 ShopWeaponPosition = new Vector3(0, 1.26f, 1.79f);
+    public readonly Vector3 ShopWeaponRotation = new Vector3(15, 180, 0);
 
-    public readonly Vector3 ShopWeaponPosition = new Vector3(0.05f, 2.44f, 3.43f);
-    public readonly Vector3 ShopWeaponRotation = new Vector3(30, 180, 0);
+    public readonly Vector3 ShopSkinPosition = new Vector3(0.05f, 2.44f, 3.43f);
+    public readonly Vector3 ShopSkinRotation = new Vector3(30, 180, 0);
 
 
 
