@@ -19,7 +19,7 @@ namespace MoveStopMove.ContentCreation
 
         public void OnDespawn()
         {
-            PrefabManager.Inst.PushToPool(this.gameObject, data.itemName, false);
+            PrefabManager.Inst.PushToPool(this.gameObject, data.poolID, false);
         }
     }
 }

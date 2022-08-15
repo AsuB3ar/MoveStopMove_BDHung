@@ -16,7 +16,7 @@ namespace MoveStopMove.ContentCreation.Weapon
     {
         float Range;
         [SerializeField]
-        protected PoolName BulletPoolName;
+        protected PoolID BulletPoolName;
         [SerializeField]
         protected WeaponType WeaponType;
         [SerializeField]
@@ -24,7 +24,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         
         [HideInInspector]
         public BaseCharacter Character;
-        public PoolName Name => BulletPoolName;
+        public PoolID Name => BulletPoolName;
              
         public abstract void DealDamage(Vector3 direction, float range, float scale);
     }

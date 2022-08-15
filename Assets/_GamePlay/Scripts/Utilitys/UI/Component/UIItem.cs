@@ -8,13 +8,14 @@ using UnityEngine.EventSystems;
 public enum UIItemType
 {
     Hair = 0,
-    Pant = 1
+    Pant = 1,
+    Weapon = 2
 }
 public class UIItem : MonoBehaviour
 {
-    public event Action<PoolName, UIItemType> OnSelectItem;
+    public event Action<PoolID, UIItemType> OnSelectItem;
     [SerializeField]
-    PoolName itemName;
+    PoolID itemName;
     [SerializeField]
     UIItemType type;
     [SerializeField]
@@ -38,7 +39,7 @@ public class UIItem : MonoBehaviour
         icon.sprite = sprite;
     }
 
-    public void SetData(PoolName itemName, UIItemType type)
+    public void SetData(PoolID itemName, UIItemType type)
     {
         this.itemName = itemName;
         this.type = type;

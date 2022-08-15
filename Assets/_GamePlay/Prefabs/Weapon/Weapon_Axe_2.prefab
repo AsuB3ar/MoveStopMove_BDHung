@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5618273737373822372, guid: 2502da38ba921e046b980471ca5fb9bd, type: 3}
       propertyPath: m_Name
-      value: Axe_2
+      value: Weapon_Axe_2
       objectReference: {fileID: 0}
     - target: {fileID: 9100544997115978373, guid: 2502da38ba921e046b980471ca5fb9bd, type: 3}
       propertyPath: m_RootOrder
@@ -104,11 +104,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a2149783fb2414b8e370364a71f1ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolName: 102
+  data: {fileID: 11400000, guid: e3dc0c5790f63924485d30be552106a9, type: 2}
   BulletPoolName: 3
   WeaponType: 0
   firePoint: {fileID: 1160421333831855363}
-  data: {fileID: 11400000, guid: f58bea087f12a544d9760a44058e9ba7, type: 2}
   Character: {fileID: 0}
 --- !u!1001 &566047954680174317
 PrefabInstance:

@@ -43,12 +43,12 @@ namespace MoveStopMove.Manager
         {
             character.OnDie -= OnDie;
             characters.Remove(character);
-            PrefabManager.Inst.PushToPool(character.gameObject, PoolName.Character);
+            PrefabManager.Inst.PushToPool(character.gameObject, PoolID.Character);
             SpawnCharacter();
         }
         private void SpawnCharacter()
         {
-            GameObject character = PrefabManager.Inst.PopFromPool(PoolName.Character);
+            GameObject character = PrefabManager.Inst.PopFromPool(PoolID.Character);
 
             character.transform.parent = Level;           
 
@@ -73,7 +73,7 @@ namespace MoveStopMove.Manager
             characterScript.ChangeColor(color);
             PantSkin pantName = GameplayManager.Inst.GetRandomPantSkin();
             characterScript.ChangePant(pantName);
-            PoolName hairname = GameplayManager.Inst.GetRandomHair();
+            PoolID hairname = GameplayManager.Inst.GetRandomHair();
             characterScript.ChangeHair(hairname);
 
             characters.Add(characterScript);

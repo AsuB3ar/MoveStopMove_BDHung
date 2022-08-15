@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PoolName
+public enum PoolID
 {
     Character = 0,
     #region Bullet
-    Axe1Bullet = 1,
-    Knife1Bullet = 2,
-    Axe2Bullet = 3,
+    Bullet_Axe1 = 1,
+    Bullet_Knife1 = 2,
+    Bullet_Axe2 = 3,
+    Bullet_Arrow = 4,
     #endregion
 
     #region Weapon
-    Axe1 = 100,
-    Knife1 = 101,
-    Axe2 = 102,
+    Weapon_Axe1 = 100,
+    Weapon_Knife1 = 101,
+    Weapon_Axe2 = 102,
+    Weapon_Arrow = 103,
     #endregion
 
     #region Skins
@@ -42,12 +44,15 @@ namespace MoveStopMove.Manager
         
         [SerializeField]
         GameObject Character;
+
         [SerializeField]
         GameObject Bullet_Axe1;
         [SerializeField]
         GameObject Bullet_Knife1;
         [SerializeField]
         GameObject Bullet_Axe2;
+        [SerializeField]
+        GameObject Bullet_Arrow;
 
         [SerializeField]
         GameObject Weapon_Axe1;
@@ -55,6 +60,8 @@ namespace MoveStopMove.Manager
         GameObject Weapon_Knife1;
         [SerializeField]
         GameObject Weapon_Axe2;
+        [SerializeField]
+        GameObject Weapon_Arrow;
 
         [SerializeField]
         GameObject Hair_Arrow;
@@ -77,32 +84,34 @@ namespace MoveStopMove.Manager
         public GameObject pool;
         
 
-        Dictionary<PoolName, Pool> poolData = new Dictionary<PoolName, Pool>();
+        Dictionary<PoolID, Pool> poolData = new Dictionary<PoolID, Pool>();
         protected override void Awake()
         {
             base.Awake();
-            CreatePool(Character, PoolName.Character, Quaternion.Euler(0, 0, 0), 15);
-            CreatePool(Bullet_Axe1, PoolName.Axe1Bullet, Quaternion.Euler(0, 0, 0));
-            CreatePool(Bullet_Knife1, PoolName.Knife1Bullet, Quaternion.Euler(0, 0, 0));
-            CreatePool(Bullet_Axe2, PoolName.Axe2Bullet, Quaternion.Euler(0, 0, 0));
+            CreatePool(Character, PoolID.Character, Quaternion.Euler(0, 0, 0), 15);
+            CreatePool(Bullet_Axe1, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Bullet_Knife1, PoolID.Bullet_Knife1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Bullet_Axe2, PoolID.Bullet_Axe2, Quaternion.Euler(0, 0, 0));
+            CreatePool(Bullet_Arrow, PoolID.Bullet_Arrow, Quaternion.Euler(0, 0, 0));
 
-            CreatePool(Weapon_Axe1, PoolName.Axe1, Quaternion.Euler(0, 0, 0));
-            CreatePool(Weapon_Knife1, PoolName.Knife1, Quaternion.Euler(0, 0, 0));
-            CreatePool(Weapon_Axe2, PoolName.Axe2, Quaternion.Euler(0, 0, 0));
+            CreatePool(Weapon_Axe1, PoolID.Weapon_Axe1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Weapon_Knife1, PoolID.Weapon_Knife1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Weapon_Axe2, PoolID.Weapon_Axe2, Quaternion.Euler(0, 0, 0));
+            CreatePool(Weapon_Arrow, PoolID.Weapon_Arrow, Quaternion.Euler(0, 0, 0));
 
-            CreatePool(Hair_Arrow, PoolName.Hair_Arrow);
-            CreatePool(Hair_Cowboy, PoolName.Hair_Cowboy);
-            CreatePool(Hair_Headphone, PoolName.Hair_Headphone);
-            CreatePool(Hair_Ear, PoolName.Hair_Ear);
-            CreatePool(Hair_Crown, PoolName.Hair_Crown);
-            CreatePool(Hair_Horn, PoolName.Hair_Horn);
-            CreatePool(Hair_Beard, PoolName.Hair_Beard);
+            CreatePool(Hair_Arrow, PoolID.Hair_Arrow);
+            CreatePool(Hair_Cowboy, PoolID.Hair_Cowboy);
+            CreatePool(Hair_Headphone, PoolID.Hair_Headphone);
+            CreatePool(Hair_Ear, PoolID.Hair_Ear);
+            CreatePool(Hair_Crown, PoolID.Hair_Crown);
+            CreatePool(Hair_Horn, PoolID.Hair_Horn);
+            CreatePool(Hair_Beard, PoolID.Hair_Beard);
 
-            CreatePool(UIItem, PoolName.UIItem);
+            CreatePool(UIItem, PoolID.UIItem);
         }
 
 
-        public void CreatePool(GameObject obj, PoolName namePool, Quaternion quaternion = default, int numObj = 10)
+        public void CreatePool(GameObject obj, PoolID namePool, Quaternion quaternion = default, int numObj = 10)
         {
             if (!poolData.ContainsKey(namePool))
             {
@@ -114,7 +123,7 @@ namespace MoveStopMove.Manager
             }
         }
 
-        public void PushToPool(GameObject obj, PoolName namePool, bool checkContain = true)
+        public void PushToPool(GameObject obj, PoolID namePool, bool checkContain = true)
         {
             if (!poolData.ContainsKey(namePool))
             {
@@ -124,7 +133,7 @@ namespace MoveStopMove.Manager
             poolData[namePool].Push(obj, checkContain);
         }
 
-        public GameObject PopFromPool(PoolName namePool, GameObject obj = null)
+        public GameObject PopFromPool(PoolID namePool, GameObject obj = null)
         {
             if (!poolData.ContainsKey(namePool))
             {

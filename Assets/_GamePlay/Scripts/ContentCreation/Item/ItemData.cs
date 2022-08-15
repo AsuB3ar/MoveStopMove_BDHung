@@ -12,7 +12,7 @@ namespace MoveStopMove.ContentCreation
         public Vector3 scale;
 
         public Sprite icon;
-        public PoolName itemName;
+        public PoolID poolID;
         public UIItemType type;
     }
 }

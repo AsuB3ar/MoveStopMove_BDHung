@@ -16,5 +16,5 @@ MonoBehaviour:
   rotation: {x: 0, y: 0, z: 0}
   scale: {x: 1, y: 1, z: 1}
   icon: {fileID: 21300000, guid: cf082404ffbb18a48868b1ea15f4710c, type: 3}
-  itemName: 1001
+  poolID: 1001
   type: 0

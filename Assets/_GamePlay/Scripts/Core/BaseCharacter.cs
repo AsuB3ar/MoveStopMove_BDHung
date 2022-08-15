@@ -201,9 +201,9 @@ namespace MoveStopMove.Core
             meshPant.material = mat;
             Data.Pant = (int)name;
         }
-        public void ChangeHair(PoolName hair)
+        public void ChangeHair(PoolID hair)
         {
-            if(hair != PoolName.None)
+            if(hair != PoolID.None)
             {
                 GameObject hairObject = PrefabManager.Inst.PopFromPool(hair);
                 hairObject.transform.parent = ContainHairTF;

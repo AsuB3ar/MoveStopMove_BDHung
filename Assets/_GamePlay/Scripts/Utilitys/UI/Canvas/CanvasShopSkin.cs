@@ -16,12 +16,12 @@ public class CanvasShopSkin : UICanvas
     {
         for(int i = 0; i < itemDatas.Count; i++)
         {
-            GameObject uiItem = PrefabManager.Inst.PopFromPool(PoolName.UIItem);
+            GameObject uiItem = PrefabManager.Inst.PopFromPool(PoolID.UIItem);
             uiItem.transform.position = Vector3.zero;
 
             UIItem UIItemScript = Cache.GetUIItem(uiItem);
             UIItemScript.SetIcon(itemDatas[i].icon);
-            UIItemScript.SetData(itemDatas[i].itemName, itemDatas[i].type);
+            UIItemScript.SetData(itemDatas[i].poolID, itemDatas[i].type);
 
             uiItem.transform.SetParent(ContentTF);
 
@@ -48,7 +48,7 @@ public class CanvasShopSkin : UICanvas
         item.OnSelectItem -= OnItemClick;
     }
 
-    public void OnItemClick(PoolName name, UIItemType type)
+    public void OnItemClick(PoolID name, UIItemType type)
     {
         if(type == UIItemType.Hair)
         {

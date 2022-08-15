@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57108dbb4a6e43e4398ee215cfe56bf5, type: 3}
-  m_Name: Hair_Arrow
+  m_Name: Axe2Weapon
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0}
+  position: {x: -0.454, y: 0.053, z: -0.34}
+  rotation: {x: 18.36, y: 317.47, z: 271.05}
   scale: {x: 1, y: 1, z: 1}
-  icon: {fileID: 21300000, guid: 3bfe5a0ac8592b34584eec795ebcc513, type: 3}
-  poolID: 1000
-  type: 0
+  icon: {fileID: 0}
+  poolID: 102
+  type: 2

@@ -41,8 +41,8 @@ namespace MoveStopMove.Manager
         List<Material> pantSkins;
         [SerializeField]
         CameraMove cameraMove;
-        public readonly List<PoolName> hairSkins = new List<PoolName>() { PoolName.Hair_Arrow, PoolName.Hair_Cowboy, PoolName.Hair_Headphone, PoolName.None };
-        public readonly List<PoolName> WeaponNames = new List<PoolName>() { PoolName.Axe1, PoolName.Knife1, PoolName.Axe2 };
+        public readonly List<PoolID> hairSkins = new List<PoolID>() { PoolID.Hair_Arrow, PoolID.Hair_Cowboy, PoolID.Hair_Headphone,PoolID.Hair_Ear, PoolID.Hair_Crown, PoolID.Hair_Horn, PoolID.Hair_Beard ,PoolID.None };
+        public readonly List<PoolID> WeaponNames = new List<PoolID>() { PoolID.Weapon_Axe1, PoolID.Weapon_Knife1, PoolID.Weapon_Axe2, PoolID.Weapon_Arrow };
 
 
         public Material GetMaterial(Color color)
@@ -65,7 +65,7 @@ namespace MoveStopMove.Manager
             return (Color)index;
         }
 
-        public PoolName GetRandomHair()
+        public PoolID GetRandomHair()
         {
             int index = Random.Range(0, hairSkins.Count);
             return hairSkins[index];
@@ -74,7 +74,7 @@ namespace MoveStopMove.Manager
         public BaseWeapon GetRandomWeapon()
         {
             int index = Random.Range(0, WeaponNames.Count);
-            PoolName weaponName = WeaponNames[index];
+            PoolID weaponName = WeaponNames[index];
             GameObject weapon = PrefabManager.Inst.PopFromPool(weaponName);
             return Cache.GetBaseWeapon(weapon);
         }

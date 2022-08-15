@@ -20,7 +20,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         [SerializeField]
         BulletType Type;
         [SerializeField]
-        PoolName poolName;
+        PoolID poolName;
 
         [SerializeField]
         float rotationSpeed = 30f;

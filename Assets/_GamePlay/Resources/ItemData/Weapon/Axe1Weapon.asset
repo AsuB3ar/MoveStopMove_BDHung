@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57108dbb4a6e43e4398ee215cfe56bf5, type: 3}
-  m_Name: KnifeWeapon
+  m_Name: Axe1Weapon
   m_EditorClassIdentifier: 
-  position: {x: -0.25, y: 0.09, z: -0.19}
-  rotation: {x: 18, y: 317, z: 263.3}
+  position: {x: -0.454, y: 0.053, z: -0.34}
+  rotation: {x: 18.36, y: 317.47, z: 271.05}
   scale: {x: 1, y: 1, z: 1}
+  icon: {fileID: 0}
+  poolID: 100
+  type: 2
