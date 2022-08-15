@@ -5,6 +5,8 @@ using UnityEngine;
 namespace MoveStopMove.Manager
 {
     using Utilitys;
+    using Core;
+    using MoveStopMove.ContentCreation.Weapon;
 
     public enum Color
     {
@@ -32,6 +34,7 @@ namespace MoveStopMove.Manager
     }
     public class GameplayManager : Singleton<GameplayManager>
     {
+        public BaseCharacter Player;
         [SerializeField]
         List<Material> materials;
         [SerializeField]
@@ -39,6 +42,7 @@ namespace MoveStopMove.Manager
         [SerializeField]
         CameraMove cameraMove;
         public readonly List<PoolName> hairSkins = new List<PoolName>() { PoolName.Hair_Arrow, PoolName.Hair_Cowboy, PoolName.Hair_Headphone, PoolName.None };
+        public readonly List<PoolName> WeaponNames = new List<PoolName>() { PoolName.Axe1, PoolName.Knife1, PoolName.Axe2 };
 
 
         public Material GetMaterial(Color color)
@@ -65,6 +69,14 @@ namespace MoveStopMove.Manager
         {
             int index = Random.Range(0, hairSkins.Count);
             return hairSkins[index];
+        }
+
+        public BaseWeapon GetRandomWeapon()
+        {
+            int index = Random.Range(0, WeaponNames.Count);
+            PoolName weaponName = WeaponNames[index];
+            GameObject weapon = PrefabManager.Inst.PopFromPool(weaponName);
+            return Cache.GetBaseWeapon(weapon);
         }
 
         public void SetCameraPosition(CameraPosition position)

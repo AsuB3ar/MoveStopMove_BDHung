@@ -5,7 +5,6 @@ using UnityEngine;
 namespace MoveStopMove.Manager
 {
     using Core;
-    using MoveStopMove.ContentCreation.Weapon;
     using Utilitys;
     public class LevelManager : Singleton<LevelManager>,IInit
     {
@@ -65,7 +64,7 @@ namespace MoveStopMove.Manager
             character.transform.localPosition = randomPos;
 
             characterScript.OnInit();
-            characterScript.ChangeWeapon(GetRandomWeapon());
+            characterScript.ChangeWeapon(GameplayManager.Inst.GetRandomWeapon());
             characterScript.OnDie += OnDie;
 
             
@@ -107,12 +106,6 @@ namespace MoveStopMove.Manager
             }
             return new Vector3(vecX, GameConst.INIT_CHARACTER_HEIGHT, vecZ);
         }
-        private BaseWeapon GetRandomWeapon()
-        {
-            int index = Random.Range(0, PrefabManager.Inst.WeaponNames.Count);
-            PoolName weaponName = PrefabManager.Inst.WeaponNames[index];
-            GameObject weapon = PrefabManager.Inst.PopFromPool(weaponName);
-            return Cache.GetBaseWeapon(weapon);
-        }
+        
     }
 }

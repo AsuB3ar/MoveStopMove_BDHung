@@ -9,8 +9,6 @@ namespace MoveStopMove.ContentCreation
     {
         [SerializeField]
         protected ItemData data;
-        [SerializeField]
-        protected PoolName PoolName;
         public void SetTranformData()
         {
             transform.localPosition = data.position;
@@ -21,7 +19,7 @@ namespace MoveStopMove.ContentCreation
 
         public void OnDespawn()
         {
-            PrefabManager.Inst.PushToPool(this.gameObject, PoolName, false);
+            PrefabManager.Inst.PushToPool(this.gameObject, data.itemName, false);
         }
     }
 }

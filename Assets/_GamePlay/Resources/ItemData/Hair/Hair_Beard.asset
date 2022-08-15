@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57108dbb4a6e43e4398ee215cfe56bf5, type: 3}
   m_Name: Hair_Beard
   m_EditorClassIdentifier: 
-  position: {x: 0.05, y: 1.75, z: 0.52}
+  position: {x: 0, y: -0.35, z: 0.45}
   rotation: {x: 0, y: 0, z: 0}
   scale: {x: 1, y: 1, z: 1}
+  icon: {fileID: 21300000, guid: c8cd961319ce3a044983e280fa94f9a7, type: 3}
+  itemName: 1006
+  type: 0

@@ -10,7 +10,7 @@ public enum UIItemType
     Hair = 0,
     Pant = 1
 }
-public class UIItem : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
+public class UIItem : MonoBehaviour
 {
     public event Action<PoolName, UIItemType> OnSelectItem;
     [SerializeField]
@@ -38,18 +38,9 @@ public class UIItem : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler,
         icon.sprite = sprite;
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void SetData(PoolName itemName, UIItemType type)
     {
-      
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        OnItemClicked();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-       
+        this.itemName = itemName;
+        this.type = type;
     }
 }

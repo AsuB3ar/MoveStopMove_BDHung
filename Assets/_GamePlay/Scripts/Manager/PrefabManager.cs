@@ -21,8 +21,13 @@ public enum PoolName
     Hair_Arrow = 1000,
     Hair_Cowboy = 1001,
     Hair_Headphone = 1002,
+    Hair_Ear = 1003,
+    Hair_Crown = 1004,
+    Hair_Horn = 1005,
+    Hair_Beard = 1006,
     #endregion
-    None = 10000
+    None = 10000,
+    UIItem = 10001
 
 }
 namespace MoveStopMove.Manager
@@ -32,22 +37,24 @@ namespace MoveStopMove.Manager
     [DefaultExecutionOrder(-1)]
     public class PrefabManager : Singleton<PrefabManager>
     {
+
         //NOTE:Specific for game,remove to reuse
+        
         [SerializeField]
         GameObject Character;
         [SerializeField]
-        GameObject Axe1Bullet;
+        GameObject Bullet_Axe1;
         [SerializeField]
-        GameObject Knife1Bullet;
+        GameObject Bullet_Knife1;
         [SerializeField]
-        GameObject Axe2Bullet;
+        GameObject Bullet_Axe2;
 
         [SerializeField]
-        GameObject Axe1;
+        GameObject Weapon_Axe1;
         [SerializeField]
-        GameObject Knife1;
+        GameObject Weapon_Knife1;
         [SerializeField]
-        GameObject Axe2;
+        GameObject Weapon_Axe2;
 
         [SerializeField]
         GameObject Hair_Arrow;
@@ -55,27 +62,43 @@ namespace MoveStopMove.Manager
         GameObject Hair_Cowboy;
         [SerializeField]
         GameObject Hair_Headphone;
+        [SerializeField]
+        GameObject Hair_Ear;
+        [SerializeField]
+        GameObject Hair_Crown;
+        [SerializeField]
+        GameObject Hair_Horn;
+        [SerializeField]
+        GameObject Hair_Beard;
 
-        public readonly List<PoolName> WeaponNames = new List<PoolName>() { PoolName.Axe1, PoolName.Knife1, PoolName.Axe2 };
+
         //-----
-
+        public GameObject UIItem;
         public GameObject pool;
+        
+
         Dictionary<PoolName, Pool> poolData = new Dictionary<PoolName, Pool>();
         protected override void Awake()
         {
             base.Awake();
             CreatePool(Character, PoolName.Character, Quaternion.Euler(0, 0, 0), 15);
-            CreatePool(Axe1Bullet, PoolName.Axe1Bullet, Quaternion.Euler(0, 0, 0));
-            CreatePool(Knife1Bullet, PoolName.Knife1Bullet, Quaternion.Euler(0, 0, 0));
-            CreatePool(Axe2Bullet, PoolName.Axe2Bullet, Quaternion.Euler(0, 0, 0));
+            CreatePool(Bullet_Axe1, PoolName.Axe1Bullet, Quaternion.Euler(0, 0, 0));
+            CreatePool(Bullet_Knife1, PoolName.Knife1Bullet, Quaternion.Euler(0, 0, 0));
+            CreatePool(Bullet_Axe2, PoolName.Axe2Bullet, Quaternion.Euler(0, 0, 0));
 
-            CreatePool(Axe1, PoolName.Axe1, Quaternion.Euler(0, 0, 0));
-            CreatePool(Knife1, PoolName.Knife1, Quaternion.Euler(0, 0, 0));
-            CreatePool(Axe2, PoolName.Axe2, Quaternion.Euler(0, 0, 0));
+            CreatePool(Weapon_Axe1, PoolName.Axe1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Weapon_Knife1, PoolName.Knife1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Weapon_Axe2, PoolName.Axe2, Quaternion.Euler(0, 0, 0));
 
             CreatePool(Hair_Arrow, PoolName.Hair_Arrow);
             CreatePool(Hair_Cowboy, PoolName.Hair_Cowboy);
             CreatePool(Hair_Headphone, PoolName.Hair_Headphone);
+            CreatePool(Hair_Ear, PoolName.Hair_Ear);
+            CreatePool(Hair_Crown, PoolName.Hair_Crown);
+            CreatePool(Hair_Horn, PoolName.Hair_Horn);
+            CreatePool(Hair_Beard, PoolName.Hair_Beard);
+
+            CreatePool(UIItem, PoolName.UIItem);
         }
 
 

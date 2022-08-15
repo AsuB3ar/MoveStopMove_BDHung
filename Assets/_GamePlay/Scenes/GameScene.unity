@@ -355,7 +355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba936a12f7e2f5343b19a1592d42a841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
 --- !u!95 &412494949
 Animator:
   serializedVersion: 3
@@ -693,6 +692,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3968126923357204953, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
   m_PrefabInstance: {fileID: 3426766287458366633}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1291635865 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4836112756249147527, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+  m_PrefabInstance: {fileID: 3426766287458366633}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291635859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be47f78c8bde7ca41b7f9679ec26224e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1320481893
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,6 +902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f533c5d595372499e057f7ba69ed67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 1291635865}
   materials:
   - {fileID: 2100000, guid: 4fd1d784530fab648889a9b19c8de20f, type: 2}
   - {fileID: 2100000, guid: dce180f7a630f1b4096268394b3be2da, type: 2}
@@ -956,15 +967,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Character: {fileID: 7335153693828646459, guid: b83f21ee2e98db64aadf2a61bea824a7, type: 3}
-  Axe1Bullet: {fileID: 6022436429646713834, guid: 13ac9a0ebd1debc48934a67c60f2db6f, type: 3}
-  Knife1Bullet: {fileID: 3624077002375939049, guid: 0eb98e3e4dd11b846aec847cd7d7ebee, type: 3}
-  Axe2Bullet: {fileID: 6022436429646713834, guid: 6d1bd9372f78f864f9aaf33e21f5aeb7, type: 3}
-  Axe1: {fileID: 5342148423312906101, guid: 0a300759cfb090e4485c3ac085772aa1, type: 3}
-  Knife1: {fileID: 5515967797501043881, guid: a67aa9b967ed8e34ca238221708e1e5a, type: 3}
-  Axe2: {fileID: 5342148423312906101, guid: a63fe999bb91150459f8041ea4e5e958, type: 3}
+  Bullet_Axe1: {fileID: 6022436429646713834, guid: 13ac9a0ebd1debc48934a67c60f2db6f, type: 3}
+  Bullet_Knife1: {fileID: 3624077002375939049, guid: 0eb98e3e4dd11b846aec847cd7d7ebee, type: 3}
+  Bullet_Axe2: {fileID: 6022436429646713834, guid: 6d1bd9372f78f864f9aaf33e21f5aeb7, type: 3}
+  Weapon_Axe1: {fileID: 5342148423312906101, guid: 0a300759cfb090e4485c3ac085772aa1, type: 3}
+  Weapon_Knife1: {fileID: 5342148423312906101, guid: a63fe999bb91150459f8041ea4e5e958, type: 3}
+  Weapon_Axe2: {fileID: 5515967797501043881, guid: a67aa9b967ed8e34ca238221708e1e5a, type: 3}
   Hair_Arrow: {fileID: 7312259725456167434, guid: 948344e564b2f264d97bdd4752961e39, type: 3}
   Hair_Cowboy: {fileID: 8759169980261381309, guid: 54718cb810362f94aa15148ec2238f2f, type: 3}
   Hair_Headphone: {fileID: 140425126917877817, guid: 4783d54763738f44cb13222e76d49fca, type: 3}
+  Hair_Ear: {fileID: 3856729236474268525, guid: 5aa36223d4bf525448e5d335ea55f972, type: 3}
+  Hair_Crown: {fileID: 6923103723748683159, guid: f3b76edb3526d6e4abca3a253317c5fd, type: 3}
+  Hair_Horn: {fileID: 8226753644670960622, guid: f2e12db11d2337a4a8aec5e0a7598f42, type: 3}
+  Hair_Beard: {fileID: 7173682517394115136, guid: 160c92fb388750441b7fb92e3c733252, type: 3}
+  UIItem: {fileID: 5344068530080740687, guid: 6dd789418a3cf4245be5fe26c29703dd, type: 3}
   pool: {fileID: 7117338696727486318, guid: b572d35da52b1cb459c582254e88fffa, type: 3}
 --- !u!1001 &3426766287458366633
 PrefabInstance:
