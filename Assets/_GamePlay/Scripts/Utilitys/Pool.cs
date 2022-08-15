@@ -50,7 +50,7 @@ namespace Utilitys
             objects.Enqueue(obj);
 
             obj.SetActive(false);
-            obj.transform.parent = mainPool.transform;
+            //obj.transform.parent = mainPool.transform;
             obj.transform.position = Vector3.zero;
         }
 

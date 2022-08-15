@@ -29,7 +29,9 @@ public enum PoolID
     Hair_Beard = 1006,
     #endregion
     None = 10000,
-    UIItem = 10001
+    UIItem = 10001,
+    UITargetIndicator = 10002
+    
 
 }
 namespace MoveStopMove.Manager
@@ -81,6 +83,7 @@ namespace MoveStopMove.Manager
 
         //-----
         public GameObject UIItem;
+        public GameObject UIIndicator;
         public GameObject pool;
         
 
@@ -108,6 +111,7 @@ namespace MoveStopMove.Manager
             CreatePool(Hair_Beard, PoolID.Hair_Beard);
 
             CreatePool(UIItem, PoolID.UIItem);
+            CreatePool(UIIndicator, PoolID.UITargetIndicator);
         }
 
 

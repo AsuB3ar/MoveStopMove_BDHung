@@ -8,6 +8,7 @@ namespace MoveStopMove.Manager
     using Core;
     using MoveStopMove.ContentCreation.Weapon;
 
+    
     public enum Color
     {
         Red = 0,
@@ -33,18 +34,24 @@ namespace MoveStopMove.Manager
         Vantim = 8
     }
     public class GameplayManager : Singleton<GameplayManager>
-    {
+    {       
         public BaseCharacter Player;
+        public Camera PlayerCamera;
+        [SerializeField]
+        CameraMove cameraMove;
         [SerializeField]
         List<Material> materials;
         [SerializeField]
         List<Material> pantSkins;
-        [SerializeField]
-        CameraMove cameraMove;
+        
         public readonly List<PoolID> hairSkins = new List<PoolID>() { PoolID.Hair_Arrow, PoolID.Hair_Cowboy, PoolID.Hair_Headphone,PoolID.Hair_Ear, PoolID.Hair_Crown, PoolID.Hair_Horn, PoolID.Hair_Beard ,PoolID.None };
         public readonly List<PoolID> WeaponNames = new List<PoolID>() { PoolID.Weapon_Axe1, PoolID.Weapon_Knife1, PoolID.Weapon_Axe2, PoolID.Weapon_Arrow };
 
 
+        public UnityEngine.Color GetColor(Color color)
+        {
+            return GetMaterial(color).color;
+        }
         public Material GetMaterial(Color color)
         {
             return materials[(int)color];

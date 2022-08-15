@@ -15,6 +15,7 @@ public static class Cache
 
     private static Dictionary<GameObject, Item> gameObj2Item = new Dictionary<GameObject, Item>();
     private static Dictionary<GameObject, UIItem> gameObj2UIItem = new Dictionary<GameObject, UIItem>();
+    private static Dictionary<GameObject, UITargetIndicator> gameObj2UIIndicator = new Dictionary<GameObject, UITargetIndicator>();
      
     public static List<Vector3> GetCacheList(int hashCode)
     {
@@ -94,5 +95,14 @@ public static class Cache
             gameObj2UIItem.Add(obj, obj.GetComponent<UIItem>());
         }
         return gameObj2UIItem[obj];
+    }
+
+    public static UITargetIndicator GetUIIndicator(GameObject obj)
+    {
+        if (!gameObj2UIIndicator.ContainsKey(obj))
+        {
+            gameObj2UIIndicator.Add(obj, obj.GetComponent<UITargetIndicator>());
+        }
+        return gameObj2UIIndicator[obj];
     }
 }

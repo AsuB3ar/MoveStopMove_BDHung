@@ -11,29 +11,35 @@ namespace MoveStopMove.Manager
         public const int MARGIN = 2;
         public Transform Level;
         public Transform StaticEnvironment;
-
-        private List<BaseCharacter> characters = new List<BaseCharacter>();
         [SerializeField]
         private GameObject Player;
+
+        public List<BaseCharacter> characters = new List<BaseCharacter>();      
         private BaseCharacter PlayerScript;
         private Vector3 position = Vector3.zero;
         [SerializeField]
         private Vector3 size;
 
-        public void OnInit()
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                SpawnCharacter();
-            }
-            PlayerScript.OnInit();
-        }
+        CanvasGameplay gameplay;
 
         protected override void Awake()
         {
             base.Awake();
             PlayerScript = Cache.GetBaseCharacter(Player);
+            gameplay = UIManager.Inst.GetUI(UIID.UICGamePlay) as CanvasGameplay;
+            gameplay.Close();
         }
+
+        public void OnInit()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                gameplay.SubscribeTarget(SpawnCharacter());
+            }
+            PlayerScript.OnInit();
+            
+        }
+      
         private void Start()
         {
             OnInit();
@@ -44,9 +50,10 @@ namespace MoveStopMove.Manager
             character.OnDie -= OnDie;
             characters.Remove(character);
             PrefabManager.Inst.PushToPool(character.gameObject, PoolID.Character);
-            SpawnCharacter();
+
+            gameplay.SubscribeTarget(SpawnCharacter());
         }
-        private void SpawnCharacter()
+        private BaseCharacter SpawnCharacter()
         {
             GameObject character = PrefabManager.Inst.PopFromPool(PoolID.Character);
 
@@ -77,6 +84,8 @@ namespace MoveStopMove.Manager
             characterScript.ChangeHair(hairname);
 
             characters.Add(characterScript);
+            return characterScript;
+                     
         }
 
         private Vector3 GetRandomPositionLevel()

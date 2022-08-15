@@ -57,7 +57,7 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -115,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsDestroyOnClose: 0
   joyStick: {fileID: 393957444027400981}
+  CanvasTF: {fileID: 1300618511076964252}
 --- !u!1001 &520634284625859805
 PrefabInstance:
   m_ObjectHideFlags: 0

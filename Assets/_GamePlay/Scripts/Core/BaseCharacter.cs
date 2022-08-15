@@ -68,6 +68,8 @@ namespace MoveStopMove.Core
         }
         public float Size => Data.Size;
         public float AttackRange => Data.AttackRange;
+        public int Level => Data.Level;
+        public Color Color => (Color)Data.Color;
 
         private void Awake()
         {

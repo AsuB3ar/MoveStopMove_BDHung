@@ -397,6 +397,7 @@ MonoBehaviour:
   Level: {fileID: 435945792}
   StaticEnvironment: {fileID: 914025758}
   Player: {fileID: 1291635859}
+  characters: []
   size: {x: 15, y: 0, z: 15}
 --- !u!1001 &637068355
 PrefabInstance:
@@ -627,6 +628,11 @@ Transform:
   m_Father: {fileID: 435945792}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &1162758034 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1385340233, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+  m_PrefabInstance: {fileID: 3426766287458366633}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1211444975
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,6 +884,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1291635865}
+  PlayerCamera: {fileID: 1162758034}
   materials:
   - {fileID: 2100000, guid: 4fd1d784530fab648889a9b19c8de20f, type: 2}
   - {fileID: 2100000, guid: dce180f7a630f1b4096268394b3be2da, type: 2}
@@ -958,6 +965,7 @@ MonoBehaviour:
   Hair_Horn: {fileID: 8226753644670960622, guid: f2e12db11d2337a4a8aec5e0a7598f42, type: 3}
   Hair_Beard: {fileID: 7173682517394115136, guid: 160c92fb388750441b7fb92e3c733252, type: 3}
   UIItem: {fileID: 5344068530080740687, guid: 6dd789418a3cf4245be5fe26c29703dd, type: 3}
+  UIIndicator: {fileID: 5550999801274606342, guid: ba4bc4d0a50f5724496af4fc14490a61, type: 3}
   pool: {fileID: 7117338696727486318, guid: b572d35da52b1cb459c582254e88fffa, type: 3}
 --- !u!1001 &3426766287458366633
 PrefabInstance:
