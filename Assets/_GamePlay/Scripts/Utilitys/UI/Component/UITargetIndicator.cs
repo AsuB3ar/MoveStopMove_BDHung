@@ -8,12 +8,12 @@ public class UITargetIndicator : MonoBehaviour
 {
     public const float WIDTH = 100;
     public const float HEIGHT = 100;
+
     [SerializeField]
     TMP_Text textLevel;
     [SerializeField]
     Image image;
-
-
+    Vector3 oldPos;
     public void SetLevel(int level)
     {
         textLevel.text = level.ToString();
@@ -23,4 +23,5 @@ public class UITargetIndicator : MonoBehaviour
     {
         image.color = color;
     }
+
 }

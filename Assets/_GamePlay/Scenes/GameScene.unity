@@ -885,6 +885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1291635865}
   PlayerCamera: {fileID: 1162758034}
+  cameraMove: {fileID: 412494947}
   materials:
   - {fileID: 2100000, guid: 4fd1d784530fab648889a9b19c8de20f, type: 2}
   - {fileID: 2100000, guid: dce180f7a630f1b4096268394b3be2da, type: 2}
@@ -904,7 +905,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 5f086210704645849bb06f6c73290132, type: 2}
   - {fileID: 2100000, guid: 3a0efa16f1742d54d8e8eedf8bc40941, type: 2}
   - {fileID: 2100000, guid: 1ef816eabcaee5b4496ae93042764ffd, type: 2}
-  cameraMove: {fileID: 412494947}
 --- !u!1 &2088463781
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,6 +974,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 435945792}
     m_Modifications:
+    - target: {fileID: 1385340233, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: m_Depth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385340233, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385340233, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385340233, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: far clip plane
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385340233, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: near clip plane
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385340233, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385340233, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: m_NormalizedViewPortRect.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385340233, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3968126923357204953, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
       propertyPath: m_Name
       value: Character

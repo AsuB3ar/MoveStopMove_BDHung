@@ -34,6 +34,7 @@ namespace MoveStopMove.Manager
         {
             for (int i = 0; i < 10; i++)
             {
+                //NOTE: UI Target Indicator
                 gameplay.SubscribeTarget(SpawnCharacter());
             }
             PlayerScript.OnInit();
@@ -51,6 +52,7 @@ namespace MoveStopMove.Manager
             characters.Remove(character);
             PrefabManager.Inst.PushToPool(character.gameObject, PoolID.Character);
 
+            //NOTE: UI Target Indicator
             gameplay.SubscribeTarget(SpawnCharacter());
         }
         private BaseCharacter SpawnCharacter()
