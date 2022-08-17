@@ -96,7 +96,8 @@ namespace MoveStopMove.Core
         {
             PhysicModule.SetActive(true);
             transform.localScale = Vector3.one * Data.Size;
-
+            PhysicModule.SetRotation(GameConst.Type.Model, Quaternion.Euler(0, 0, 0));
+            PhysicModule.SetRotation(GameConst.Type.Sensor, Quaternion.Euler(0, 0, 0));
             //TEST: Test Player Have Hp = 10
             if(type == CharacterType.Player)
             {
@@ -119,9 +120,15 @@ namespace MoveStopMove.Core
         public void Reset()
         {
             SetLevel(1);
-            PhysicModule.SetActive(false);
-            transform.localPosition = new Vector3(0, GameConst.INIT_CHARACTER_HEIGHT, 0);
+            SetPosition(new Vector3(0, GameConst.INIT_CHARACTER_HEIGHT, 0));            
             OnInit();
+        }
+
+        public void SetPosition(Vector3 position)
+        {
+            PhysicModule.SetActive(false);
+            transform.localPosition = position;
+            PhysicModule.SetActive(true);
         }
 
         public void SetLevel(int level)
@@ -132,6 +139,9 @@ namespace MoveStopMove.Core
 
         public void OnDespawn()
         {
+
+            if (type == CharacterType.Player) return;
+
             ((CharacterLogicModule)LogicModule).StopStateMachine();
             PrefabManager.Inst.PushToPool(this.gameObject, PoolID.Character);
         }

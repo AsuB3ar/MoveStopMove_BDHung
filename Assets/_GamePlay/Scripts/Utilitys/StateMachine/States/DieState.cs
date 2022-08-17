@@ -30,6 +30,8 @@ namespace Utilitys.AI
         public override void Exit()
         {
             base.Exit();
+            Event.SetBool_Anim(GameConst.ANIM_IS_DEAD, false);
+            Event.SetActive(true);
         }
 
 

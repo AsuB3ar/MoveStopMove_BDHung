@@ -44,7 +44,7 @@ namespace MoveStopMove.Core.Character.LogicSystem
 
         public void StartStateMachine()
         {
-            StateMachine.Start(State.Idle);          
+            StateMachine.Start(State.Idle);
         }
 
         public void StopStateMachine()

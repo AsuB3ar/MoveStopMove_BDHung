@@ -28,14 +28,17 @@ public class CanvasShopSkin : UICanvas
             Subscribe(UIItemScript);
         }
     }
-
+    public override void Open()
+    {
+        base.Open();
+        GameplayManager.Inst.SetCameraPosition(CameraPosition.ShopSkin);
+    }
     public void CloseButton()
     {
         UIManager.Inst.OpenUI(UIID.UICMainMenu);
-        GameplayManager.Inst.SetCameraPosition(CameraPosition.MainMenu);
         Close();
     }
-  
+    
     public void Subscribe(UIItem item)
     {
         items.Add(item);
@@ -52,7 +55,7 @@ public class CanvasShopSkin : UICanvas
     {
         if(type == UIItemType.Hair)
         {
-            GameplayManager.Inst.Player.ChangeHair(name);
+            GameplayManager.Inst.PlayerScript.ChangeHair(name);
         }
     }
 }

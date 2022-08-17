@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilitys.Input;
+using TMPro;
 
 public class CanvasGameplay : UICanvas
 {
@@ -17,16 +18,17 @@ public class CanvasGameplay : UICanvas
 
     public JoyStick joyStick;
     [SerializeField]
-    Transform CanvasIndicatorTF;
+    Transform canvasIndicatorTF;
+    [SerializeField]
+    TMP_Text remainingPlayersNum;
     Dictionary<BaseCharacter, UITargetIndicator> indicators = new Dictionary<BaseCharacter, UITargetIndicator>();
     List<BaseCharacter> characters = new List<BaseCharacter>();
     Camera playerCamera;
 
-   
-
     private void Start()
     {
         playerCamera = GameplayManager.Inst.PlayerCamera;
+        SubscribeTarget(GameplayManager.Inst.PlayerScript);
     }
     public void FixedUpdate()
     {
@@ -51,7 +53,10 @@ public class CanvasGameplay : UICanvas
 
         }
     }
-
+    public void SetRemainingPlayerNumber(int num)
+    {
+        remainingPlayersNum.text = num.ToString();
+    }
     public void SubscribeTarget(BaseCharacter character)
     {
         if (character == null)
@@ -62,8 +67,7 @@ public class CanvasGameplay : UICanvas
 
         //indicatorScript.SetColor(new UnityEngine.Color(1f, 107f/255, 107f/255, 1f));
         indicatorScript.SetColor(GameplayManager.Inst.GetColor(character.Color));
-        uiIndicator.transform.SetParent(CanvasIndicatorTF);
-        character.OnDie += UnsubcribeTarget;
+        uiIndicator.transform.SetParent(canvasIndicatorTF);
         indicators.Add(character, indicatorScript);
         characters.Add(character);
     }
@@ -71,12 +75,17 @@ public class CanvasGameplay : UICanvas
     public void UnsubcribeTarget(BaseCharacter character)
     {
         PrefabManager.Inst.PushToPool(indicators[character].gameObject, PoolID.UITargetIndicator);
-        character.OnDie -= UnsubcribeTarget;
         indicators.Remove(character);
         characters.Remove(character);
     }
     public void SettingButton()
     {
         UIManager.Inst.OpenUI(UIID.UICSetting);
+    }
+
+    public override void Open()
+    {
+        base.Open();
+        GameplayManager.Inst.SetCameraPosition(CameraPosition.Gameplay);
     }
 }

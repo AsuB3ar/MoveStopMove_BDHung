@@ -17,7 +17,7 @@ namespace Utilitys.AI
         {
             base.Enter();
             //TODO: Play Animation 
-            Event.SetVelocity(Vector3.zero);
+            Event.SetVelocity(Vector3.zero);           
             Event.SetBool_Anim(GameConst.ANIM_IS_IDLE, true);
         }
 

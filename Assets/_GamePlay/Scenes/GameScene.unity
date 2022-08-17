@@ -311,11 +311,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Level: {fileID: 435945792}
   StaticEnvironment: {fileID: 914025758}
-  characters: []
   difficulty: 3
   data: {fileID: 11400000, guid: 544fd8abc0aed9c489c61a7390387f8f, type: 2}
   Ground: {fileID: 295663988}
-  Player: {fileID: 1291635859}
+  position: {x: 0, y: 0, z: 0}
 --- !u!1001 &637068355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -800,7 +799,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f533c5d595372499e057f7ba69ed67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1291635865}
+  Player: {fileID: 1291635859}
+  PlayerScript: {fileID: 1291635865}
   PlayerCamera: {fileID: 1162758034}
   cameraMove: {fileID: 412494947}
   materials:
@@ -896,14 +896,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ground
       objectReference: {fileID: 0}
-    - target: {fileID: 1325490468756289826, guid: d7cc14fc77a68eb43b070458034aa5f2, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 17a6da0eee971d0489ea0dcc2b4bf157, type: 2}
-    - target: {fileID: 1325490468756289827, guid: d7cc14fc77a68eb43b070458034aa5f2, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 1325490468756289836, guid: d7cc14fc77a68eb43b070458034aa5f2, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -914,7 +906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1325490468756289836, guid: d7cc14fc77a68eb43b070458034aa5f2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -12.6
       objectReference: {fileID: 0}
     - target: {fileID: 1325490468756289836, guid: d7cc14fc77a68eb43b070458034aa5f2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -988,6 +980,10 @@ PrefabInstance:
     - target: {fileID: 1385340233, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 12309100090982357, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5686275
       objectReference: {fileID: 0}
     - target: {fileID: 3968126923357204953, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
       propertyPath: m_Name

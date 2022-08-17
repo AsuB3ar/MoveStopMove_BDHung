@@ -27,6 +27,8 @@ namespace Utilitys.AI
         public bool Report = false;
         public void Start(BaseState<P,D> initState)
         {
+            if (CurrentState != null) CurrentState.Exit();
+
             CurrentState = initState;
             CurrentState.Enter();
             IsStarted = true;

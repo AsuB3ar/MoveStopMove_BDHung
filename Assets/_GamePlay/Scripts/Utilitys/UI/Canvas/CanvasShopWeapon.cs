@@ -29,6 +29,12 @@ public class CanvasShopWeapon : UICanvas
             Subscribe(UIItemScript);
         }
     }
+
+    public override void Open()
+    {
+        base.Open();
+        GameplayManager.Inst.SetCameraPosition(CameraPosition.ShopWeapon);
+    }
     public void Subscribe(UIItem item)
     {
         items.Add(item);
@@ -46,7 +52,7 @@ public class CanvasShopWeapon : UICanvas
         if (type == UIItemType.Weapon)
         {
             GameObject weapon = PrefabManager.Inst.PopFromPool(name);
-            GameplayManager.Inst.Player.ChangeWeapon(Cache.GetBaseWeapon(weapon));
+            GameplayManager.Inst.PlayerScript.ChangeWeapon(Cache.GetBaseWeapon(weapon));
         }
     }
 

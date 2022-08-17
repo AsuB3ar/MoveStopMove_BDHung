@@ -27,12 +27,15 @@ public class CanvasVictory : UICanvas
 
     public void NextLevelButton()
     {
-        LevelManager.Inst.OpenLevel(currentLevel);
+        UIManager.Inst.OpenUI(UIID.UICGamePlay);
+        LevelManager.Inst.OpenLevel(currentLevel + 1);
         Close();
     }
 
     public void PlayAgainButton()
     {
-
+        UIManager.Inst.OpenUI(UIID.UICGamePlay);
+        LevelManager.Inst.OpenLevel(currentLevel);
+        Close();
     }
 }

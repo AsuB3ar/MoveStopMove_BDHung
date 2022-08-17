@@ -34,8 +34,9 @@ namespace MoveStopMove.Manager
         Vantim = 8
     }
     public class GameplayManager : Singleton<GameplayManager>
-    {       
-        public BaseCharacter Player;
+    {
+        public GameObject Player;
+        public BaseCharacter PlayerScript;
         public Camera PlayerCamera;
         [SerializeField]
         CameraMove cameraMove;
