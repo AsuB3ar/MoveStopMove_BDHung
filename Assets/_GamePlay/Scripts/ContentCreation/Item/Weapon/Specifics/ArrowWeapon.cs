@@ -46,10 +46,10 @@ namespace MoveStopMove.ContentCreation.Weapon
                 bulletScript.OnFire(direction, range, Character);
 
                 BaseBullet bulletScript1 = Cache.GetBaseBullet(bullet1);
-                bulletScript1.OnFire(direction1.normalized, range, Character);
+                bulletScript1.OnFire(direction1, range, Character);
 
                 BaseBullet bulletScript2 = Cache.GetBaseBullet(bullet2);
-                bulletScript2.OnFire(direction2.normalized, range, Character);
+                bulletScript2.OnFire(direction2, range, Character);
             }        
         }
     }

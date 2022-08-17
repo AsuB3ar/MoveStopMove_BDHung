@@ -30,7 +30,8 @@ public enum PoolID
     #endregion
     None = 10000,
     UIItem = 10001,
-    UITargetIndicator = 10002
+    UITargetIndicator = 10002,
+    Obstance = 10003
     
 
 }
@@ -46,7 +47,7 @@ namespace MoveStopMove.Manager
         
         [SerializeField]
         GameObject Character;
-
+        #region Bullet
         [SerializeField]
         GameObject Bullet_Axe1;
         [SerializeField]
@@ -55,7 +56,8 @@ namespace MoveStopMove.Manager
         GameObject Bullet_Axe2;
         [SerializeField]
         GameObject Bullet_Arrow;
-
+        #endregion
+        #region Weapon
         [SerializeField]
         GameObject Weapon_Axe1;
         [SerializeField]
@@ -64,7 +66,8 @@ namespace MoveStopMove.Manager
         GameObject Weapon_Axe2;
         [SerializeField]
         GameObject Weapon_Arrow;
-
+        #endregion
+        #region Hair
         [SerializeField]
         GameObject Hair_Arrow;
         [SerializeField]
@@ -79,12 +82,16 @@ namespace MoveStopMove.Manager
         GameObject Hair_Horn;
         [SerializeField]
         GameObject Hair_Beard;
-
-
+        #endregion
+        [SerializeField]
+        GameObject Obstance;
         //-----
-        public GameObject UIItem;
-        public GameObject UIIndicator;
-        public GameObject pool;
+        [SerializeField]
+        GameObject UIItem;
+        [SerializeField]
+        GameObject UIIndicator;
+        [SerializeField]
+        GameObject pool;
         
 
         Dictionary<PoolID, Pool> poolData = new Dictionary<PoolID, Pool>();
@@ -112,6 +119,7 @@ namespace MoveStopMove.Manager
 
             CreatePool(UIItem, PoolID.UIItem);
             CreatePool(UIIndicator, PoolID.UITargetIndicator);
+            CreatePool(Obstance, PoolID.Obstance);
         }
 
 

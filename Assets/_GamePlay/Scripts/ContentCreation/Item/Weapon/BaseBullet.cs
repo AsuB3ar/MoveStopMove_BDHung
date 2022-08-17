@@ -53,7 +53,6 @@ namespace MoveStopMove.ContentCreation.Weapon
             {
                 range -= lastSpeed;
             }
-            
         }
         public void OnHit(BaseCharacter character)
         {
@@ -72,8 +71,8 @@ namespace MoveStopMove.ContentCreation.Weapon
 
         public void OnFire(Vector3 direction,float range,BaseCharacter parentCharacter)
         {
-            this.direction = direction;
-            this.direction.y = 0;
+            direction.y = 0;
+            this.direction = direction.normalized;          
             this.range = range - lastSpeed * 6;
             this.parentCharacter = parentCharacter;
 

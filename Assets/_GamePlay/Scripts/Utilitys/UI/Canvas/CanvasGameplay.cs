@@ -17,7 +17,7 @@ public class CanvasGameplay : UICanvas
 
     public JoyStick joyStick;
     [SerializeField]
-    Transform CanvasTF;
+    Transform CanvasIndicatorTF;
     Dictionary<BaseCharacter, UITargetIndicator> indicators = new Dictionary<BaseCharacter, UITargetIndicator>();
     List<BaseCharacter> characters = new List<BaseCharacter>();
     Camera playerCamera;
@@ -54,12 +54,15 @@ public class CanvasGameplay : UICanvas
 
     public void SubscribeTarget(BaseCharacter character)
     {
+        if (character == null)
+            return;
+
         GameObject uiIndicator = PrefabManager.Inst.PopFromPool(PoolID.UITargetIndicator);
         UITargetIndicator indicatorScript = Cache.GetUIIndicator(uiIndicator);
 
         //indicatorScript.SetColor(new UnityEngine.Color(1f, 107f/255, 107f/255, 1f));
         indicatorScript.SetColor(GameplayManager.Inst.GetColor(character.Color));
-        uiIndicator.transform.SetParent(CanvasTF);
+        uiIndicator.transform.SetParent(CanvasIndicatorTF);
         character.OnDie += UnsubcribeTarget;
         indicators.Add(character, indicatorScript);
         characters.Add(character);
@@ -75,19 +78,5 @@ public class CanvasGameplay : UICanvas
     public void SettingButton()
     {
         UIManager.Inst.OpenUI(UIID.UICSetting);
-    }
-
-    public void FailButton()
-    {
-        UIManager.Inst.OpenUI(UIID.UICFail);
-
-        Close();
-    }
-
-    public void VictoryButton()
-    {
-        UIManager.Inst.OpenUI<CanvasVictory>(UIID.UICVictory).OnInitData(Random.Range(0, 100));
-
-        Close();
     }
 }

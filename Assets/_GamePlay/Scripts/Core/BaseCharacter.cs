@@ -116,11 +116,24 @@ namespace MoveStopMove.Core
                 ((CharacterAI)NavigationModule).StartStateMachine();
             }
         }
+        public void Reset()
+        {
+            SetLevel(1);
+            PhysicModule.SetActive(false);
+            transform.localPosition = new Vector3(0, GameConst.INIT_CHARACTER_HEIGHT, 0);
+            OnInit();
+        }
+
+        public void SetLevel(int level)
+        {
+            Data.Level = level;
+            transform.localScale = Vector3.one * Data.Size;
+        }
 
         public void OnDespawn()
         {
-            OnDie?.Invoke(this);
             ((CharacterLogicModule)LogicModule).StopStateMachine();
+            PrefabManager.Inst.PushToPool(this.gameObject, PoolID.Character);
         }
         protected virtual void OnEnable()
         {
@@ -240,7 +253,7 @@ namespace MoveStopMove.Core
             Data.Hp -= damage;
             if(Data.Hp <= 0)
             {
-                timerDie.Start(GameConst.ANIM_IS_DEAD_TIME + 2f, 0);
+                timerDie.Start(GameConst.ANIM_IS_DEAD_TIME, 0);
                 if (type == CharacterType.Enemy)
                 {
                     ((CharacterAI)NavigationModule).StopStateMachine();
@@ -260,7 +273,8 @@ namespace MoveStopMove.Core
 
         private void Die()
         {
-            OnDespawn();
+            OnDie?.Invoke(this);
+            timerDie.Start(2f, 1);
         }
 
         private void TimerEvent(int code)
@@ -268,6 +282,10 @@ namespace MoveStopMove.Core
             if(code == 0)
             {
                 Die();
+            }
+            else if(code == 1)
+            {
+                OnDespawn();             
             }
         }
         

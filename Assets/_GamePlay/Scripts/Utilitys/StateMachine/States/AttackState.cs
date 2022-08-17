@@ -49,7 +49,7 @@ namespace Utilitys.AI
             }
             else if(timeFrames == 12)
             {
-                Event.DealDamage(direction.normalized, Data.CharacterData.AttackRange);
+                Event.DealDamage(direction, Data.CharacterData.AttackRange);
             }
 
             timeFrames++;

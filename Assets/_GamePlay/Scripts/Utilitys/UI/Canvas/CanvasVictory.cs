@@ -2,20 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
+using MoveStopMove.Manager;
 public class CanvasVictory : UICanvas
 {
-    public Text text;
+    public TMP_Text score_txt;
+    public int currentLevel = 1;
 
-    public void OnInitData(int data)
+    public void SetScore(int score)
     {
-        text.text = data.ToString();
+        score_txt.text = score.ToString();
+    }
+    public void SetCurrentLevel(int currentLevel)
+    {
+        this.currentLevel = currentLevel;
     }
 
     public void CloseButton()
     {
         UIManager.Inst.OpenUI(UIID.UICMainMenu);
-
         Close();
+    }
+
+    public void NextLevelButton()
+    {
+        LevelManager.Inst.OpenLevel(currentLevel);
+        Close();
+    }
+
+    public void PlayAgainButton()
+    {
+
     }
 }
