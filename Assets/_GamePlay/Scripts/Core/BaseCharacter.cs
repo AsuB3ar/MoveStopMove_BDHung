@@ -101,7 +101,7 @@ namespace MoveStopMove.Core
             //TEST: Test Player Have Hp = 10
             if(type == CharacterType.Player)
             {
-                Data.Hp = 10;
+                Data.Hp = 1;
             }
             else
             {
