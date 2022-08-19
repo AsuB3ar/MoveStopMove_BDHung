@@ -33,6 +33,7 @@ namespace MoveStopMove.Manager
         Skull = 7,
         Vantim = 8
     }
+    [DefaultExecutionOrder(-2)]
     public class GameplayManager : Singleton<GameplayManager>
     {
         public GameObject Player;

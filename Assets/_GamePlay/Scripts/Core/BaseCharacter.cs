@@ -22,6 +22,7 @@ namespace MoveStopMove.Core
     public class BaseCharacter : MonoBehaviour,IInit,IDespawn
     {
         public event Action<BaseCharacter> OnDie;
+        protected VisualEffectController VFX_Hit;
         [SerializeField]
         protected SkinnedMeshRenderer meshCharacter;
         [SerializeField]
@@ -71,6 +72,7 @@ namespace MoveStopMove.Core
         public int Level => Data.Level;
         public Color Color => (Color)Data.Color;
 
+        
         private void Awake()
         {
             WorldInterfaceSystem = new CharacterWorldInterfaceSystem(WorldInterfaceModule);
@@ -90,6 +92,20 @@ namespace MoveStopMove.Core
                 Data.Weapon = (int)Weapon.Name;
             }
             
+        }
+
+        private void Start()
+        {
+            if(type == CharacterType.Player)
+            {
+                VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
+                
+                VFX_Hit.gameObject.transform.parent = transform;
+                VFX_Hit.gameObject.transform.localPosition = Vector3.up * 0.5f;
+                VFX_Hit.gameObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                VFX_Hit.gameObject.transform.localScale = Vector3.one * 0.3f;
+                VFX_Hit.Stop();
+            }
         }
 
         public void OnInit()
@@ -168,6 +184,16 @@ namespace MoveStopMove.Core
             #endregion           
             
             timerDie.TimeOut1 += TimerEvent;
+
+            if (type == CharacterType.Enemy)
+            {
+                VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
+                VFX_Hit.gameObject.transform.parent = transform;
+                VFX_Hit.gameObject.transform.localPosition = Vector3.up * 0.5f;
+                VFX_Hit.gameObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                VFX_Hit.gameObject.transform.localScale = Vector3.one * 0.4f;
+                VFX_Hit.Stop();
+            }
         }
 
         protected virtual void OnDisable()
@@ -193,6 +219,11 @@ namespace MoveStopMove.Core
             #endregion
             
             timerDie.TimeOut1 -= TimerEvent;
+
+            if (type == CharacterType.Enemy)
+            {
+                VisualEffectManager.Inst.PushToPool(VFX_Hit.gameObject, VisualEffect.VFX_Hit);
+            }
         }
 
         protected virtual void Update()
@@ -218,6 +249,7 @@ namespace MoveStopMove.Core
             Material mat = GameplayManager.Inst.GetMaterial(color);
             meshCharacter.material = mat;
             Data.Color = (int)color;
+            VFX_Hit.SetColor(GameplayManager.Inst.GetColor(Color));
         }
 
         public void ChangePant(PantSkin name)
@@ -261,6 +293,7 @@ namespace MoveStopMove.Core
         public void TakeDamage(int damage)
         {
             Data.Hp -= damage;
+            VFX_Hit.Play();
             if(Data.Hp <= 0)
             {
                 timerDie.Start(GameConst.ANIM_IS_DEAD_TIME, 0);

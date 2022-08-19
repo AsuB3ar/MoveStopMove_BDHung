@@ -8,7 +8,6 @@ namespace MoveStopMove.Core.Character.NavigationSystem
     using Utilitys;
     public class InputModule : AbstractNavigationModule
     {
-        [SerializeField]
         JoyStick joyStick;
         Vector2 moveDirection = Vector2.zero;
         private void Start()
