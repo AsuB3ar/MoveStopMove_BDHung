@@ -23,6 +23,8 @@ namespace MoveStopMove.Core
     {
         public event Action<BaseCharacter> OnDie;
         protected VisualEffectController VFX_Hit;
+        protected VisualEffectController VFX_AddStatus;
+
         [SerializeField]
         protected SkinnedMeshRenderer meshCharacter;
         [SerializeField]
@@ -85,6 +87,7 @@ namespace MoveStopMove.Core
             WorldInterfaceSystem.SetCharacterInformation(Data);
             NavigationSystem.SetCharacterInformation(transform, SensorTF, GetInstanceID());
 
+
             //NOTE: When change wepon need to set this line of code
             if(Weapon != null)
             {
@@ -99,12 +102,11 @@ namespace MoveStopMove.Core
             if(type == CharacterType.Player)
             {
                 VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
-                
-                VFX_Hit.gameObject.transform.parent = transform;
-                VFX_Hit.gameObject.transform.localPosition = Vector3.up * 0.5f;
-                VFX_Hit.gameObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
-                VFX_Hit.gameObject.transform.localScale = Vector3.one * 0.3f;
-                VFX_Hit.Stop();
+                VFX_AddStatus = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_AddStatus));
+                VFX_Hit.SetColor(GameplayManager.Inst.GetColor(Color.Red));
+
+                VFX_Hit.Init(transform, Vector3.up * 0.5f, Quaternion.Euler(Vector3.zero), Vector3.one * 0.3f);
+                VFX_AddStatus.Init(transform, Vector3.up * -0.5f, Quaternion.Euler(-90, 0, 0), Vector3.one);
             }
         }
 
@@ -117,7 +119,7 @@ namespace MoveStopMove.Core
             //TEST: Test Player Have Hp = 10
             if(type == CharacterType.Player)
             {
-                Data.Hp = 1;
+                Data.Hp = 10;
             }
             else
             {
@@ -188,11 +190,10 @@ namespace MoveStopMove.Core
             if (type == CharacterType.Enemy)
             {
                 VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
-                VFX_Hit.gameObject.transform.parent = transform;
-                VFX_Hit.gameObject.transform.localPosition = Vector3.up * 0.5f;
-                VFX_Hit.gameObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
-                VFX_Hit.gameObject.transform.localScale = Vector3.one * 0.4f;
-                VFX_Hit.Stop();
+                VFX_AddStatus = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_AddStatus));
+                VFX_Hit.Init(transform, Vector3.up * 0.5f, Quaternion.Euler(Vector3.zero), Vector3.one * 0.3f);
+                VFX_AddStatus.Init(transform, Vector3.up * -0.5f, Quaternion.Euler(-90, 0, 0), Vector3.one);
+                
             }
         }
 
@@ -311,7 +312,8 @@ namespace MoveStopMove.Core
 
             //TODO: Increase Size of character
             //TODO: Increase Size of Attack Range Indicator
-            PhysicModule.SetScale(GameConst.Type.Character, 1.1f);                        
+            PhysicModule.SetScale(GameConst.Type.Character, 1.1f);
+            VFX_AddStatus.Play();
         }
 
         private void Die()

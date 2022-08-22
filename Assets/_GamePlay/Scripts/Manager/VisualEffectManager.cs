@@ -8,6 +8,7 @@ namespace MoveStopMove.Manager
     public enum VisualEffect
     {
         VFX_Hit = 0,
+        VFX_AddStatus = 1,
     }
     [DefaultExecutionOrder(-1)]
     public class VisualEffectManager : Singleton<VisualEffectManager>
@@ -16,6 +17,8 @@ namespace MoveStopMove.Manager
 
         [SerializeField]
         GameObject hitEffect;
+        [SerializeField]
+        GameObject addStatusEffect;
 
         [SerializeField]
         GameObject pool;
@@ -24,6 +27,7 @@ namespace MoveStopMove.Manager
         {
             base.Awake();
             CreatePool(hitEffect, VisualEffect.VFX_Hit);
+            CreatePool(addStatusEffect, VisualEffect.VFX_AddStatus);
         }
 
 

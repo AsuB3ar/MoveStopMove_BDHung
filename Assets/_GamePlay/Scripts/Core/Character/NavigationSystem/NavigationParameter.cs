@@ -7,10 +7,10 @@ namespace MoveStopMove.Core.Character.NavigationSystem
     using MoveStopMove.Core.Data;
     public class NavigationParameter : AbstractParameterSystem
     {
-        public Transform PlayerTF;
+        public Transform CharacterTF;
         public Transform SensorTF;
         public CharacterData CharacterData;
-        public int PlayerInstanceID;
+        public int CharacterInstanceID;
 
         public bool IsGrounded = false;
         public bool IsHaveGround = false;

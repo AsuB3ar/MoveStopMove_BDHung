@@ -23,11 +23,12 @@ namespace MoveStopMove.Core.Character.NavigationSystem
             Parameter.CharacterPositions = Data.CharacterPositions;
         }
 
-        public void SetCharacterInformation(Transform Player,Transform SensorTF ,int PlayerInstanceID)
+        public void SetCharacterInformation(Transform Character,Transform SensorTF ,int PlayerInstanceID)
         {
-            Parameter.PlayerTF = Player;
-            Parameter.PlayerInstanceID = PlayerInstanceID;
+            Parameter.CharacterTF = Character;
+            Parameter.CharacterInstanceID = PlayerInstanceID;
             Parameter.SensorTF = SensorTF;
+            
         }
 
         public void SetCharacterData(CharacterData CharacterData)

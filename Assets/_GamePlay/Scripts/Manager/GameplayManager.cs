@@ -36,7 +36,7 @@ namespace MoveStopMove.Manager
     [DefaultExecutionOrder(-2)]
     public class GameplayManager : Singleton<GameplayManager>
     {
-        public GameObject Player;
+        public GameObject Player => PlayerScript.gameObject;
         public BaseCharacter PlayerScript;
         public Camera PlayerCamera;
         [SerializeField]

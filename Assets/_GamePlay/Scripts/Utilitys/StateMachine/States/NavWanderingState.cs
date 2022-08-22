@@ -6,6 +6,7 @@ namespace Utilitys.AI
 {
     using MoveStopMove.Core.Character.NavigationSystem;
     using Utilitys.Timer;
+    using MoveStopMove.Manager;
     public class NavWanderingState : BaseState<NavigationParameter,NavigationData>
     {
         STimer timer = new STimer();
@@ -77,7 +78,9 @@ namespace Utilitys.AI
             Vector2 newDirection;
             if (value < 3.5)
             {
-                newDirection = MathHelper.GetRandomDirection();
+                Vector3 direction = GameplayManager.Inst.Player.transform.position - Parameter.CharacterTF.position;
+                float angle = Vector3.SignedAngle(Vector3.forward, direction, Vector3.up) + 90;
+                newDirection = MathHelper.GetRandomDirection(angle - 90,angle + 90);
             }
             else
             {
