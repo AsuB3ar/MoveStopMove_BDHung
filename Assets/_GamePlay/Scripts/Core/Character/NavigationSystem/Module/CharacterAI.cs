@@ -41,6 +41,7 @@ namespace MoveStopMove.Core.Character.NavigationSystem
         public void StopStateMachine()
         {
             StateMachine.Stop();
+            Data.MoveDirection = Vector3.zero;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoveStopMove.ContentCreation;
+using Utilitys;
 public static class Cache 
 {
     private static Dictionary<int, List<Vector3>> hashCodeToList = new Dictionary<int, List<Vector3>>();
@@ -17,6 +18,7 @@ public static class Cache
     private static Dictionary<GameObject, UIItem> gameObj2UIItem = new Dictionary<GameObject, UIItem>();
     private static Dictionary<GameObject, UITargetIndicator> gameObj2UIIndicator = new Dictionary<GameObject, UITargetIndicator>();
     private static Dictionary<GameObject, VisualEffectController> gameObj2VisualEffectController = new Dictionary<GameObject, VisualEffectController>();
+    private static Dictionary<GameObject, AudioSource> gameObj2AudioSource = new Dictionary<GameObject, AudioSource>();
      
     public static List<Vector3> GetCacheList(int hashCode)
     {
@@ -114,5 +116,14 @@ public static class Cache
             gameObj2VisualEffectController.Add(obj, obj.GetComponent<VisualEffectController>());
         }
         return gameObj2VisualEffectController[obj];
+    }
+
+    public static AudioSource GetAudioSource(GameObject obj)
+    {
+        if (!gameObj2AudioSource.ContainsKey(obj))
+        {
+            gameObj2AudioSource.Add(obj, obj.GetComponent<AudioSource>());
+        }
+        return gameObj2AudioSource[obj];
     }
 }

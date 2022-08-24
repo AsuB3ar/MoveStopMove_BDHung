@@ -5,6 +5,7 @@ using UnityEngine;
 namespace MoveStopMove.Core
 {
     using Manager;
+    using Utilitys;
     using Utilitys.Timer;
     using MoveStopMove.Core.Data;
     using MoveStopMove.Core.Character.WorldInterfaceSystem;
@@ -74,7 +75,8 @@ namespace MoveStopMove.Core
         public int Level => Data.Level;
         public Color Color => (Color)Data.Color;
 
-        
+        public bool IsRun => ((CharacterAI)NavigationModule).StateMachine.IsStarted;
+
         private void Awake()
         {
             WorldInterfaceSystem = new CharacterWorldInterfaceSystem(WorldInterfaceModule);
@@ -119,7 +121,7 @@ namespace MoveStopMove.Core
             //TEST: Test Player Have Hp = 10
             if(type == CharacterType.Player)
             {
-                Data.Hp = 10;
+                Data.Hp = 1;
             }
             else
             {
@@ -130,30 +132,9 @@ namespace MoveStopMove.Core
 
             ((CharacterLogicModule)LogicModule).StartStateMachine();
 
-            if (type == CharacterType.Enemy)
-            {
-                ((CharacterAI)NavigationModule).StartStateMachine();
-            }
+            
         }
-        public void Reset()
-        {
-            SetLevel(1);
-            SetPosition(new Vector3(0, GameConst.INIT_CHARACTER_HEIGHT, 0));            
-            OnInit();
-        }
-
-        public void SetPosition(Vector3 position)
-        {
-            PhysicModule.SetActive(false);
-            transform.localPosition = position;
-            PhysicModule.SetActive(true);
-        }
-
-        public void SetLevel(int level)
-        {
-            Data.Level = level;
-            transform.localScale = Vector3.one * Data.Size;
-        }
+        
 
         public void OnDespawn()
         {
@@ -161,7 +142,24 @@ namespace MoveStopMove.Core
             if (type == CharacterType.Player) return;
 
             ((CharacterLogicModule)LogicModule).StopStateMachine();
+
             PrefabManager.Inst.PushToPool(this.gameObject, PoolID.Character);
+        }
+
+        public void Run()
+        {
+            if (type == CharacterType.Enemy)
+            {
+                ((CharacterAI)NavigationModule).StartStateMachine();
+            }
+        }
+
+        public void Stop()
+        {
+            if (type == CharacterType.Enemy)
+            {
+                ((CharacterAI)NavigationModule).StopStateMachine();
+            }
         }
         protected virtual void OnEnable()
         {
@@ -226,7 +224,25 @@ namespace MoveStopMove.Core
                 VisualEffectManager.Inst.PushToPool(VFX_Hit.gameObject, VisualEffect.VFX_Hit);
             }
         }
+        public void Reset()
+        {
+            SetLevel(1);
+            SetPosition(new Vector3(0, GameConst.INIT_CHARACTER_HEIGHT, 0));
+            OnInit();
+        }
 
+        public void SetPosition(Vector3 position)
+        {
+            PhysicModule.SetActive(false);
+            transform.localPosition = position;
+            PhysicModule.SetActive(true);
+        }
+
+        public void SetLevel(int level)
+        {
+            Data.Level = level;
+            transform.localScale = Vector3.one * Data.Size;
+        }
         protected virtual void Update()
         {
             WorldInterfaceSystem.Run();
@@ -295,8 +311,10 @@ namespace MoveStopMove.Core
         {
             Data.Hp -= damage;
             VFX_Hit.Play();
+            SoundManager.Inst.PlaySound(SoundManager.Sound.Character_Hit,transform.position);
             if(Data.Hp <= 0)
             {
+                SoundManager.Inst.PlaySound(SoundManager.Inst.GetRandomDieSound(), transform.position);
                 timerDie.Start(GameConst.ANIM_IS_DEAD_TIME, 0);
                 if (type == CharacterType.Enemy)
                 {
@@ -312,6 +330,7 @@ namespace MoveStopMove.Core
 
             //TODO: Increase Size of character
             //TODO: Increase Size of Attack Range Indicator
+            SoundManager.Inst.PlaySound(SoundManager.Sound.Character_SizeUp, transform.position);
             PhysicModule.SetScale(GameConst.Type.Character, 1.1f);
             VFX_AddStatus.Play();
         }

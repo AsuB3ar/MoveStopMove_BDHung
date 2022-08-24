@@ -41,7 +41,7 @@ namespace Utilitys.AI
 
         public void Stop()
         {
-            CurrentState.Exit();
+            if (CurrentState != null) CurrentState.Exit();
             CurrentState = null;
             IsStarted = false;
         }

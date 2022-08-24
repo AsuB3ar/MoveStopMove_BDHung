@@ -84,21 +84,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 4
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
-  - name: SpawnRate
-    path: SpawnRate
-    tooltip: 
-    sheetType: m_Float
-    realType: Single
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 15
+      m_SerializableObject: 3.8
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -112,7 +98,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.6
+      m_SerializableObject: 0.65
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -1487,8 +1473,8 @@ MonoBehaviour:
   - {fileID: 8926484042661614652}
   - {fileID: 8926484042661614674}
   dataType: 1
-  capacity: 64000
-  stripCapacity: 1000
+  capacity: 2048
+  stripCapacity: 32
   particlePerStripCount: 64
   m_Space: 0
 --- !u!114 &8926484042661614650
@@ -1774,7 +1760,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":64.0,"g":64.0,"b":64.0,"a":1.0},"time":0.0},{"color":{"r":4.0,"g":4.0,"b":4.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":0.9411764740943909,"time":0.6705882549285889}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":64.0,"g":64.0,"b":64.0,"a":1.0},"time":0.0},{"color":{"r":4.0,"g":4.0,"b":4.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":0.7843137383460999,"time":0.4941176474094391},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: Color
@@ -2052,7 +2038,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.02
+      m_SerializableObject: 0.06
     m_Space: 2147483647
   m_Property:
     name: Size
@@ -2294,7 +2280,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 4
+      m_SerializableObject: 3.8
     m_Space: 2147483647
   m_Property:
     name: o
@@ -2818,7 +2804,7 @@ MonoBehaviour:
   m_OutputSlots:
   - {fileID: 8926484042661614775}
   m_ExposedName: SpawnRate
-  m_Exposed: 1
+  m_Exposed: 0
   m_Order: 2
   m_Category: 
   m_Min:
@@ -3383,7 +3369,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.6
+      m_SerializableObject: 0.65
     m_Space: 2147483647
   m_Property:
     name: o

@@ -18,6 +18,8 @@ namespace MoveStopMove.Manager
         //private static GameState gameState = GameState.MainMenu;
 
         // Start is called before the first frame update
+        public event Action OnStartGame;
+        public event Action OnStopGame;
         bool gameIsRun = false;
         public bool GameIsRun => gameIsRun;
         protected override void Awake()
@@ -69,12 +71,13 @@ namespace MoveStopMove.Manager
         {
             gameIsRun = true;
             Time.timeScale = 1;
+            OnStartGame?.Invoke();
         }
 
         public void StopGame()
         {
             gameIsRun = false;
-            Time.timeScale = 0;
+            OnStopGame?.Invoke();
         }
 
 

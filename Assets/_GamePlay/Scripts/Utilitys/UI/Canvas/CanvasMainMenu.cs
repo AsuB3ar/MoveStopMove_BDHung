@@ -31,7 +31,7 @@ public class CanvasMainMenu : UICanvas
         if (isDirty)
         {
             //GameplayManager.Inst.PlayerScript.Reset();
-            LevelManager.Inst.DestructLevel();
+            GameManager.Inst.StopGame();
             LevelManager.Inst.OpenLevel(1);
             GameplayManager.Inst.SetCameraPosition(CameraPosition.MainMenu);
         }

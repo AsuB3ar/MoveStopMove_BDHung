@@ -58,6 +58,7 @@ namespace MoveStopMove.Manager
         {
             GameplayManager.Inst.PlayerScript = Cache.GetBaseCharacter(GameplayManager.Inst.Player);
             GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
+            GameManager.Inst.OnStartGame += RunLevel;
             OpenLevel(1);          
         }
 
@@ -80,11 +81,18 @@ namespace MoveStopMove.Manager
         public void OpenLevel(int level)
         {
             //TODO: Set Data Level
-            
+            DestructLevel();
             GameplayManager.Inst.PlayerScript.Reset();
             OnInit();
         }
 
+        public void RunLevel()
+        {
+            for (int i = 0; i < characters.Count; i++)
+            {
+                characters[i].Run();
+            }
+        }
 
         public void ConstructLevel()
         {
@@ -194,6 +202,14 @@ namespace MoveStopMove.Manager
 
             characterScript.SetLevel(level);
             characterScript.OnInit();
+            if (GameManager.Inst.GameIsRun)
+            {
+                characterScript.Run();
+            }
+            else
+            {
+                characterScript.Stop();
+            }
             characterScript.ChangeWeapon(GameplayManager.Inst.GetRandomWeapon());
             characterScript.OnDie += OnEnemyDie;
 

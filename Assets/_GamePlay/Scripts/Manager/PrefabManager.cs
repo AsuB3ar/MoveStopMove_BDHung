@@ -44,7 +44,7 @@ namespace MoveStopMove.Manager
     {
 
         //NOTE:Specific for game,remove to reuse
-        
+        private GameObject PrefabPool;
         [SerializeField]
         GameObject Character;
         #region Bullet
@@ -98,6 +98,10 @@ namespace MoveStopMove.Manager
         protected override void Awake()
         {
             base.Awake();
+
+            PrefabPool = Instantiate(pool);
+            PrefabPool.name = "PrefabPool";
+
             CreatePool(Character, PoolID.Character, Quaternion.Euler(0, 0, 0), 15);
             CreatePool(Bullet_Axe1, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0));
             CreatePool(Bullet_Knife1, PoolID.Bullet_Knife1, Quaternion.Euler(0, 0, 0));
@@ -120,6 +124,8 @@ namespace MoveStopMove.Manager
             CreatePool(UIItem, PoolID.UIItem);
             CreatePool(UIIndicator, PoolID.UITargetIndicator);
             CreatePool(Obstance, PoolID.Obstance);
+
+            
         }
 
 
@@ -128,6 +134,7 @@ namespace MoveStopMove.Manager
             if (!poolData.ContainsKey(namePool))
             {
                 GameObject newPool = Instantiate(pool, Vector3.zero, Quaternion.identity);
+                newPool.transform.parent = PrefabPool.transform;
                 Pool poolScript = newPool.GetComponent<Pool>();
                 newPool.name = namePool.ToString();
                 poolScript.Initialize(obj, quaternion, numObj);

@@ -9,6 +9,7 @@ namespace MoveStopMove.ContentCreation.Weapon
     {
         public override void DealDamage(Vector3 direction, float range, float size)
         {
+            base.DealDamage(direction, range, size);
             if (WeaponType == WeaponType.Normal)
             {
                 GameObject bullet = PrefabManager.Inst.PopFromPool(BulletPoolName);
