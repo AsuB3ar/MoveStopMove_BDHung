@@ -23,6 +23,8 @@ namespace MoveStopMove.Core
     public class BaseCharacter : MonoBehaviour,IInit,IDespawn
     {
         public event Action<BaseCharacter> OnDie;
+
+        private 
         protected VisualEffectController VFX_Hit;
         protected VisualEffectController VFX_AddStatus;
 
@@ -41,15 +43,15 @@ namespace MoveStopMove.Core
         protected CharacterData Data;
 
         [SerializeField]
-        WorldInterfaceModule WorldInterfaceModule;
+        protected WorldInterfaceModule WorldInterfaceModule;
         [SerializeField]
-        AbstractNavigationModule NavigationModule;
+        protected AbstractNavigationModule NavigationModule;
         [SerializeField]
-        AbstractLogicModule LogicModule;
+        protected AbstractLogicModule LogicModule;
         [SerializeField]
-        AbstractPhysicModule PhysicModule;
+        protected AbstractPhysicModule PhysicModule;
         [SerializeField]
-        AnimationModule AnimModule;
+        protected AnimationModule AnimModule;
         
 
 
@@ -60,8 +62,6 @@ namespace MoveStopMove.Core
         protected STimer timerDie = new STimer();
 
         public BaseWeapon Weapon;
-        [SerializeField]
-        CharacterType type;
         public bool IsDie
         {
             get
@@ -73,96 +73,51 @@ namespace MoveStopMove.Core
         public float Size => Data.Size;
         public float AttackRange => Data.AttackRange;
         public int Level => Data.Level;
-        public Color Color => (Color)Data.Color;
+        public GameColor Color => (GameColor)Data.Color;
 
         public bool IsRun => ((CharacterAI)NavigationModule).StateMachine.IsStarted;
 
-        private void Awake()
+
+        protected virtual void Awake()
         {
             WorldInterfaceSystem = new CharacterWorldInterfaceSystem(WorldInterfaceModule);
             NavigationSystem = new CharacterNavigationSystem(NavigationModule);
             LogicSystem = new CharacterLogicSystem(LogicModule);
             PhysicSystem = new CharacterPhysicSystem(PhysicModule);
 
-            Data = ScriptableObject.CreateInstance(typeof(CharacterData)) as CharacterData;
-            LogicSystem.SetCharacterInformation(Data, gameObject.transform);
-            WorldInterfaceSystem.SetCharacterInformation(Data);
+                       
             NavigationSystem.SetCharacterInformation(transform, SensorTF, GetInstanceID());
-
-
             //NOTE: When change wepon need to set this line of code
-            if(Weapon != null)
-            {
-                Weapon.Character = this;
-                Data.Weapon = (int)Weapon.Name;
-            }
             
         }
 
-        private void Start()
-        {
-            if(type == CharacterType.Player)
-            {
-                VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
-                VFX_AddStatus = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_AddStatus));
-                VFX_Hit.SetColor(GameplayManager.Inst.GetColor(Color.Red));
 
-                VFX_Hit.Init(transform, Vector3.up * 0.5f, Quaternion.Euler(Vector3.zero), Vector3.one * 0.3f);
-                VFX_AddStatus.Init(transform, Vector3.up * -0.5f, Quaternion.Euler(-90, 0, 0), Vector3.one);
-            }
-        }
-
-        public void OnInit()
+        public virtual void OnInit()
         {
             PhysicModule.SetActive(true);
             transform.localScale = Vector3.one * Data.Size;
             PhysicModule.SetRotation(GameConst.Type.Model, Quaternion.Euler(0, 0, 0));
-            PhysicModule.SetRotation(GameConst.Type.Sensor, Quaternion.Euler(0, 0, 0));
-            //TEST: Test Player Have Hp = 10
-            if(type == CharacterType.Player)
-            {
-                Data.Hp = 1;
-            }
-            else
-            {
-                Data.Hp = 1;
-            }
-            
-            Data.AttackCount = 1;
-
-            ((CharacterLogicModule)LogicModule).StartStateMachine();
-
-            
+            PhysicModule.SetRotation(GameConst.Type.Sensor, Quaternion.Euler(0, 0, 0));          
+            Data.AttackCount = 0;
+            OnEnable();
+            ((CharacterLogicModule)LogicModule).StartStateMachine();            
         }
         
 
-        public void OnDespawn()
+        public virtual void OnDespawn()
         {
-
-            if (type == CharacterType.Player) return;
-
-            ((CharacterLogicModule)LogicModule).StopStateMachine();
-
-            PrefabManager.Inst.PushToPool(this.gameObject, PoolID.Character);
         }
 
-        public void Run()
-        {
-            if (type == CharacterType.Enemy)
-            {
-                ((CharacterAI)NavigationModule).StartStateMachine();
-            }
+        public virtual void Run()
+        {        
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
-            if (type == CharacterType.Enemy)
-            {
-                ((CharacterAI)NavigationModule).StopStateMachine();
-            }
         }
         protected virtual void OnEnable()
         {
+            if (LogicSystem.Event.SetVelocity != null) return;
             #region Update Data Event
             WorldInterfaceSystem.OnUpdateData += NavigationSystem.ReceiveInformation;
             WorldInterfaceSystem.OnUpdateData += LogicSystem.ReceiveInformation;
@@ -184,15 +139,6 @@ namespace MoveStopMove.Core
             #endregion           
             
             timerDie.TimeOut1 += TimerEvent;
-
-            if (type == CharacterType.Enemy)
-            {
-                VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
-                VFX_AddStatus = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_AddStatus));
-                VFX_Hit.Init(transform, Vector3.up * 0.5f, Quaternion.Euler(Vector3.zero), Vector3.one * 0.3f);
-                VFX_AddStatus.Init(transform, Vector3.up * -0.5f, Quaternion.Euler(-90, 0, 0), Vector3.one);
-                
-            }
         }
 
         protected virtual void OnDisable()
@@ -218,11 +164,6 @@ namespace MoveStopMove.Core
             #endregion
             
             timerDie.TimeOut1 -= TimerEvent;
-
-            if (type == CharacterType.Enemy)
-            {
-                VisualEffectManager.Inst.PushToPool(VFX_Hit.gameObject, VisualEffect.VFX_Hit);
-            }
         }
         public void Reset()
         {
@@ -261,7 +202,7 @@ namespace MoveStopMove.Core
             Weapon.DealDamage(direction, range ,Data.Size);
         }
 
-        public void ChangeColor(Color color)
+        public void ChangeColor(GameColor color)
         {
             Material mat = GameplayManager.Inst.GetMaterial(color);
             meshCharacter.material = mat;
@@ -289,7 +230,7 @@ namespace MoveStopMove.Core
                 }
                 this.hair = hairObject;
             }
-            
+            Data.Hair = (int)hair;
         }
         public void ChangeWeapon(BaseWeapon weapon)
         {
@@ -316,10 +257,7 @@ namespace MoveStopMove.Core
             {
                 SoundManager.Inst.PlaySound(SoundManager.Inst.GetRandomDieSound(), transform.position);
                 timerDie.Start(GameConst.ANIM_IS_DEAD_TIME, 0);
-                if (type == CharacterType.Enemy)
-                {
-                    ((CharacterAI)NavigationModule).StopStateMachine();
-                }
+              
             }
         }
 

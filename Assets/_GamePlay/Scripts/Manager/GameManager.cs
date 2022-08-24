@@ -11,6 +11,9 @@ namespace MoveStopMove.Manager
 {
     using System;
     using Utilitys;
+    using MoveStopMove.Core.Data;
+    using MoveStopMove.Core;
+    using System.Linq;
     public class GameManager : Singleton<GameManager>
     {
         //[SerializeField] UserData userData;
@@ -22,6 +25,9 @@ namespace MoveStopMove.Manager
         public event Action OnStopGame;
         bool gameIsRun = false;
         public bool GameIsRun => gameIsRun;
+
+        private List<IPersistentData> persistentDataObjects;
+        private GameData gameData;
         protected override void Awake()
         {
             base.Awake();
@@ -43,28 +49,17 @@ namespace MoveStopMove.Manager
             UIManager.Inst.OpenUI(UIID.UICMainMenu);
         }
 
-
-        void HandleOnPlayModeChanged(PauseState mode)
+        private void Start()
         {
-            //Debug.Log("Enter");
-            // This method is run whenever the playmode state is changed.
-            //if (EditorApplication.isPaused)
-            //{
-            //    StopGame();
-            //}
-            //else
-            //{
-            //    if(Time.timeScale != 0)
-            //    {
-            //        StartGame();
-            //    }
-                
-            //}
-            //else if (EditorApplication.isPlaying)
-            //{
-            //    StartGame();
-            //    Debug.Log("Start Game");
-            //}
+            this.persistentDataObjects = FindAllDataPersistentObject();
+            LoadGame();
+        }
+
+        private List<IPersistentData> FindAllDataPersistentObject()
+        {
+            IEnumerable<IPersistentData> dataPersistentObjects = FindObjectsOfType<MonoBehaviour>().OfType<IPersistentData>();
+
+            return new List<IPersistentData>(dataPersistentObjects);
         }
 
         public void StartGame()
@@ -81,15 +76,59 @@ namespace MoveStopMove.Manager
         }
 
 
-        //public static void ChangeState(GameState state)
-        //{
-        //    gameState = state;
-        //}
+        public void NewGame()
+        {
+            gameData = new GameData();
+        }
+        public void LoadGame()
+        {
+            if (!PlayerPrefs.HasKey(Player.P_SPEED))
+            {
+                Debug.Log("Game Data Not Found! Initializing data to defaults");
+                NewGame();
+            }
+            else
+            {
+                gameData = new GameData();
+                gameData.Speed = PlayerPrefs.GetFloat(Player.P_SPEED);
+                gameData.Weapon = PlayerPrefs.GetInt(Player.P_WEAPON);
 
-        //public static bool IsState(GameState state)
-        //{
-        //    return gameState == state;
-        //}
+                gameData.Color = PlayerPrefs.GetInt(Player.P_COLOR);
+                gameData.Pant = PlayerPrefs.GetInt(Player.P_PANT);
+                gameData.Hair = PlayerPrefs.GetInt(Player.P_HAIR);
+                gameData.Set = PlayerPrefs.GetInt(Player.P_SET);
+            }
 
+
+            for(int i = 0; i < persistentDataObjects.Count; i++)
+            {
+                persistentDataObjects[i].LoadGame(gameData);
+            }
+
+            Debug.Log("Load Data");
+        }
+        public void SaveGame()
+        {
+            for (int i = 0; i < persistentDataObjects.Count; i++)
+            {
+                persistentDataObjects[i].SaveGame(ref gameData);
+            }
+            PlayerPrefs.SetFloat(Player.P_SPEED, gameData.Speed);
+            PlayerPrefs.SetInt(Player.P_WEAPON, gameData.Weapon);
+
+            PlayerPrefs.SetInt(Player.P_COLOR, gameData.Color);
+            PlayerPrefs.SetInt(Player.P_PANT, gameData.Pant);
+            PlayerPrefs.SetInt(Player.P_HAIR, gameData.Hair);
+            PlayerPrefs.SetInt(Player.P_SET, gameData.Set);
+
+            Debug.Log("Save Data");
+        }
+
+
+
+        private void OnApplicationQuit()
+        {
+            SaveGame();
+        }
     }
 }

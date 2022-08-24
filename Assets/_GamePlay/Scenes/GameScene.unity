@@ -302,7 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundAssets:
   - sound: 0
-    audioClip: {fileID: 8300000, guid: e8fa65757f1fa9244b991c89e21a38c1, type: 3}
+    audioClip: {fileID: 8300000, guid: 79d3263592faaeb4b889734c8747d9aa, type: 3}
   - sound: 5
     audioClip: {fileID: 8300000, guid: 919de2e922c8eac4e8146fd9a08c08c7, type: 3}
   - sound: 6
@@ -615,7 +615,7 @@ MonoBehaviour:
   m_FadeDistance: 10000
   m_VolumetricFadeDistance: 10000
   m_AffectDiffuse: 1
-  m_AffectSpecular: 1
+  m_AffectSpecular: 0
   m_NonLightmappedOnly: 0
   m_ShapeWidth: 1000
   m_ShapeHeight: 1000
@@ -702,7 +702,7 @@ MonoBehaviour:
   useOldInspector: 0
   useVolumetric: 1
   featuresFoldout: 1
-  showAdditionalSettings: 0
+  showAdditionalSettings: 13
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
@@ -822,17 +822,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8032057855635813058, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
   m_PrefabInstance: {fileID: 3426766287458366633}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1291635865 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4836112756249147527, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
-  m_PrefabInstance: {fileID: 3426766287458366633}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1705399957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be47f78c8bde7ca41b7f9679ec26224e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1312662020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1559,6 +1548,7 @@ MonoBehaviour:
   globalAudioSource: {fileID: 1692822100}
   soundPool: {fileID: 2122125030}
   audioSourceObject: {fileID: 3193153282077443919, guid: 13bfb91ef0a33ae408c22737c2fb21a8, type: 3}
+  volume: 1
 --- !u!1 &1705399957 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3968126923357204953, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
@@ -1572,6 +1562,17 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1705399957}
   m_Enabled: 1
+--- !u!114 &1705399964 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 619714245882869173, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+  m_PrefabInstance: {fileID: 3426766287458366633}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705399957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 503dc55f0dc04f94facf47396ad64aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1921968860
 GameObject:
   m_ObjectHideFlags: 0
@@ -1615,7 +1616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f533c5d595372499e057f7ba69ed67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerScript: {fileID: 1291635865}
+  PlayerScript: {fileID: 1705399964}
   PlayerCamera: {fileID: 1162758034}
   cameraMove: {fileID: 412494947}
   materials:
@@ -1872,6 +1873,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 12309100090982357, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 12309100090982357, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
@@ -1886,6 +1891,14 @@ PrefabInstance:
     - target: {fileID: 12309100090982357, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 12309100090982357, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 12309100090982357, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: m_UseSpriteMesh
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3145264607800021339, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
       propertyPath: m_Center.y

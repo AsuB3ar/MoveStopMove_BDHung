@@ -24,7 +24,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         
         [HideInInspector]
         public BaseCharacter Character;
-        public PoolID Name => BulletPoolName;
+        public PoolID Name => data.poolID;
              
         public virtual void DealDamage(Vector3 direction, float range, float scale)
         {

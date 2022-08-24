@@ -1644,7 +1644,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 665182061883788722}
-  - component: {fileID: 2689206920248707063}
   - component: {fileID: 8684538965717568146}
   - component: {fileID: 1369847175855840471}
   - component: {fileID: 3092809192485204286}
@@ -1672,31 +1671,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2689206920248707063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5862903821006261929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be47f78c8bde7ca41b7f9679ec26224e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meshCharacter: {fileID: 1032434236312950549}
-  meshPant: {fileID: 8824928195836492804}
-  hair: {fileID: 0}
-  SensorTF: {fileID: 4516260988997187901}
-  ContainWeaponTF: {fileID: 3603346951696897283}
-  ContainHairTF: {fileID: 6595828003968469383}
-  WorldInterfaceModule: {fileID: 8684538965717568146}
-  NavigationModule: {fileID: 0}
-  LogicModule: {fileID: 3092809192485204286}
-  PhysicModule: {fileID: 1369847175855840471}
-  AnimModule: {fileID: 6251622995687998557}
-  Weapon: {fileID: 0}
-  type: 0
 --- !u!114 &8684538965717568146
 MonoBehaviour:
   m_ObjectHideFlags: 0

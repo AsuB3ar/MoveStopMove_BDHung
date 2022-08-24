@@ -1625,6 +1625,70 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5862903821006261929, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
   m_PrefabInstance: {fileID: 3789361948585805970}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5481772110054720000 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8684538965717568146, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+  m_PrefabInstance: {fileID: 3789361948585805970}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7335153693828646459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f27542ec963ff94bafc0d54a67e9845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2851948591325598789 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1369847175855840471, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+  m_PrefabInstance: {fileID: 3789361948585805970}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7335153693828646459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 975417138325dd94bb882c5bbedd1ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2197010116248762796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3092809192485204286, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+  m_PrefabInstance: {fileID: 3789361948585805970}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7335153693828646459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f841a995145b9a848bbe8744c85c5417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7085496335678524623 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6251622995687998557, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+  m_PrefabInstance: {fileID: 3789361948585805970}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3778261ec1404a049a2cc055234f61ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &8007279200292274453 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6595828003968469383, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+  m_PrefabInstance: {fileID: 3789361948585805970}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &474897126279060881 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3603346951696897283, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+  m_PrefabInstance: {fileID: 3789361948585805970}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4234920673630510983 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1032434236312950549, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+  m_PrefabInstance: {fileID: 3789361948585805970}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5687753780087452822 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8824928195836492804, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+  m_PrefabInstance: {fileID: 3789361948585805970}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &737042147009065391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4516260988997187901, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
@@ -1642,3 +1706,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d095e8efaf0774494da54bb491df92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6404774815512985161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7335153693828646459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d00a3b7bcf818df44b4f66507454bd93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshCharacter: {fileID: 4234920673630510983}
+  meshPant: {fileID: 5687753780087452822}
+  hair: {fileID: 0}
+  SensorTF: {fileID: 737042147009065391}
+  ContainWeaponTF: {fileID: 474897126279060881}
+  ContainHairTF: {fileID: 8007279200292274453}
+  WorldInterfaceModule: {fileID: 5481772110054720000}
+  NavigationModule: {fileID: 1282303763}
+  LogicModule: {fileID: 2197010116248762796}
+  PhysicModule: {fileID: 2851948591325598789}
+  AnimModule: {fileID: 7085496335678524623}
+  Weapon: {fileID: 0}
+  type: 1

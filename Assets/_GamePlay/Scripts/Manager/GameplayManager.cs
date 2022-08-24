@@ -2,6 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameColor
+{
+    Red = 0,
+    Blue = 1,
+    Green = 2,
+    Yellow = 3,
+    Purple = 4,
+    Orange = 5,
+    Brown = 6,
+    Aqua = 7
+}
+
+public enum PantSkin
+{
+    Batman = 0,
+    Chambi = 1,
+    Comy = 2,
+    Dabao = 3,
+    Onion = 4,
+    Pokemon = 5,
+    Rainbow = 6,
+    Skull = 7,
+    Vantim = 8
+}
+
 namespace MoveStopMove.Manager
 {
     using Utilitys;
@@ -9,30 +34,7 @@ namespace MoveStopMove.Manager
     using MoveStopMove.ContentCreation.Weapon;
 
     
-    public enum Color
-    {
-        Red = 0,
-        Blue = 1,
-        Green = 2,
-        Yellow = 3,
-        Purple = 4,
-        Orange = 5,
-        Brown = 6,
-        Aqua = 7
-    }
-
-    public enum PantSkin
-    {
-        Batman = 0,
-        Chambi = 1,
-        Comy = 2,
-        Dabao = 3,
-        Onion = 4,
-        Pokemon = 5,
-        Rainbow = 6,
-        Skull = 7,
-        Vantim = 8
-    }
+    
     [DefaultExecutionOrder(-2)]
     public class GameplayManager : Singleton<GameplayManager>
     {
@@ -50,11 +52,11 @@ namespace MoveStopMove.Manager
         public readonly List<PoolID> WeaponNames = new List<PoolID>() { PoolID.Weapon_Axe1, PoolID.Weapon_Knife1, PoolID.Weapon_Axe2, PoolID.Weapon_Arrow };
 
 
-        public UnityEngine.Color GetColor(Color color)
+        public UnityEngine.Color GetColor(GameColor color)
         {
             return GetMaterial(color).color;
         }
-        public Material GetMaterial(Color color)
+        public Material GetMaterial(GameColor color)
         {
             return materials[(int)color];
         }
@@ -68,10 +70,10 @@ namespace MoveStopMove.Manager
             int index = Random.Range(0, pantSkins.Count);
             return (PantSkin)index;
         }
-        public Color GetRandomColor()
+        public GameColor GetRandomColor()
         {
             int index = Random.Range(0, materials.Count);
-            return (Color)index;
+            return (GameColor)index;
         }
 
         public PoolID GetRandomHair()

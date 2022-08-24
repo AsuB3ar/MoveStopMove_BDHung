@@ -43,11 +43,16 @@ namespace Utilitys.AI
 
         public override int PhysicUpdate()
         {
-            if(timeFrames >= GameConst.ANIM_IS_ATTACK_FRAMES)
+            if (Parameter.MoveDirection.sqrMagnitude > 0.001f)
+            {
+                StateMachine.ChangeState(State.Move);
+            }
+            else if (timeFrames >= GameConst.ANIM_IS_ATTACK_FRAMES)
             {
                 StateMachine.ChangeState(State.Idle);
-            }
-            else if(timeFrames == 12)
+            }          
+
+            if (timeFrames == 12)
             {
                 Event.DealDamage(direction, Data.CharacterData.AttackRange);
             }
