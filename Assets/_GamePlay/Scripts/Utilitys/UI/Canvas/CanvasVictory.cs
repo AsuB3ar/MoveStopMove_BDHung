@@ -22,6 +22,7 @@ public class CanvasVictory : UICanvas
     public void CloseButton()
     {
         UIManager.Inst.OpenUI(UIID.UICMainMenu);
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
     }
 
@@ -29,6 +30,7 @@ public class CanvasVictory : UICanvas
     {
         UIManager.Inst.OpenUI(UIID.UICGamePlay);
         LevelManager.Inst.OpenLevel(currentLevel + 1);
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
     }
 
@@ -36,6 +38,7 @@ public class CanvasVictory : UICanvas
     {
         UIManager.Inst.OpenUI(UIID.UICGamePlay);
         LevelManager.Inst.OpenLevel(currentLevel);
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
     }
 }

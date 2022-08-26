@@ -35,5 +35,10 @@ namespace MoveStopMove.Core.Character.NavigationSystem
         {
             Parameter.CharacterData = CharacterData;
         }
+
+        public void Reset()
+        {
+            Data.MoveDirection = Vector3.zero;
+        }
     }
 }

@@ -8,12 +8,16 @@ namespace MoveStopMove.Core.Character.NavigationSystem
     {
         protected NavigationData Data;
         protected NavigationParameter Parameter;
-
+      
         public override void Initialize(NavigationData Data,NavigationParameter Parameter)
         {
             this.Data = Data;
             this.Parameter = Parameter;
         }
 
+        public virtual void Reset()
+        {
+            //Reset Data;
+        }
     }
 }

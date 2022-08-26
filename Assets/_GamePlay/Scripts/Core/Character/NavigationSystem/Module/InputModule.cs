@@ -10,6 +10,20 @@ namespace MoveStopMove.Core.Character.NavigationSystem
     {
         JoyStick joyStick;
         Vector2 moveDirection = Vector2.zero;
+        private bool active = false;
+        public bool Active
+        {
+            set
+            {
+                active = value;
+                if (active == false)
+                {
+                    moveDirection = Vector2.zero;
+                    Data.MoveDirection = Vector3.zero;
+                }
+            }
+        }
+
         private void Start()
         {
             CanvasGameplay gameplay = (CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay);
@@ -19,9 +33,12 @@ namespace MoveStopMove.Core.Character.NavigationSystem
         }
         public override void UpdateData()
         {
+            if (!active) return;
+
             Vector3 move = (Vector3.right * moveDirection.x + Vector3.forward * moveDirection.y).normalized;
             Data.MoveDirection = move;
-        }    
+        }
+
 
         private void UpdateMoveDirection(Vector2 moveDirection)
         {

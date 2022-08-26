@@ -27,7 +27,8 @@ namespace MoveStopMove.Manager
         public bool GameIsRun => gameIsRun;
 
         private List<IPersistentData> persistentDataObjects;
-        private GameData gameData;
+        [SerializeField]
+        public GameData GameData;
         protected override void Awake()
         {
             base.Awake();
@@ -47,12 +48,12 @@ namespace MoveStopMove.Manager
 
             //ChangeState(GameState.MainMenu);
             UIManager.Inst.OpenUI(UIID.UICMainMenu);
+            LoadGame();
         }
 
         private void Start()
         {
-            this.persistentDataObjects = FindAllDataPersistentObject();
-            LoadGame();
+            this.persistentDataObjects = FindAllDataPersistentObject();           
         }
 
         private List<IPersistentData> FindAllDataPersistentObject()
@@ -78,52 +79,15 @@ namespace MoveStopMove.Manager
 
         public void NewGame()
         {
-            gameData = new GameData();
+            
         }
         public void LoadGame()
         {
-            if (!PlayerPrefs.HasKey(Player.P_SPEED))
-            {
-                Debug.Log("Game Data Not Found! Initializing data to defaults");
-                NewGame();
-            }
-            else
-            {
-                gameData = new GameData();
-                gameData.Speed = PlayerPrefs.GetFloat(Player.P_SPEED);
-                gameData.Weapon = PlayerPrefs.GetInt(Player.P_WEAPON);
-
-                gameData.Color = PlayerPrefs.GetInt(Player.P_COLOR);
-                gameData.Pant = PlayerPrefs.GetInt(Player.P_PANT);
-                gameData.Hair = PlayerPrefs.GetInt(Player.P_HAIR);
-                gameData.Set = PlayerPrefs.GetInt(Player.P_SET);
-            }
-            
-            for(int i = 0; i < persistentDataObjects.Count; i++)
-            {
-                persistentDataObjects[i].LoadGame(gameData);
-            }
-
-            Debug.Log("Load Data");
-            Debug.Log(((PoolID)gameData.Weapon).ToString());
+            GameData.OnInitData();
         }
         public void SaveGame()
         {
-            for (int i = 0; i < persistentDataObjects.Count; i++)
-            {
-                persistentDataObjects[i].SaveGame(ref gameData);
-            }
-            PlayerPrefs.SetFloat(Player.P_SPEED, gameData.Speed);
-            PlayerPrefs.SetInt(Player.P_WEAPON, gameData.Weapon);
-
-            PlayerPrefs.SetInt(Player.P_COLOR, gameData.Color);
-            PlayerPrefs.SetInt(Player.P_PANT, gameData.Pant);
-            PlayerPrefs.SetInt(Player.P_HAIR, gameData.Hair);
-            PlayerPrefs.SetInt(Player.P_SET, gameData.Set);
-
-            Debug.Log("Save Data");
-            Debug.Log(((PoolID)gameData.Weapon).ToString());
-
+            
         }
 
 

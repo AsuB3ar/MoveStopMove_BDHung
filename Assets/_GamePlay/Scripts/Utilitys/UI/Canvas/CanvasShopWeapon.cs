@@ -49,6 +49,8 @@ public class CanvasShopWeapon : UICanvas
 
     public void OnItemClick(PoolID name,PantSkin pant,UIItemType type)
     {
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
+
         if (type == UIItemType.Weapon)
         {
             GameObject weapon = PrefabManager.Inst.PopFromPool(name);
@@ -60,6 +62,7 @@ public class CanvasShopWeapon : UICanvas
     {
         UIManager.Inst.OpenUI(UIID.UICMainMenu);
         GameplayManager.Inst.SetCameraPosition(CameraPosition.MainMenu);
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
     }
 

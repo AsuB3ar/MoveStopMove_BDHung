@@ -44,6 +44,7 @@ namespace MoveStopMove.Manager
         public GameObject Player => PlayerScript.gameObject;
         public BaseCharacter PlayerScript;
         public Camera PlayerCamera;
+        public GameObject TargetIndicator;
         [SerializeField]
         CameraMove cameraMove;
         [SerializeField]

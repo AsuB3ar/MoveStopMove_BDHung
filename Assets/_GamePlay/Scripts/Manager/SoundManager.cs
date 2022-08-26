@@ -33,9 +33,9 @@ namespace MoveStopMove.Manager
             Character_Die4 = 7,
             Character_Die5 = 8,
             
+            Weapon_Throw = 100,
+            Button_Click = 1000,
 
-
-            Weapon_Throw = 100
         }
 
         protected override void Awake()

@@ -58,7 +58,5 @@ namespace Utilitys.Input
             //Debug.Log("On Pointer Up");
         }
 
-        
-
     }
 }

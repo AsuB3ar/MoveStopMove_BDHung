@@ -22,7 +22,7 @@ namespace MoveStopMove.Core.Data {
             get => level;
             set
             {
-                size = Mathf.Pow(1.1f, value);
+                size = Mathf.Pow(1.1f, value - 1);
                 level = value;
             }
         }

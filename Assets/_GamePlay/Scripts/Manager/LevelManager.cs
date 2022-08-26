@@ -8,7 +8,7 @@ namespace MoveStopMove.Manager
     using Core;
     using Core.Data;
     using Utilitys;
-    public class LevelManager : Singleton<LevelManager>,IInit
+    public class LevelManager : Singleton<LevelManager>,IInit,IPersistentData
     {
         public event Action OnWinLevel;
         public event Action OnLoseLevel;
@@ -22,7 +22,9 @@ namespace MoveStopMove.Manager
         [SerializeField]
         int difficulty = 3;
         [SerializeField]
-        LevelData data;
+        List<LevelData> levelDatas;
+        [SerializeField]
+        LevelData currentLevelData;
         [SerializeField]
         private GameObject Ground;
         [SerializeField]             
@@ -33,7 +35,7 @@ namespace MoveStopMove.Manager
 
         private int numOfSpawnPlayers;
         private int numOfRemainingPlayers;
-        private int currentLevel = 1;
+        private int currentLevel = 0;
 
         private int NumOfRemainingPlayers
         {
@@ -66,8 +68,8 @@ namespace MoveStopMove.Manager
         {
             characters.Clear();
             obstances.Clear();
-            NumOfRemainingPlayers = data.numOfPlayers;
-            numOfSpawnPlayers = data.numOfPlayers;
+            NumOfRemainingPlayers = currentLevelData.numOfPlayers;
+            numOfSpawnPlayers = currentLevelData.numOfPlayers;
             
             for (int i = 0; i < 10; i++)
             {
@@ -81,6 +83,8 @@ namespace MoveStopMove.Manager
         public void OpenLevel(int level)
         {
             //TODO: Set Data Level
+            currentLevel = level - 1;
+            currentLevelData = levelDatas[currentLevel];
             DestructLevel();
             GameplayManager.Inst.PlayerScript.Reset();
             OnInit();
@@ -96,10 +100,10 @@ namespace MoveStopMove.Manager
 
         public void ConstructLevel()
         {
-            groundSize = Vector3.one * data.Size * 2;
+            groundSize = Vector3.one * currentLevelData.Size * 2;
             Ground.transform.localScale = groundSize;
-            Ground.transform.localPosition = -Vector3.up * data.Size * 2 * GROUNG_HEIGHT_PARAMETER;
-            for (int i = 0; i < data.ObstancePositions.Count; i++)
+            Ground.transform.localPosition = -Vector3.up * currentLevelData.Size * 2 * GROUNG_HEIGHT_PARAMETER;
+            for (int i = 0; i < currentLevelData.ObstancePositions.Count; i++)
             {
                 GameObject obstance = PrefabManager.Inst.PopFromPool(PoolID.Obstance);
                 obstance.transform.parent = StaticEnvironment;
@@ -108,7 +112,7 @@ namespace MoveStopMove.Manager
                 Vector3 scale = new Vector3(value, value, value);
                 obstance.transform.localScale = scale;
 
-                Vector3 pos = data.ObstancePositions[i] * data.Size;
+                Vector3 pos = currentLevelData.ObstancePositions[i] * currentLevelData.Size;
                 pos.y = 0.5f;
                 obstance.transform.localPosition = pos;
                 obstance.transform.localRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
@@ -234,27 +238,35 @@ namespace MoveStopMove.Manager
             float vecZ;
             if (value == 0)
             {
-                vecX = data.Size - MARGIN;
-                vecZ = UnityEngine.Random.Range(-(data.Size - MARGIN) + position.z, data.Size - MARGIN + position.z);
+                vecX = currentLevelData.Size - MARGIN;
+                vecZ = UnityEngine.Random.Range(-(currentLevelData.Size - MARGIN) + position.z, currentLevelData.Size - MARGIN + position.z);
             }
             else if(value == 1)
             {
-                vecX = -(data.Size - MARGIN);
-                vecZ = UnityEngine.Random.Range(-(data.Size - MARGIN) + position.z, data.Size - MARGIN + position.z);
+                vecX = -(currentLevelData.Size - MARGIN);
+                vecZ = UnityEngine.Random.Range(-(currentLevelData.Size - MARGIN) + position.z, currentLevelData.Size - MARGIN + position.z);
             }
             else if(value == 2)
             {
-                vecZ = data.Size - MARGIN;
-                vecX = UnityEngine.Random.Range(-(data.Size - MARGIN) + position.x, data.Size - MARGIN + position.x);
+                vecZ = currentLevelData.Size - MARGIN;
+                vecX = UnityEngine.Random.Range(-(currentLevelData.Size - MARGIN) + position.x, currentLevelData.Size - MARGIN + position.x);
             }
             else
             {
-                vecZ = -(data.Size - MARGIN);
-                vecX = UnityEngine.Random.Range(-(data.Size - MARGIN) + position.x, data.Size - MARGIN + position.x);
+                vecZ = -(currentLevelData.Size - MARGIN);
+                vecX = UnityEngine.Random.Range(-(currentLevelData.Size - MARGIN) + position.x, currentLevelData.Size - MARGIN + position.x);
             }
             return new Vector3(vecX, GameConst.INIT_CHARACTER_HEIGHT, vecZ);
         }
 
-        
+        public void LoadGame(GameData data)
+        {
+            currentLevel = data.CurrentRegion;
+        }
+
+        public void SaveGame(ref GameData data)
+        {
+            data.CurrentRegion = currentLevel;
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using MoveStopMove.Manager;
+
 public class CanvasFail : UICanvas
 {
     [SerializeField]
@@ -10,7 +12,7 @@ public class CanvasFail : UICanvas
     public void CloseButton()
     {
         UIManager.Inst.OpenUI(UIID.UICMainMenu);
-
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
     }
 

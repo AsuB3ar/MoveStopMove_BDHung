@@ -10,6 +10,7 @@ namespace Utilitys.AI
     {
         private int timeFrames;
         Vector3 direction;
+        Vector3 targetPosition;
         public AttackState(StateMachine<LogicParameter,LogicData> StateMachine, LogicParameter Parameter, LogicData Data, LogicEvent Event) 
             : base(StateMachine ,Parameter, Data, Event)
         {
@@ -22,7 +23,23 @@ namespace Utilitys.AI
             Event.SetVelocity(Vector3.zero);
 
             //TODO: Need to change here
+            Vector3 newDirection;
             direction = Parameter.CharacterPositions[0] - Parameter.PlayerTF.position;
+            targetPosition = Parameter.CharacterPositions[0];
+
+            direction.y = 0;
+            for (int i = 1; i < Parameter.CharacterPositions.Count; i++)
+            {
+                newDirection = Parameter.CharacterPositions[i] - Parameter.PlayerTF.position;
+                newDirection.y = 0;
+
+                if(newDirection.sqrMagnitude < direction.sqrMagnitude)
+                {
+                    direction = newDirection;
+                    targetPosition = Parameter.CharacterPositions[i];
+                }
+            }
+            
             Quaternion rot = MathHelper.GetQuaternion2Vector(Vector2.up, new Vector2(-direction.x, direction.z));
 
             timeFrames = 0;
@@ -38,11 +55,16 @@ namespace Utilitys.AI
                 StateMachine.ChangeState(State.Die);
             }
 
+            if (Parameter.CharacterPositions.Count > 0)
+            {             
+                Event.SetTargetIndicatorPosition?.Invoke(targetPosition, true);
+            }
+
             return 0;
         }
 
         public override int PhysicUpdate()
-        {
+        {           
             if (Parameter.MoveDirection.sqrMagnitude > 0.001f)
             {
                 StateMachine.ChangeState(State.Move);
@@ -64,10 +86,12 @@ namespace Utilitys.AI
 
         public override void Exit()
         {
-            base.Exit();           
+            base.Exit();                     
+            Event.SetTargetIndicatorPosition?.Invoke(Vector3.zero, false);
             Event.SetBool_Anim(GameConst.ANIM_IS_ATTACK, false);
         }
 
+        
 
     }
 }

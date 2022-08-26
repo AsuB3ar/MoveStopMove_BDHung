@@ -47,6 +47,7 @@ public class CanvasShopSkin : UICanvas
                 continue;
             }
             scrollViews[i].gameObject.SetActive(false);
+            SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         }
     }
     public void CloseButton()
@@ -69,7 +70,8 @@ public class CanvasShopSkin : UICanvas
 
     public void OnItemClick(PoolID name,PantSkin pant ,UIItemType type)
     {
-        if(type == UIItemType.Hair)
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
+        if (type == UIItemType.Hair)
         {
             GameplayManager.Inst.PlayerScript.ChangeHair(name);
         }

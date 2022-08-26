@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e8a793a475a93439498c24ff33f87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameData: {fileID: 11400000, guid: fcfd6173098dcc4499bed58ddbdcd864, type: 2}
 --- !u!1 &67666985
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +322,8 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: f4e59084b141a76498a865bc81ef9a8a, type: 3}
   - sound: 100
     audioClip: {fileID: 8300000, guid: e269d0f1215732843b81be1d34760e91, type: 3}
+  - sound: 1000
+    audioClip: {fileID: 8300000, guid: 5d4dd3bece804aa4299aa76d529c9394, type: 3}
 --- !u!1 &295663988 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1325490468756289824, guid: d7cc14fc77a68eb43b070458034aa5f2, type: 3}
@@ -427,9 +430,106 @@ MonoBehaviour:
   Level: {fileID: 435945792}
   StaticEnvironment: {fileID: 914025758}
   difficulty: 3
-  data: {fileID: 11400000, guid: 544fd8abc0aed9c489c61a7390387f8f, type: 2}
+  levelDatas:
+  - {fileID: 11400000, guid: 544fd8abc0aed9c489c61a7390387f8f, type: 2}
+  currentLevelData: {fileID: 0}
   Ground: {fileID: 295663988}
   position: {x: 0, y: 0, z: 0}
+--- !u!1 &593069393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 593069396}
+  - component: {fileID: 593069395}
+  - component: {fileID: 593069394}
+  - component: {fileID: 593069397}
+  m_Layer: 0
+  m_Name: TargetIndicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!23 &593069394
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593069393}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 60aee87bc0ece5e44a5122a11b152a4d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &593069395
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593069393}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &593069396
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593069393}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 9.09}
+  m_LocalScale: {x: 0.1, y: 1, z: 0.1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &593069397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593069393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e33c5a09ac708b849b676df599a00be2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 5
 --- !u!1001 &637068355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1458,9 +1558,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 0
   MinDistance: 1
-  MaxDistance: 8
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1618,6 +1718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerScript: {fileID: 1705399964}
   PlayerCamera: {fileID: 1162758034}
+  TargetIndicator: {fileID: 593069393}
   cameraMove: {fileID: 412494947}
   materials:
   - {fileID: 2100000, guid: 4fd1d784530fab648889a9b19c8de20f, type: 2}
@@ -1900,6 +2001,10 @@ PrefabInstance:
       propertyPath: m_UseSpriteMesh
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 619714245882869173, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: GameData
+      value: 
+      objectReference: {fileID: 11400000, guid: fcfd6173098dcc4499bed58ddbdcd864, type: 2}
     - target: {fileID: 3145264607800021339, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
       propertyPath: m_Center.y
       value: 0.5

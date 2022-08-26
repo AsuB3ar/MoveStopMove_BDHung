@@ -202,7 +202,7 @@ namespace MoveStopMove.Core
             Weapon.DealDamage(direction, range ,Data.Size);
         }
 
-        public void ChangeColor(GameColor color)
+        public virtual void ChangeColor(GameColor color)
         {
             Material mat = GameplayManager.Inst.GetMaterial(color);
             meshCharacter.material = mat;
@@ -210,13 +210,13 @@ namespace MoveStopMove.Core
             VFX_Hit.SetColor(GameplayManager.Inst.GetColor(Color));
         }
 
-        public void ChangePant(PantSkin name)
+        public virtual void ChangePant(PantSkin name)
         {
             Material mat = GameplayManager.Inst.GetMaterial(name);
             meshPant.material = mat;
             Data.Pant = (int)name;
         }
-        public void ChangeHair(PoolID hair)
+        public virtual void ChangeHair(PoolID hair)
         {
             if(hair != PoolID.None)
             {
@@ -232,7 +232,7 @@ namespace MoveStopMove.Core
             }
             Data.Hair = (int)hair;
         }
-        public void ChangeWeapon(BaseWeapon weapon)
+        public virtual void ChangeWeapon(BaseWeapon weapon)
         {
             if(weapon != null)
             {

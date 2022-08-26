@@ -4,9 +4,11 @@ using UnityEngine;
 
 namespace MoveStopMove.Core
 {
+    using MoveStopMove.ContentCreation.Weapon;
+    using MoveStopMove.Core.Character.NavigationSystem;
     using MoveStopMove.Core.Data;
     using MoveStopMove.Manager;
-    public class Player : BaseCharacter,IPersistentData
+    public class Player : BaseCharacter
     {
         public const string P_SPEED = "PlayerSpeed";
         public const string P_WEAPON = "PlayerWeapon";
@@ -16,20 +18,46 @@ namespace MoveStopMove.Core
         public const string P_PANT = "PlayerPant";       
         public const string P_SET = "PlayerSet";
 
+        public const string P_HIGHTEST_SCORE = "PlayerHighestScore";
+        public const string P_CURRENT_REGION = "PlayerCurrentRegion";
+
+        public GameData GameData;
+
         protected override void Awake()
         {
             base.Awake();
+            Data = ScriptableObject.CreateInstance(typeof(CharacterData)) as CharacterData;
+            LogicSystem.SetCharacterInformation(Data, gameObject.transform);
+            WorldInterfaceSystem.SetCharacterInformation(Data);
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            LogicSystem.Event.SetTargetIndicatorPosition += SetIndicatorPosition;
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            LogicSystem.Event.SetTargetIndicatorPosition -= SetIndicatorPosition;
         }
 
         protected void Start()
         {
-            
+            LevelManager.Inst.OnWinLevel += Win;
+            VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
+            VFX_AddStatus = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_AddStatus));
+            VFX_Hit.Init(transform, Vector3.up * 0.5f, Quaternion.Euler(Vector3.zero), Vector3.one * 0.3f);
+            VFX_AddStatus.Init(transform, Vector3.up * -0.5f, Quaternion.Euler(-90, 0, 0), Vector3.one);
+            LoadData();
         }
 
         public override void OnInit()
         {
             base.OnInit();
             Data.Hp = 10;
+            ((InputModule)NavigationModule).Active = true;
         }
 
         public override void OnDespawn()
@@ -37,58 +65,63 @@ namespace MoveStopMove.Core
             
         }
 
-        public void LoadGame(GameData gameData)
+        public override void ChangeColor(GameColor color)
         {
-            if(Data == null)
-            {
-                Data = ScriptableObject.CreateInstance(typeof(CharacterData)) as CharacterData;
-                LogicSystem.SetCharacterInformation(Data, gameObject.transform);
-                WorldInterfaceSystem.SetCharacterInformation(Data);
-            }
+            base.ChangeColor(color);
+            GameData.SetIntData(P_COLOR, ref GameData.Color, (int)color);
+        }
 
-            Data.Speed = gameData.Speed;
-            Data.Weapon = gameData.Weapon;
+        public override void ChangeHair(PoolID hair)
+        {
+            base.ChangeHair(hair);
+            GameData.SetIntData(P_HAIR, ref GameData.Hair, (int)hair);
+        }
 
-            Data.Color = gameData.Color;
-            Data.Pant = gameData.Pant;
-            Data.Hair = gameData.Hair;
-            Data.Set = gameData.Set;
+        public override void ChangePant(PantSkin name)
+        {
+            base.ChangePant(name);
+            GameData.SetIntData(P_PANT, ref GameData.Pant, (int)name);
+        }
 
-            if(VFX_Hit == null)
-            {
-                VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
-            }
+        public override void ChangeWeapon(BaseWeapon weapon)
+        {
+            base.ChangeWeapon(weapon);
+            GameData.SetIntData(P_WEAPON, ref GameData.Weapon, (int)weapon.Name);
+        }
+
+        public void Win()
+        {
+            ((InputModule)NavigationModule).Active = false;
+        }
+
+        private void SetIndicatorPosition(Vector3 pos, bool active)
+        {
+            GameplayManager.Inst.TargetIndicator.SetActive(active);
+            GameplayManager.Inst.TargetIndicator.transform.position = pos + Vector3.up * 0.1f;
+        }
+
+        private void LoadData()
+        {
             
-            if(VFX_AddStatus == null)
-            {
-                VFX_AddStatus = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_AddStatus));
-            }
+            Data.Speed = GameData.Speed;
+            Data.Weapon = GameData.Weapon;
 
-            VFX_Hit.SetColor(GameplayManager.Inst.GetColor((GameColor)Data.Color));
-            VFX_Hit.Init(transform, Vector3.up * 0.5f, Quaternion.Euler(Vector3.zero), Vector3.one * 0.3f);
-            VFX_AddStatus.Init(transform, Vector3.up * -0.5f, Quaternion.Euler(-90, 0, 0), Vector3.one);
+            Data.Color = GameData.Color;
+            Data.Hair = GameData.Hair;
+            Data.Pant = GameData.Pant;
+            Data.Set = GameData.Set;
 
             ChangeColor((GameColor)Data.Color);
-            ChangePant((PantSkin)Data.Pant);
             ChangeHair((PoolID)Data.Hair);
+            ChangePant((PantSkin)Data.Pant);
 
-            GameObject weapon = PrefabManager.Inst.PopFromPool((PoolID)Data.Weapon);
-            ChangeWeapon(Cache.GetBaseWeapon(weapon));
-            //Change Set
-    }
+            if (Weapon != null)
+            {
+                PrefabManager.Inst.PushToPool(Weapon.gameObject, Weapon.Name);
+            }
 
-        public void SaveGame(ref GameData gameData)
-        {
-            gameData.Speed = Data.Speed;
-            gameData.Weapon = Data.Weapon;
-
-            gameData.Color = Data.Color;
-            gameData.Pant = Data.Pant;
-            gameData.Hair = Data.Hair;
-            gameData.Set = Data.Set;
-
-            
-            
+            GameObject newWeapon = PrefabManager.Inst.PopFromPool((PoolID)Data.Weapon);
+            ChangeWeapon(Cache.GetBaseWeapon(newWeapon));
         }
     }
 }
