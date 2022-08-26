@@ -13,6 +13,7 @@ namespace MoveStopMove.ContentCreation
 
         public Sprite icon;
         public PoolID poolID;
+        public PantSkin pant;
         public UIItemType type;
     }
 }

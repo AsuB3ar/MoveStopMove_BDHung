@@ -22,7 +22,7 @@ public class CanvasShopWeapon : UICanvas
 
             UIItem UIItemScript = Cache.GetUIItem(uiItem);
             UIItemScript.SetIcon(itemDatas[i].icon);
-            UIItemScript.SetData(itemDatas[i].poolID, itemDatas[i].type);
+            UIItemScript.SetData(itemDatas[i].poolID,itemDatas[i].pant,itemDatas[i].type);
 
             uiItem.transform.SetParent(ContentTF);
 
@@ -47,7 +47,7 @@ public class CanvasShopWeapon : UICanvas
         item.OnSelectItem -= OnItemClick;
     }
 
-    public void OnItemClick(PoolID name, UIItemType type)
+    public void OnItemClick(PoolID name,PantSkin pant,UIItemType type)
     {
         if (type == UIItemType.Weapon)
         {

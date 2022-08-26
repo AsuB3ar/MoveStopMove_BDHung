@@ -1687,8 +1687,8 @@ MonoBehaviour:
   Bullet_Axe2: {fileID: 6022436429646713834, guid: 6d1bd9372f78f864f9aaf33e21f5aeb7, type: 3}
   Bullet_Arrow: {fileID: 3628063373359776792, guid: f329a6286f0e73047b87f05000c114e2, type: 3}
   Weapon_Axe1: {fileID: 5342148423312906101, guid: 0a300759cfb090e4485c3ac085772aa1, type: 3}
-  Weapon_Knife1: {fileID: 5342148423312906101, guid: a63fe999bb91150459f8041ea4e5e958, type: 3}
-  Weapon_Axe2: {fileID: 5515967797501043881, guid: a67aa9b967ed8e34ca238221708e1e5a, type: 3}
+  Weapon_Knife1: {fileID: 5515967797501043881, guid: a67aa9b967ed8e34ca238221708e1e5a, type: 3}
+  Weapon_Axe2: {fileID: 5342148423312906101, guid: a63fe999bb91150459f8041ea4e5e958, type: 3}
   Weapon_Arrow: {fileID: 2485118370923991048, guid: d900259350a2b8e4c8195f184b0dcef9, type: 3}
   Hair_Arrow: {fileID: 7312259725456167434, guid: 948344e564b2f264d97bdd4752961e39, type: 3}
   Hair_Cowboy: {fileID: 8759169980261381309, guid: 54718cb810362f94aa15148ec2238f2f, type: 3}

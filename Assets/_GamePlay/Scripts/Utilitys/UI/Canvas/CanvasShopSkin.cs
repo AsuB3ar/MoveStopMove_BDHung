@@ -3,28 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoveStopMove.Manager;
 using MoveStopMove.ContentCreation;
-
+using UnityEngine.UI;
+using Utilitys;
 public class CanvasShopSkin : UICanvas
 {
     [SerializeField]
-    private List<ItemData> itemDatas = new List<ItemData>();
+    Button firstButton;
     [SerializeField]
-    private Transform ContentTF;
+    private List<ItemData> hairItemDatas = new List<ItemData>();
+    [SerializeField]
+    private List<ItemData> pantItemDatas = new List<ItemData>(); 
+    [SerializeField]
+    private List<ScrollViewController> scrollViews;
     private List<UIItem> items = new List<UIItem>();
 
     private void Start()
     {
-        for(int i = 0; i < itemDatas.Count; i++)
+        firstButton.Select();
+        for(int i = 0; i < hairItemDatas.Count; i++)
         {
-            GameObject uiItem = PrefabManager.Inst.PopFromPool(PoolID.UIItem);
-            uiItem.transform.position = Vector3.zero;
+            UIItem UIItemScript = scrollViews[0].AddUIItem(hairItemDatas[i]);       
+            Subscribe(UIItemScript);
+        }
 
-            UIItem UIItemScript = Cache.GetUIItem(uiItem);
-            UIItemScript.SetIcon(itemDatas[i].icon);
-            UIItemScript.SetData(itemDatas[i].poolID, itemDatas[i].type);
-
-            uiItem.transform.SetParent(ContentTF);
-
+        for(int i = 0; i < pantItemDatas.Count; i++)
+        {
+            UIItem UIItemScript = scrollViews[1].AddUIItem(pantItemDatas[i]);
             Subscribe(UIItemScript);
         }
     }
@@ -32,6 +36,18 @@ public class CanvasShopSkin : UICanvas
     {
         base.Open();
         GameplayManager.Inst.SetCameraPosition(CameraPosition.ShopSkin);
+    }
+    public void OpenTab(int type)
+    {
+        for (int i = 0; i < scrollViews.Count; i++)
+        {
+            if (i == type)
+            {
+                scrollViews[i].gameObject.SetActive(true);
+                continue;
+            }
+            scrollViews[i].gameObject.SetActive(false);
+        }
     }
     public void CloseButton()
     {
@@ -51,11 +67,15 @@ public class CanvasShopSkin : UICanvas
         item.OnSelectItem -= OnItemClick;
     }
 
-    public void OnItemClick(PoolID name, UIItemType type)
+    public void OnItemClick(PoolID name,PantSkin pant ,UIItemType type)
     {
         if(type == UIItemType.Hair)
         {
             GameplayManager.Inst.PlayerScript.ChangeHair(name);
+        }
+        else if(type == UIItemType.Pant)
+        {
+            GameplayManager.Inst.PlayerScript.ChangePant(pant);
         }
     }
 }

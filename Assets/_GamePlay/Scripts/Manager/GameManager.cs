@@ -98,14 +98,14 @@ namespace MoveStopMove.Manager
                 gameData.Hair = PlayerPrefs.GetInt(Player.P_HAIR);
                 gameData.Set = PlayerPrefs.GetInt(Player.P_SET);
             }
-
-
+            
             for(int i = 0; i < persistentDataObjects.Count; i++)
             {
                 persistentDataObjects[i].LoadGame(gameData);
             }
 
             Debug.Log("Load Data");
+            Debug.Log(((PoolID)gameData.Weapon).ToString());
         }
         public void SaveGame()
         {
@@ -122,6 +122,8 @@ namespace MoveStopMove.Manager
             PlayerPrefs.SetInt(Player.P_SET, gameData.Set);
 
             Debug.Log("Save Data");
+            Debug.Log(((PoolID)gameData.Weapon).ToString());
+
         }
 
 

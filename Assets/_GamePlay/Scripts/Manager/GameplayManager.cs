@@ -24,7 +24,10 @@ public enum PantSkin
     Pokemon = 5,
     Rainbow = 6,
     Skull = 7,
-    Vantim = 8
+    Vantim = 8,
+
+
+    None = 10000,    
 }
 
 namespace MoveStopMove.Manager
