@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public enum CameraPosition
 {
@@ -23,44 +24,36 @@ public class CameraMove : MonoBehaviour
 
     public readonly Vector3 ShopSkinPosition = new Vector3(0.05f, 2.44f, 3.43f);
     public readonly Vector3 ShopSkinRotation = new Vector3(30, 180, 0);
-
-
+    [SerializeField]
+    CinemachineVirtualCamera virtualCamera;
+    CinemachineFramingTransposer comp;
 
     private float speed = 2f;
     private Vector3 targetPos;
     private Vector3 targetRot;
+
     private bool IsReachDestination = true;
     private bool IsReachRotation = true;
     float rate = 0;
 
+    private void Awake()
+    {
+        comp = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+    }
+
     // Update is called once per frame
     void Update()
-    {
-        if (!IsReachDestination)
-        {
-            Move();
-        }
-
+    {      
         if (!IsReachRotation)
         {
             Rotate();
         }
-        
     }
 
-    private void Move()
-    {
-        Vector3 newPos = Vector3.Lerp(transform.localPosition, targetPos, speed * Time.deltaTime);
-        if((transform.localPosition - newPos).sqrMagnitude < 0.0000001f)
-        {
-            IsReachDestination = true;
-        }
-        transform.localPosition = newPos;
-    }
 
     private void Rotate()
     {
-        Vector3 newRot = Vector3.Lerp(transform.localRotation.eulerAngles, targetRot, speed * Time.deltaTime);
+        Vector3 newRot = Vector3.Lerp(transform.rotation.eulerAngles, targetRot, speed * Time.deltaTime);
         if((transform.localRotation.eulerAngles - newRot).sqrMagnitude < 0.0000001f)
         {
             IsReachRotation = true;
@@ -83,7 +76,7 @@ public class CameraMove : MonoBehaviour
         {
             targetPos = GameplayPosition;
             targetRot = GameplayRotation;
-            speed = 6;
+            speed = 10;
         }
         else if(position == CameraPosition.ShopSkin)
         {
@@ -97,5 +90,6 @@ public class CameraMove : MonoBehaviour
             targetRot = ShopWeaponRotation;
             speed = 4;
         }
+        comp.m_TrackedObjectOffset = targetPos;
     }
 }

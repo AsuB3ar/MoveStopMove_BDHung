@@ -49,6 +49,7 @@ public class CanvasMainMenu : UICanvas,IPersistentData
         else
         {
             isDirty = true;
+            GameplayManager.Inst.SetCameraPosition(CameraPosition.MainMenu);
         }
     }
 

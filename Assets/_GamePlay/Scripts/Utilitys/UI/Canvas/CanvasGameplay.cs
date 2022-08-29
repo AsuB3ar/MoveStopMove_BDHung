@@ -48,8 +48,8 @@ public class CanvasGameplay : UICanvas
             pos.x = Mathf.Clamp(pos.x, minX, maxX);
             pos.y = Mathf.Clamp(pos.y, minY, maxY);
             pos.z = 0;
-            indicators[characters[i]].transform.position = pos;
-            
+            indicators[characters[i]].transform.position = pos;           
+            indicators[characters[i]].SetDirection();
 
         }
     }

@@ -53,14 +53,7 @@ namespace MoveStopMove.Manager
 
         private void Start()
         {
-            this.persistentDataObjects = FindAllDataPersistentObject();           
-        }
-
-        private List<IPersistentData> FindAllDataPersistentObject()
-        {
-            IEnumerable<IPersistentData> dataPersistentObjects = FindObjectsOfType<MonoBehaviour>().OfType<IPersistentData>();
-
-            return new List<IPersistentData>(dataPersistentObjects);
+               
         }
 
         public void StartGame()

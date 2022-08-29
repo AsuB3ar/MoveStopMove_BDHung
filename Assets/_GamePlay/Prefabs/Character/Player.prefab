@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba936a12f7e2f5343b19a1592d42a841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 0}
 --- !u!1 &680344163154300117
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,7 +1281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5614459181001223723, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: m_Center.y
-      value: 0.45
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 5654369632037256341, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1919,7 +1920,7 @@ MonoBehaviour:
   PhysicModule: {fileID: 8452699186967667623}
   AnimModule: {fileID: 3498892711340079917}
   Weapon: {fileID: 2193068112873909060}
-  type: 0
+  GameData: {fileID: 0}
 --- !u!1001 &7942242260661931794
 PrefabInstance:
   m_ObjectHideFlags: 0

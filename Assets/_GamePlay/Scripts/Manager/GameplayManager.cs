@@ -95,7 +95,7 @@ namespace MoveStopMove.Manager
         }
 
         public void SetCameraPosition(CameraPosition position)
-        {
+        {          
             cameraMove.MoveTo(position);
         }
     }

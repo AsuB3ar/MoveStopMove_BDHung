@@ -23,12 +23,12 @@ namespace MoveStopMove.Manager
         int difficulty = 3;
         [SerializeField]
         List<LevelData> levelDatas;
-        [SerializeField]
-        LevelData currentLevelData;
+        
         [SerializeField]
         private GameObject Ground;
         [SerializeField]             
         private Vector3 position = Vector3.zero;
+        LevelData currentLevelData;
         private Vector3 groundSize;
         private List<GameObject> obstances = new List<GameObject>();
 
