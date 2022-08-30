@@ -262,7 +262,7 @@ namespace MoveStopMove.Core
         }
 
         //TODO: Combat Function(Covert to a system)
-        public void AddStatus()
+        public virtual void AddStatus()
         {
             Data.Level += 1;
 

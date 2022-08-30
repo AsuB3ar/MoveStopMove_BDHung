@@ -17,4 +17,6 @@ MonoBehaviour:
   scale: {x: 0, y: 0, z: 0}
   icon: {fileID: 21300000, guid: c3f2033d89140f14fa374298183290c0, type: 3}
   poolID: 10000
+  pant: 0
   type: 1
+  Price: 150

@@ -19,7 +19,7 @@ namespace Utilitys {
 
             UIItem UIItemScript = Cache.GetUIItem(uiItemObject);
             UIItemScript.SetIcon(data.icon);
-            UIItemScript.SetData(data.poolID,data.pant,data.type);
+            UIItemScript.SetData(data.poolID,data.pant,data.type,data.Price);
 
             uiItemObject.transform.SetParent(contentTranform);
             uiItemObjects.Add(uiItemObject);

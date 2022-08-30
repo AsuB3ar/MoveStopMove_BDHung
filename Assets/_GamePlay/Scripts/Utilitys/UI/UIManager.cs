@@ -20,7 +20,7 @@ public enum UIID
     UICShopWeapon = 7
 }
 
-[DefaultExecutionOrder(-1)]
+[DefaultExecutionOrder(-15)]
 public class UIManager : Singleton<UIManager>
 {
     

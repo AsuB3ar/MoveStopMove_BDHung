@@ -20,8 +20,9 @@ namespace MoveStopMove.Core
 
         public const string P_HIGHTEST_SCORE = "PlayerHighestScore";
         public const string P_CURRENT_REGION = "PlayerCurrentRegion";
+        public const string P_CASH = "PlayerCash";
 
-        public GameData GameData;
+        private GameData GameData;
 
         protected override void Awake()
         {
@@ -29,6 +30,7 @@ namespace MoveStopMove.Core
             Data = ScriptableObject.CreateInstance(typeof(CharacterData)) as CharacterData;
             LogicSystem.SetCharacterInformation(Data, gameObject.transform);
             WorldInterfaceSystem.SetCharacterInformation(Data);
+            GameData = GameManager.Inst.GameData;
         }
 
         protected override void OnEnable()
@@ -87,6 +89,11 @@ namespace MoveStopMove.Core
         {
             base.ChangeWeapon(weapon);
             GameData.SetIntData(P_WEAPON, ref GameData.Weapon, (int)weapon.Name);
+        }
+        public override void AddStatus()
+        {
+            base.AddStatus();
+            GameplayManager.Inst.SetCameraPosition(Data.Size);
         }
 
         public void Win()

@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoveStopMove.Manager;
 using MoveStopMove.ContentCreation;
+using MoveStopMove.Core.Data;
+using TMPro;
 
 public class CanvasShopWeapon : UICanvas
 {
+    [SerializeField]
+    TMP_Text cash;
     [SerializeField]
     private List<ItemData> itemDatas = new List<ItemData>();
     [SerializeField]
     private Transform ContentTF;
     private List<UIItem> items = new List<UIItem>();
-    
+
+    GameData Data;
+    private void Awake()
+    {
+        Data = GameManager.Inst.GameData;
+    }
 
     private void Start()
     {
@@ -22,7 +31,7 @@ public class CanvasShopWeapon : UICanvas
 
             UIItem UIItemScript = Cache.GetUIItem(uiItem);
             UIItemScript.SetIcon(itemDatas[i].icon);
-            UIItemScript.SetData(itemDatas[i].poolID,itemDatas[i].pant,itemDatas[i].type);
+            UIItemScript.SetData(itemDatas[i].poolID,itemDatas[i].pant,itemDatas[i].type,itemDatas[i].Price);
 
             uiItem.transform.SetParent(ContentTF);
 
@@ -34,6 +43,7 @@ public class CanvasShopWeapon : UICanvas
     {
         base.Open();
         GameplayManager.Inst.SetCameraPosition(CameraPosition.ShopWeapon);
+        LoadData();
     }
     public void Subscribe(UIItem item)
     {
@@ -47,13 +57,13 @@ public class CanvasShopWeapon : UICanvas
         item.OnSelectItem -= OnItemClick;
     }
 
-    public void OnItemClick(PoolID name,PantSkin pant,UIItemType type)
+    public void OnItemClick(UIItem item)
     {
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
 
-        if (type == UIItemType.Weapon)
+        if (item.Type == UIItemType.Weapon)
         {
-            GameObject weapon = PrefabManager.Inst.PopFromPool(name);
+            GameObject weapon = PrefabManager.Inst.PopFromPool(item.ItemName);
             GameplayManager.Inst.PlayerScript.ChangeWeapon(Cache.GetBaseWeapon(weapon));
         }
     }
@@ -64,6 +74,11 @@ public class CanvasShopWeapon : UICanvas
         GameplayManager.Inst.SetCameraPosition(CameraPosition.MainMenu);
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
+    }
+
+    private void LoadData()
+    {
+        cash.text = Data.Cash.ToString();
     }
 
 }

@@ -10,6 +10,7 @@ public enum CameraPosition
     ShopSkin = 2,
     ShopWeapon = 3,
 }
+[DefaultExecutionOrder(-1)]
 public class CameraMove : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -42,18 +43,31 @@ public class CameraMove : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {      
+    void FixedUpdate()
+    {
+        if (!IsReachDestination)
+        {
+            Move();
+        }
         if (!IsReachRotation)
         {
             Rotate();
         }
     }
 
-
+    private void Move()
+    {
+        Vector3 newPos = Vector3.Lerp(comp.m_TrackedObjectOffset, targetPos, speed * Time.fixedDeltaTime);
+        if((comp.m_TrackedObjectOffset - newPos).sqrMagnitude < 0.0000001f)
+        {
+            IsReachDestination = true;
+        }
+        comp.m_TrackedObjectOffset = newPos;
+    }
+    
     private void Rotate()
     {
-        Vector3 newRot = Vector3.Lerp(transform.rotation.eulerAngles, targetRot, speed * Time.deltaTime);
+        Vector3 newRot = Vector3.Lerp(transform.rotation.eulerAngles, targetRot, speed * Time.fixedDeltaTime);
         if((transform.localRotation.eulerAngles - newRot).sqrMagnitude < 0.0000001f)
         {
             IsReachRotation = true;
@@ -63,8 +77,7 @@ public class CameraMove : MonoBehaviour
 
     public void MoveTo(CameraPosition position)
     {
-        IsReachDestination = false;
-        IsReachRotation = false;
+        
 
         if(position == CameraPosition.MainMenu)
         {
@@ -76,7 +89,7 @@ public class CameraMove : MonoBehaviour
         {
             targetPos = GameplayPosition;
             targetRot = GameplayRotation;
-            speed = 10;
+            speed = 6;
         }
         else if(position == CameraPosition.ShopSkin)
         {
@@ -90,6 +103,17 @@ public class CameraMove : MonoBehaviour
             targetRot = ShopWeaponRotation;
             speed = 4;
         }
-        comp.m_TrackedObjectOffset = targetPos;
+        IsReachDestination = false;
+        IsReachRotation = false;
+    }
+
+    public void MoveTo(float size)
+    {
+        targetPos = GameplayPosition;
+        targetPos.y *= size;
+        targetPos.z *= size;
+
+        speed = 6;
+        IsReachDestination = false;
     }
 }

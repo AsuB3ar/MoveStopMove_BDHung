@@ -14,6 +14,7 @@ namespace MoveStopMove.Manager
     using MoveStopMove.Core.Data;
     using MoveStopMove.Core;
     using System.Linq;
+    [DefaultExecutionOrder(-10)]
     public class GameManager : Singleton<GameManager>
     {
         //[SerializeField] UserData userData;

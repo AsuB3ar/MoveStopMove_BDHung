@@ -5,10 +5,19 @@ using MoveStopMove.Manager;
 using MoveStopMove.ContentCreation;
 using UnityEngine.UI;
 using Utilitys;
+using MoveStopMove.Core.Data;
+using TMPro;
+
 public class CanvasShopSkin : UICanvas
 {
     [SerializeField]
-    Button firstButton;
+    TMP_Text cash;  
+    [SerializeField]
+    Button buyButton;
+    [SerializeField]
+    TMP_Text buyButtonText;
+    [SerializeField]
+    List<Button> tabButtons;
     [SerializeField]
     private List<ItemData> hairItemDatas = new List<ItemData>();
     [SerializeField]
@@ -17,9 +26,19 @@ public class CanvasShopSkin : UICanvas
     private List<ScrollViewController> scrollViews;
     private List<UIItem> items = new List<UIItem>();
 
+    private GameData Data;
+    private Button currentButtonTab;
+    private UIItem currentItem;
+    private int currentPrice;
+    private void Awake()
+    {
+        Data = GameManager.Inst.GameData;
+        currentButtonTab = tabButtons[0];
+    }
     private void Start()
     {
-        firstButton.Select();
+        currentButtonTab.Select();
+        buyButton.gameObject.SetActive(false);
         for(int i = 0; i < hairItemDatas.Count; i++)
         {
             UIItem UIItemScript = scrollViews[0].AddUIItem(hairItemDatas[i]);       
@@ -36,6 +55,7 @@ public class CanvasShopSkin : UICanvas
     {
         base.Open();
         GameplayManager.Inst.SetCameraPosition(CameraPosition.ShopSkin);
+        LoadData();
     }
     public void OpenTab(int type)
     {
@@ -68,16 +88,33 @@ public class CanvasShopSkin : UICanvas
         item.OnSelectItem -= OnItemClick;
     }
 
-    public void OnItemClick(PoolID name,PantSkin pant ,UIItemType type)
+    public void OnItemClick(UIItem item)
     {
+        if (!buyButton.gameObject.activeInHierarchy)
+        {
+            buyButton.gameObject.SetActive(true);
+        }
+
+        currentItem = item;
+        currentButtonTab.Select();
+        currentPrice = item.Price;        
+
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
-        if (type == UIItemType.Hair)
+        if (item.Type == UIItemType.Hair)
         {
-            GameplayManager.Inst.PlayerScript.ChangeHair(name);
+            GameplayManager.Inst.PlayerScript.ChangeHair(item.ItemName);
+            currentButtonTab = tabButtons[0];
         }
-        else if(type == UIItemType.Pant)
+        else if(item.Type == UIItemType.Pant)
         {
-            GameplayManager.Inst.PlayerScript.ChangePant(pant);
+            GameplayManager.Inst.PlayerScript.ChangePant(item.PantType);
+            currentButtonTab = tabButtons[1];
         }
+        buyButtonText.text = currentPrice.ToString();
+    }
+
+    private void LoadData()
+    {
+        cash.text = Data.Cash.ToString();
     }
 }

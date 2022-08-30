@@ -6,13 +6,24 @@ using TMPro;
 using MoveStopMove.Manager;
 using MoveStopMove.Core.Data;
 
-public class CanvasMainMenu : UICanvas,IPersistentData
+public class CanvasMainMenu : UICanvas
 {
     bool isDirty = false;
+    
     [SerializeField]
-    TMP_Text heightRank;
+    TMP_Text descriptionPlayText;
     [SerializeField]
-    TMP_Text region;
+    TMP_Text cash;
+
+
+    GameData Data;
+    private const string ZONE = "Zone:";
+    private const string BEST = " - Best:#";
+
+    public void Awake()
+    {
+        Data = GameManager.Inst.GameData;
+    }
     public void PlayGameButton()
     {
         UIManager.Inst.OpenUI(UIID.UICGamePlay);
@@ -37,31 +48,27 @@ public class CanvasMainMenu : UICanvas,IPersistentData
 
     public override void Open()
     {
-        base.Open();
+        base.Open();       
         if (isDirty)
         {
             //GameplayManager.Inst.PlayerScript.Reset();
             GameManager.Inst.StopGame();
             LevelManager.Inst.OpenLevel(1);
-            SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
-            GameplayManager.Inst.SetCameraPosition(CameraPosition.MainMenu);
+            SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);            
         }
         else
         {
             isDirty = true;
-            GameplayManager.Inst.SetCameraPosition(CameraPosition.MainMenu);
         }
+        GameplayManager.Inst.SetCameraPosition(CameraPosition.MainMenu);
+        LoadData();
     }
 
-    public void LoadGame(GameData data)
+    public void LoadData()
     {
-        //heightRank.text = data.HighestRank.ToString();
-        //region.text = data.CurrentRegion.ToString();
-
+        string des = ZONE + Data.CurrentRegion.ToString() + BEST + Data.HighestRank.ToString();
+        descriptionPlayText.text = des;
+        cash.text = Data.Cash.ToString();
     }
 
-    public void SaveGame(ref GameData data)
-    {
-        
-    }
 }

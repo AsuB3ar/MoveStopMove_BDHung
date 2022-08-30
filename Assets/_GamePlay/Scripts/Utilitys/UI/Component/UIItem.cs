@@ -13,7 +13,7 @@ public enum UIItemType
 }
 public class UIItem : MonoBehaviour
 {
-    public event Action<PoolID,PantSkin,UIItemType> OnSelectItem;
+    public event Action<UIItem> OnSelectItem;
     [SerializeField]
     PoolID itemName;
     [SerializeField]
@@ -21,10 +21,16 @@ public class UIItem : MonoBehaviour
     [SerializeField]
     PantSkin pantType;
     [SerializeField]
+    int price;
+    [SerializeField]
     Image icon;
     [SerializeField]
     Image background;
 
+    public PoolID ItemName => itemName;
+    public UIItemType Type => type;
+    public PantSkin PantType => pantType;
+    public int Price => price;
     Color color;
     private void Start()
     {
@@ -33,7 +39,7 @@ public class UIItem : MonoBehaviour
 
     public void OnItemClicked()
     {
-        OnSelectItem?.Invoke(itemName,pantType,type);
+        OnSelectItem?.Invoke(this);
     }
 
     public void SetIcon(Sprite sprite)
@@ -41,10 +47,11 @@ public class UIItem : MonoBehaviour
         icon.sprite = sprite;
     }
 
-    public void SetData(PoolID itemName,PantSkin pantType,UIItemType type)
+    public void SetData(PoolID itemName,PantSkin pantType,UIItemType type,int price)
     {
         this.itemName = itemName;
         this.type = type;
         this.pantType = pantType;
+        this.price = price;
     }
 }

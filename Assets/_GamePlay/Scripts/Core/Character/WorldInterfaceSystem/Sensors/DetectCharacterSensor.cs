@@ -7,7 +7,7 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
 {
     public class DetectCharacterSensor : BaseSensor
     {
-        private readonly Vector3 unit = new Vector3(1, 0.01f, 1);
+        private readonly Vector3 unit = new Vector3(1, 0.05f, 1);
 
         [SerializeField]
         Transform checkPoint;

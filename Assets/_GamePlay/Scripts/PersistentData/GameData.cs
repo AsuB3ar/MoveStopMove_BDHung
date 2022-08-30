@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MoveStopMove.Manager;
 
 namespace MoveStopMove.Core.Data
 {
     [CreateAssetMenu(fileName = "GameData", menuName = "Data/Game", order = 1)]
     public class GameData : ScriptableObject
     {
+        private const string POOL_ID_ITEM_NAME = "PoolID";
+        private const string PANT_SKIN_ITEM_NAME = "PantSkin";
+
+
+
         #region Player Data
         #region Stats
         public float Speed = 3;
@@ -23,6 +29,10 @@ namespace MoveStopMove.Core.Data
         #region Poverty
         public int HighestRank = 100;
         public int CurrentRegion = 1;
+        public int Cash = 0;
+
+        public Dictionary<PoolID, int> PoolID2State = new Dictionary<PoolID, int>();
+        public Dictionary<PantSkin, int> PantSkin2State = new Dictionary<PantSkin, int>();
         #endregion
         #endregion
 
@@ -98,8 +108,25 @@ namespace MoveStopMove.Core.Data
             Set = PlayerPrefs.GetInt(Player.P_SET,0);
             #endregion
             #region Poverty
-            HighestRank = PlayerPrefs.GetInt(Player.P_HIGHTEST_SCORE,100);
-            CurrentRegion = PlayerPrefs.GetInt(Player.P_CURRENT_REGION,1);
+            HighestRank = PlayerPrefs.GetInt(Player.P_HIGHTEST_SCORE, 100);
+            CurrentRegion = PlayerPrefs.GetInt(Player.P_CURRENT_REGION, 1);
+            Cash = PlayerPrefs.GetInt(Player.P_CASH, 0);
+
+            List<PoolID> poolIdItems = GameplayManager.Inst.HairSkins;
+            List<PantSkin> pantSkinItems = GameplayManager.Inst.PantSkins;
+
+            for (int i = 0; i < poolIdItems.Count; i++)
+            {
+                PoolID2State.Add(poolIdItems[i], GetDataState(POOL_ID_ITEM_NAME, (int)poolIdItems[i], 0));
+            }
+
+            for(int i = 0; i < pantSkinItems.Count; i++)
+            {
+                PantSkin2State.Add(pantSkinItems[i], GetDataState(PANT_SKIN_ITEM_NAME, (int)pantSkinItems[i], 0));
+            }
+
+            PoolID2State[PoolID.Hair_Arrow] = 1;
+            PantSkin2State[PantSkin.Batman] = 1;
             #endregion
             #endregion
         }
