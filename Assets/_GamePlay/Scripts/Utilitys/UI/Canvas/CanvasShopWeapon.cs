@@ -30,8 +30,7 @@ public class CanvasShopWeapon : UICanvas
             uiItem.transform.position = Vector3.zero;
 
             UIItem UIItemScript = Cache.GetUIItem(uiItem);
-            UIItemScript.SetIcon(itemDatas[i].icon);
-            UIItemScript.SetData(itemDatas[i].poolID,itemDatas[i].pant,itemDatas[i].type,itemDatas[i].Price);
+            UIItemScript.SetData(itemDatas[i]);
 
             uiItem.transform.SetParent(ContentTF);
 

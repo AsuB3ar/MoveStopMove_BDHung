@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.EventSystems;
+using MoveStopMove.ContentCreation;
 
 public enum UIItemType
 {
@@ -23,14 +24,24 @@ public class UIItem : MonoBehaviour
     [SerializeField]
     int price;
     [SerializeField]
+    ItemState state;
+
+    [SerializeField]
     Image icon;
     [SerializeField]
     Image background;
+    [SerializeField]
+    GameObject lockIcon;
+
+    private ItemData data;
+    public ItemData ItemData => data;
 
     public PoolID ItemName => itemName;
     public UIItemType Type => type;
     public PantSkin PantType => pantType;
     public int Price => price;
+
+    public ItemState State => state;
     Color color;
     private void Start()
     {
@@ -42,16 +53,36 @@ public class UIItem : MonoBehaviour
         OnSelectItem?.Invoke(this);
     }
 
-    public void SetIcon(Sprite sprite)
+    
+
+    public void SetData(ItemData data)
+    {
+        this.data = data;
+        this.itemName = data.poolID;
+        this.type = data.type;
+        this.pantType = data.pant;
+        this.price = data.price;
+        this.state = data.state;
+
+        SetIcon(data.icon);
+    }
+ 
+
+    public void SetLock(ItemState value)
+    {
+        state = value;
+        if(state == ItemState.Lock)
+        {
+            lockIcon.SetActive(true);
+        }
+        else if(state == ItemState.Unlock)
+        {
+            lockIcon.SetActive(false);
+        }
+        
+    }
+    private void SetIcon(Sprite sprite)
     {
         icon.sprite = sprite;
-    }
-
-    public void SetData(PoolID itemName,PantSkin pantType,UIItemType type,int price)
-    {
-        this.itemName = itemName;
-        this.type = type;
-        this.pantType = pantType;
-        this.price = price;
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 610871823629036413}
   - component: {fileID: 1753217543845794275}
   m_Layer: 5
-  m_Name: HairButton
+  m_Name: HairButtonTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 521650088941209380}
   - component: {fileID: 2531060282611753005}
   m_Layer: 5
-  m_Name: PantButton
+  m_Name: PantButtonTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDestroyOnClose: 0
-  cash: {fileID: 8493855272105855195}
+  cashText: {fileID: 8493855272105855195}
   buyButton: {fileID: 6954775320367045080}
   buyButtonText: {fileID: 7573183900675586945}
   tabButtons:
@@ -1262,6 +1262,34 @@ PrefabInstance:
     - target: {fileID: 723266109712151917, guid: a195ba35fc5a91d4f8916ebe73911145, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631555503651747319, guid: a195ba35fc5a91d4f8916ebe73911145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631555503651747319, guid: a195ba35fc5a91d4f8916ebe73911145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631555503651747319, guid: a195ba35fc5a91d4f8916ebe73911145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5589326927155017418}
+    - target: {fileID: 4631555503651747319, guid: a195ba35fc5a91d4f8916ebe73911145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631555503651747319, guid: a195ba35fc5a91d4f8916ebe73911145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnBuy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631555503651747319, guid: a195ba35fc5a91d4f8916ebe73911145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CanvasShopSkin, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631555503651747319, guid: a195ba35fc5a91d4f8916ebe73911145, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8297701096262001081, guid: a195ba35fc5a91d4f8916ebe73911145, type: 3}
       propertyPath: m_Name

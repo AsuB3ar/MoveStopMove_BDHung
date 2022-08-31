@@ -48,8 +48,9 @@ namespace MoveStopMove.Manager
             //userData?.OnInitData();
 
             //ChangeState(GameState.MainMenu);
-            UIManager.Inst.OpenUI(UIID.UICMainMenu);
             LoadGame();
+            UIManager.Inst.OpenUI(UIID.UICMainMenu);
+            
         }
 
         private void Start()

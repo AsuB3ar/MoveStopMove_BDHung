@@ -8,8 +8,8 @@ namespace MoveStopMove.Core.Data
     [CreateAssetMenu(fileName = "GameData", menuName = "Data/Game", order = 1)]
     public class GameData : ScriptableObject
     {
-        private const string POOL_ID_ITEM_NAME = "PoolID";
-        private const string PANT_SKIN_ITEM_NAME = "PantSkin";
+        public const string POOL_ID_ITEM_NAME = "PoolID";
+        public const string PANT_SKIN_ITEM_NAME = "PantSkin";
 
 
 
@@ -110,7 +110,7 @@ namespace MoveStopMove.Core.Data
             #region Poverty
             HighestRank = PlayerPrefs.GetInt(Player.P_HIGHTEST_SCORE, 100);
             CurrentRegion = PlayerPrefs.GetInt(Player.P_CURRENT_REGION, 1);
-            Cash = PlayerPrefs.GetInt(Player.P_CASH, 0);
+            Cash = PlayerPrefs.GetInt(Player.P_CASH, 10000);
 
             List<PoolID> poolIdItems = GameplayManager.Inst.HairSkins;
             List<PantSkin> pantSkinItems = GameplayManager.Inst.PantSkins;
@@ -129,6 +129,54 @@ namespace MoveStopMove.Core.Data
             PantSkin2State[PantSkin.Batman] = 1;
             #endregion
             #endregion
+        }
+
+        public void ResetData()
+        {
+            PlayerPrefs.DeleteAll();
+            PoolID2State.Clear();
+            PantSkin2State.Clear();
+            OnInitData();
+            //#region Player Data
+            //#region Stats
+            //SetFloatData(Player.P_SPEED,ref Speed, 3);
+            //SetIntData(Player.P_WEAPON,ref Weapon, (int)PoolID.Weapon_Arrow);
+            //#endregion
+
+            //#region Skins
+            //SetIntData(Player.P_COLOR,ref Color, 0);
+            //SetIntData(Player.P_PANT,ref Pant, (int)PantSkin.Batman);
+            //SetIntData(Player.P_HAIR,ref Hair, (int)PoolID.Hair_Arrow);
+            //SetIntData(Player.P_SET,ref Set, 0);
+            //#endregion
+
+            //#region Poverty
+            //SetIntData(Player.P_HIGHTEST_SCORE,ref HighestRank, 100);
+            //SetIntData(Player.P_CURRENT_REGION,ref CurrentRegion, 1);
+            //SetIntData(Player.P_CASH,ref Cash, 10000);
+
+            //List<PoolID> poolIdItems = GameplayManager.Inst.HairSkins;
+            //List<PantSkin> pantSkinItems = GameplayManager.Inst.PantSkins;
+
+            //for (int i = 0; i < poolIdItems.Count; i++)
+            //{
+            //    SetDataState(POOL_ID_ITEM_NAME, (int)poolIdItems[i], 0);
+            //    PoolID2State[poolIdItems[i]] = 0;
+            //}
+
+            //for (int i = 0; i < pantSkinItems.Count; i++)
+            //{
+            //    SetDataState(PANT_SKIN_ITEM_NAME, (int)pantSkinItems[i], 0);
+            //    PantSkin2State[pantSkinItems[i]] = 0;
+            //}
+
+            //SetDataState(POOL_ID_ITEM_NAME, (int)PoolID.Hair_Arrow, 1);
+            //PoolID2State[PoolID.Hair_Arrow] = 1;
+
+            //SetDataState(POOL_ID_ITEM_NAME, (int)PantSkin.Batman, 1);
+            //PantSkin2State[PantSkin.Batman] = 1;
+            //#endregion
+            //#endregion
         }
     }
 }

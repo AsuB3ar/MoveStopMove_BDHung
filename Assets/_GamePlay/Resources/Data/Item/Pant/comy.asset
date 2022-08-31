@@ -19,4 +19,5 @@ MonoBehaviour:
   poolID: 10000
   pant: 2
   type: 1
-  Price: 200
+  price: 500
+  state: 0

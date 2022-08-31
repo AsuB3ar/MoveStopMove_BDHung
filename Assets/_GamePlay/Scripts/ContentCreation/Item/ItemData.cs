@@ -22,9 +22,9 @@ namespace MoveStopMove.ContentCreation
         public PoolID poolID;
         public PantSkin pant;
         public UIItemType type;
-        public int Price;
+        public int price;
 
         [Header("Dynamic Data")]
-        public ItemState State;
+        public ItemState state;
     }
 }

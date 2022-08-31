@@ -18,8 +18,8 @@ namespace Utilitys {
             uiItemObject.transform.position = Vector3.zero;
 
             UIItem UIItemScript = Cache.GetUIItem(uiItemObject);
-            UIItemScript.SetIcon(data.icon);
-            UIItemScript.SetData(data.poolID,data.pant,data.type,data.Price);
+            UIItemScript.SetData(data);
+            UIItemScript.SetLock(data.state);
 
             uiItemObject.transform.SetParent(contentTranform);
             uiItemObjects.Add(uiItemObject);
