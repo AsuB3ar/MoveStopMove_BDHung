@@ -16,7 +16,11 @@ public class CanvasShopWeapon : UICanvas
     private Transform ContentTF;
     private List<UIItem> items = new List<UIItem>();
 
+    [SerializeField]
+    GameObject cameraScreenSpace;
+
     GameData Data;
+    ItemData weaponUnlock;
     private void Awake()
     {
         Data = GameManager.Inst.GameData;
@@ -31,6 +35,7 @@ public class CanvasShopWeapon : UICanvas
 
             UIItem UIItemScript = Cache.GetUIItem(uiItem);
             UIItemScript.SetData(itemDatas[i]);
+            UIItemScript.SetLock(itemDatas[i].state);
 
             uiItem.transform.SetParent(ContentTF);
 
@@ -42,7 +47,9 @@ public class CanvasShopWeapon : UICanvas
     {
         base.Open();
         GameplayManager.Inst.SetCameraPosition(CameraPosition.ShopWeapon);
+        //cameraScreenSpace.SetActive(true);
         LoadData();
+        
     }
     public void Subscribe(UIItem item)
     {
@@ -67,6 +74,11 @@ public class CanvasShopWeapon : UICanvas
         }
     }
 
+    public override void Close()
+    {
+        base.Close();
+        //cameraScreenSpace.SetActive(false);
+    }
     public void CloseButton()
     {
         UIManager.Inst.OpenUI(UIID.UICMainMenu);
@@ -78,6 +90,16 @@ public class CanvasShopWeapon : UICanvas
     private void LoadData()
     {
         cash.text = Data.Cash.ToString();
+
+        for(int i = 0; i < itemDatas.Count; i++)
+        {
+            itemDatas[i].state = (ItemState)Data.PoolID2State[itemDatas[i].poolID];
+            if(itemDatas[i].state == ItemState.Unlock)
+            {
+                Debug.Log(itemDatas[i].poolID);
+                weaponUnlock = itemDatas[i];
+            }
+        }
     }
 
 }

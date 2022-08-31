@@ -43,6 +43,7 @@ namespace MoveStopMove.Manager
         public BaseCharacter PlayerScript;
         public Camera PlayerCamera;
         public GameObject TargetIndicator;
+        public Vector3 InitScaleTargetIndicator;
         [SerializeField]
         CameraMove cameraMove;
         [SerializeField]
@@ -54,7 +55,11 @@ namespace MoveStopMove.Manager
         public readonly List<PantSkin> PantSkins = new List<PantSkin>() { PantSkin.Batman, PantSkin.Chambi, PantSkin.Comy, PantSkin.Dabao, PantSkin.Onion, PantSkin.Pokemon, PantSkin.Rainbow, PantSkin.Skull, PantSkin.Vantim };
         public readonly List<PoolID> WeaponNames = new List<PoolID>() { PoolID.Weapon_Axe1, PoolID.Weapon_Knife1, PoolID.Weapon_Axe2, PoolID.Weapon_Arrow };
 
-
+        protected override void Awake()
+        {
+            base.Awake();
+            InitScaleTargetIndicator = TargetIndicator.transform.localScale;
+        }
         public UnityEngine.Color GetColor(GameColor color)
         {
             return GetMaterial(color).color;

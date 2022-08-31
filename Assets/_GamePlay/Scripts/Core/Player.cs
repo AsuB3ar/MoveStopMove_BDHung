@@ -101,10 +101,14 @@ namespace MoveStopMove.Core
             ((InputModule)NavigationModule).Active = false;
         }
 
-        private void SetIndicatorPosition(Vector3 pos, bool active)
+        private void SetIndicatorPosition(BaseCharacter character, bool active)
         {
+            
             GameplayManager.Inst.TargetIndicator.SetActive(active);
-            GameplayManager.Inst.TargetIndicator.transform.position = pos + Vector3.up * 0.1f;
+            if (!active) return;
+
+            GameplayManager.Inst.TargetIndicator.transform.position = character.gameObject.transform.position + Vector3.up * 0.1f;
+            GameplayManager.Inst.TargetIndicator.transform.localScale = character.Size * GameplayManager.Inst.InitScaleTargetIndicator;
         }
 
         private void LoadData()

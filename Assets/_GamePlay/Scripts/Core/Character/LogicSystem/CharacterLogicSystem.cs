@@ -28,7 +28,7 @@ namespace MoveStopMove.Core.Character.LogicSystem
         }
         public void ReceiveInformation(WorldInterfaceData Data)
         {
-            Parameter.CharacterPositions = Data.CharacterPositions;
+            Parameter.TargetCharacter = Data.TargetCharacter;
             Parameter.IsGrounded = Data.IsGrounded;
             Parameter.IsHaveGround = Data.IsHaveGround;
             //Debug.Log("Logic:" + Data.CharacterPositions.Count);

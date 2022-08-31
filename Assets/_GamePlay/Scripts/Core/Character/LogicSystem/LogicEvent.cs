@@ -15,6 +15,6 @@ namespace MoveStopMove.Core.Character.LogicSystem
         public Action<string, int> SetInt_Anim;
         public Action<Vector3, float> DealDamage;
         public Action<bool> SetActive;
-        public Action<Vector3, bool> SetTargetIndicatorPosition;
+        public Action<BaseCharacter, bool> SetTargetIndicatorPosition;
     }
 }

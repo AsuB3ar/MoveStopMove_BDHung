@@ -20,7 +20,7 @@ namespace MoveStopMove.Core.Character.NavigationSystem
             Parameter.IsHaveGround = Data.IsHaveGround;
             Parameter.IsGrounded = Data.IsGrounded;
             Parameter.IsHaveObstances = Data.IsHaveObstances;
-            Parameter.CharacterPositions = Data.CharacterPositions;
+            Parameter.TargetCharacter = Data.TargetCharacter;
         }
 
         public void SetCharacterInformation(Transform Character,Transform SensorTF ,int PlayerInstanceID)

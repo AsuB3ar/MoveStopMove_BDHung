@@ -53,7 +53,7 @@ public class CanvasMainMenu : UICanvas
         {
             //GameplayManager.Inst.PlayerScript.Reset();
             GameManager.Inst.StopGame();
-            LevelManager.Inst.OpenLevel(1);
+            LevelManager.Inst.OpenLevel(Data.CurrentRegion);
             SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);            
         }
         else
@@ -66,7 +66,7 @@ public class CanvasMainMenu : UICanvas
 
     public void LoadData()
     {
-        string des = ZONE + Data.CurrentRegion.ToString() + BEST + Data.HighestRank.ToString();
+        string des = ZONE + (Data.CurrentRegion + 1).ToString() + BEST + Data.HighestRank.ToString();
         descriptionPlayText.text = des;
         cash.text = Data.Cash.ToString();
     }

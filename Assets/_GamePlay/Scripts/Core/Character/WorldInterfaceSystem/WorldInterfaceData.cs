@@ -12,7 +12,7 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
         public bool IsExitRoom = false;
         public bool IsHaveObstances = false;
 
-        public List<Vector3> CharacterPositions = new List<Vector3>();
+        public BaseCharacter TargetCharacter;
 
 
         protected override void UpdateDataClone()
@@ -26,7 +26,8 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
             Clone.IsExitRoom = IsExitRoom;
             Clone.IsHaveObstances = IsHaveObstances;
 
-            Clone.CharacterPositions = Cache.GetCacheList(Clone.CharacterPositions.GetHashCode(),CharacterPositions);
+            Clone.TargetCharacter = TargetCharacter;
+            //Clone.TargetCharacter = Cache.GetCacheList(Clone.TargetCharacter.GetHashCode(),TargetCharacter);
             //NOTE: Clone list EatBricks
         }
     }

@@ -23,22 +23,8 @@ namespace Utilitys.AI
             Event.SetVelocity(Vector3.zero);
 
             //TODO: Need to change here
-            Vector3 newDirection;
-            direction = Parameter.CharacterPositions[0] - Parameter.PlayerTF.position;
-            targetPosition = Parameter.CharacterPositions[0];
-
-            direction.y = 0;
-            for (int i = 1; i < Parameter.CharacterPositions.Count; i++)
-            {
-                newDirection = Parameter.CharacterPositions[i] - Parameter.PlayerTF.position;
-                newDirection.y = 0;
-
-                if(newDirection.sqrMagnitude < direction.sqrMagnitude)
-                {
-                    direction = newDirection;
-                    targetPosition = Parameter.CharacterPositions[i];
-                }
-            }
+            targetPosition = Parameter.TargetCharacter.gameObject.transform.position;
+            direction = Parameter.TargetCharacter.gameObject.transform.position - Parameter.PlayerTF.position;
             
             Quaternion rot = MathHelper.GetQuaternion2Vector(Vector2.up, new Vector2(-direction.x, direction.z));
 
@@ -53,13 +39,8 @@ namespace Utilitys.AI
             if (Data.CharacterData.Hp <= 0)
             {
                 StateMachine.ChangeState(State.Die);
-            }
-
-            if (Parameter.CharacterPositions.Count > 0)
-            {             
-                Event.SetTargetIndicatorPosition?.Invoke(targetPosition, true);
-            }
-
+            }            
+                      
             return 0;
         }
 
@@ -87,7 +68,7 @@ namespace Utilitys.AI
         public override void Exit()
         {
             base.Exit();                     
-            Event.SetTargetIndicatorPosition?.Invoke(Vector3.zero, false);
+            Event.SetTargetIndicatorPosition?.Invoke(null, false);
             Event.SetBool_Anim(GameConst.ANIM_IS_ATTACK, false);
         }
 

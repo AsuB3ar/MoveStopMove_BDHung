@@ -297,7 +297,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 166127594924431304, guid: 6ef89d6ea0ee4114ea1fa5fcbe1fa422, type: 3}
       propertyPath: dragThreshold
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 1469762956795308472, guid: 6ef89d6ea0ee4114ea1fa5fcbe1fa422, type: 3}
       propertyPath: m_PresetInfoIsWorld

@@ -61,7 +61,7 @@ namespace MoveStopMove.Manager
             GameplayManager.Inst.PlayerScript = Cache.GetBaseCharacter(GameplayManager.Inst.Player);
             GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
             GameManager.Inst.OnStartGame += RunLevel;
-            OpenLevel(1);          
+            OpenLevel(GameManager.Inst.GameData.CurrentRegion);          
         }
 
         public void OnInit()
@@ -83,7 +83,7 @@ namespace MoveStopMove.Manager
         public void OpenLevel(int level)
         {
             //TODO: Set Data Level
-            currentLevel = level - 1;
+            currentLevel = level;
             currentLevelData = levelDatas[currentLevel];
             DestructLevel();
             GameplayManager.Inst.PlayerScript.Reset();
@@ -108,7 +108,7 @@ namespace MoveStopMove.Manager
                 GameObject obstance = PrefabManager.Inst.PopFromPool(PoolID.Obstance);
                 obstance.transform.parent = StaticEnvironment;
 
-                float value = UnityEngine.Random.Range(1, 4f);
+                float value = UnityEngine.Random.Range(3, 6f);
                 Vector3 scale = new Vector3(value, value, value);
                 obstance.transform.localScale = scale;
 
@@ -139,7 +139,7 @@ namespace MoveStopMove.Manager
         
         private void OnPlayerDie(BaseCharacter player)
         {
-            ((CanvasFail)UIManager.Inst.OpenUI(UIID.UICFail)).SetRank(NumOfRemainingPlayers);
+            ((CanvasFail)UIManager.Inst.OpenUI(UIID.UICFail)).SetRank(NumOfRemainingPlayers + 1);
             UIManager.Inst.CloseUI(UIID.UICGamePlay);
             
             OnLoseLevel?.Invoke();

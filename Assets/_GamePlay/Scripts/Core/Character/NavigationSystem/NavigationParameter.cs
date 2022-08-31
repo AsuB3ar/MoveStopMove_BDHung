@@ -16,6 +16,6 @@ namespace MoveStopMove.Core.Character.NavigationSystem
         public bool IsHaveGround = false;
         public bool IsHaveObstances = false;
 
-        public List<Vector3> CharacterPositions;
+        public BaseCharacter TargetCharacter;
     }
 }

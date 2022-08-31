@@ -25,11 +25,24 @@ namespace MoveStopMove.Core.Character.LogicSystem
             //StateMachine.Report = true;            
         }
 
+        bool isIndicatorActive = false;
         public override void UpdateData()
         {
             if (StateMachine.IsStarted)
             {
                 StateMachine.CurrentState.LogicUpdate();
+
+                if(Parameter.TargetCharacter != null)
+                {
+                    Event.SetTargetIndicatorPosition?.Invoke(Parameter.TargetCharacter, true);
+                    isIndicatorActive = true;
+                }
+                else if(isIndicatorActive)
+                {
+                    Event.SetTargetIndicatorPosition?.Invoke(null, false);
+                    isIndicatorActive = false;
+                }
+
             }
             
         }

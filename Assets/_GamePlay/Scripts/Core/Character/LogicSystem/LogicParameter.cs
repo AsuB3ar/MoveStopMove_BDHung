@@ -13,7 +13,7 @@ namespace MoveStopMove.Core.Character.LogicSystem
         public bool IsGrounded;
         public bool IsHaveGround;
         public Transform PlayerTF;
-        public List<Vector3> CharacterPositions;
+        public BaseCharacter TargetCharacter;
         
     }
 }

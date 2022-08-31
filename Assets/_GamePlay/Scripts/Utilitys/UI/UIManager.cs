@@ -27,7 +27,7 @@ public class UIManager : Singleton<UIManager>
     private Dictionary<UIID, UICanvas> UICanvas = new Dictionary<UIID, UICanvas>();
 
     public Transform CanvasParentTF;
-
+    public UICanvas ShopWeaponCanvas;
     #region Canvas
 
     protected override void Awake()

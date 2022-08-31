@@ -16,39 +16,59 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
         Collider parentCollider;
         //[SerializeField]
         //SensorType type;
+        float minDistance;
+        BaseCharacter target;
 
         Collider[] temp = new Collider[10];
         private Queue<Collider> oldCharacters = new Queue<Collider>();
         public override void UpdateData()
         {
+            target = null;
             checkRadius = Parameter.CharacterData.AttackRange;
             Array.Clear(temp, 0, temp.Length);
             Physics.OverlapBoxNonAlloc(checkPoint.position, unit * checkRadius, temp, Quaternion.identity, layer);
-            EnterCheck(temp);
+            //EnterCheck(temp);
             StayCheck(temp);
             //Debug.Log(Data.CharacterPositions.Count);
         }
 
         private void StayCheck(Collider[] characters)
         {
-            Data.CharacterPositions.Clear();
+            Data.TargetCharacter = null;
             for (int i = 0; i < characters.Length; i++)
             {
                 if (characters[i] == null || characters[i] == parentCollider)
                     continue;
                 //Debug.Log((characters[i].transform.position - checkPoint.position).sqrMagnitude);
 
-                if ((characters[i].transform.position - checkPoint.position).sqrMagnitude < checkRadius * checkRadius)
+                float distance = (characters[i].transform.position - checkPoint.position).sqrMagnitude;
+                if (distance < checkRadius * checkRadius)
                 {
-                    Data.CharacterPositions.Add(characters[i].transform.position);
-                }
-                
+                    if (target == null)
+                    {
+                        minDistance = (characters[i].transform.position - checkPoint.position).sqrMagnitude;
+                        target = Cache.GetBaseCharacter(characters[i]);
+                        continue;
+                    }
+
+                    if(distance < minDistance)
+                    {
+                        minDistance = distance;
+                        target = Cache.GetBaseCharacter(characters[i]);
+                    }
+                }                              
             }
+
+            if(target != null)
+            {
+                Data.TargetCharacter = target;
+            }
+            
         }
 
         private void EnterCheck(Collider[] characters)
         {
-            Data.CharacterPositions.Clear();
+            Data.TargetCharacter = null;
             int oldCount = oldCharacters.Count;
             for (int i = 0; i < characters.Length; i++)
             {
@@ -58,7 +78,7 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
                 {
                     if((characters[i].transform.position - checkPoint.position).sqrMagnitude < checkRadius * checkRadius)
                     {
-                        Data.CharacterPositions.Add(characters[i].transform.position);
+                        Data.TargetCharacter = Cache.GetBaseCharacter(characters[i]);
                     }                    
                 }
                 oldCharacters.Enqueue(characters[i]);

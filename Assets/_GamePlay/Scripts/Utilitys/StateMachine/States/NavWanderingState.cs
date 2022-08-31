@@ -28,7 +28,7 @@ namespace Utilitys.AI
         }
         public override int LogicUpdate()
         {
-            if(Parameter.CharacterPositions.Count > 0)
+            if(Parameter.TargetCharacter != null)
             {
                 StateMachine.ChangeState(State.Combat);
             }

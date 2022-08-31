@@ -28,7 +28,7 @@ namespace MoveStopMove.Core.Data
 
         #region Poverty
         public int HighestRank = 100;
-        public int CurrentRegion = 1;
+        public int CurrentRegion = 0;
         public int Cash = 0;
 
         public Dictionary<PoolID, int> PoolID2State = new Dictionary<PoolID, int>();
@@ -109,15 +109,22 @@ namespace MoveStopMove.Core.Data
             #endregion
             #region Poverty
             HighestRank = PlayerPrefs.GetInt(Player.P_HIGHTEST_SCORE, 100);
-            CurrentRegion = PlayerPrefs.GetInt(Player.P_CURRENT_REGION, 1);
+            CurrentRegion = PlayerPrefs.GetInt(Player.P_CURRENT_REGION, 0);
             Cash = PlayerPrefs.GetInt(Player.P_CASH, 10000);
 
             List<PoolID> poolIdItems = GameplayManager.Inst.HairSkins;
+            List<PoolID> weaponItems = GameplayManager.Inst.WeaponNames;
             List<PantSkin> pantSkinItems = GameplayManager.Inst.PantSkins;
+            
 
             for (int i = 0; i < poolIdItems.Count; i++)
             {
                 PoolID2State.Add(poolIdItems[i], GetDataState(POOL_ID_ITEM_NAME, (int)poolIdItems[i], 0));
+            }
+
+            for(int i = 0; i < weaponItems.Count; i++)
+            {
+                PoolID2State.Add(weaponItems[i], GetDataState(POOL_ID_ITEM_NAME, (int)weaponItems[i], 0));
             }
 
             for(int i = 0; i < pantSkinItems.Count; i++)
@@ -126,7 +133,9 @@ namespace MoveStopMove.Core.Data
             }
 
             PoolID2State[PoolID.Hair_Arrow] = 1;
+            PoolID2State[PoolID.Weapon_Arrow] = 1;
             PantSkin2State[PantSkin.Batman] = 1;
+
             #endregion
             #endregion
         }

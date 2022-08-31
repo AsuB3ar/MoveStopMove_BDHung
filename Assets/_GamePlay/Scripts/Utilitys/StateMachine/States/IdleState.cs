@@ -34,7 +34,7 @@ namespace Utilitys.AI
             {
                 StateMachine.ChangeState(State.Die);
             }
-            else if (Parameter.CharacterPositions.Count > 0 && Data.CharacterData.AttackCount > 0)
+            else if (Parameter.TargetCharacter != null && Data.CharacterData.AttackCount > 0)
             {
                 StateMachine.ChangeState(State.Attack);
             }
