@@ -6,6 +6,7 @@ using MoveStopMove.ContentCreation;
 using MoveStopMove.Core.Data;
 using TMPro;
 
+
 public class CanvasShopWeapon : UICanvas
 {
     [SerializeField]
@@ -14,12 +15,13 @@ public class CanvasShopWeapon : UICanvas
     private List<ItemData> itemDatas = new List<ItemData>();
     [SerializeField]
     private Transform ContentTF;
-    private List<UIItem> items = new List<UIItem>();
+    private Dictionary<UIItem,ItemData> items = new Dictionary<UIItem, ItemData>();
 
     [SerializeField]
     GameObject cameraScreenSpace;
 
     GameData Data;
+
     ItemData weaponUnlock;
     private void Awake()
     {
@@ -39,8 +41,10 @@ public class CanvasShopWeapon : UICanvas
 
             uiItem.transform.SetParent(ContentTF);
 
+            items.Add(UIItemScript, itemDatas[i]);
             Subscribe(UIItemScript);
         }
+
     }
 
     public override void Open()
@@ -53,7 +57,6 @@ public class CanvasShopWeapon : UICanvas
     }
     public void Subscribe(UIItem item)
     {
-        items.Add(item);
         item.OnSelectItem += OnItemClick;
     }
 
