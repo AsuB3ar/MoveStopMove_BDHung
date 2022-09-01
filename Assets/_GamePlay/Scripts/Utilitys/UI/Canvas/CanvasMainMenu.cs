@@ -41,7 +41,7 @@ public class CanvasMainMenu : UICanvas
 
     public void ShopWeaponButton()
     {
-        UIManager.Inst.OpenUI(UIID.UICShopWeapon);
+        UIManager.Inst.ShopWeaponCanvas.Open();
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
     }
@@ -61,10 +61,10 @@ public class CanvasMainMenu : UICanvas
             isDirty = true;
         }
         GameplayManager.Inst.SetCameraPosition(CameraPosition.MainMenu);
-        LoadData();
+        UpdateData();
     }
 
-    public void LoadData()
+    public void UpdateData()
     {
         string des = ZONE + (Data.CurrentRegion + 1).ToString() + BEST + Data.HighestRank.ToString();
         descriptionPlayText.text = des;

@@ -108,9 +108,9 @@ namespace MoveStopMove.Core.Data
             Set = PlayerPrefs.GetInt(Player.P_SET,0);
             #endregion
             #region Poverty
-            HighestRank = PlayerPrefs.GetInt(Player.P_HIGHTEST_SCORE, 100);
+            HighestRank = PlayerPrefs.GetInt(Player.P_HIGHTEST_SCORE, 50);
             CurrentRegion = PlayerPrefs.GetInt(Player.P_CURRENT_REGION, 0);
-            Cash = PlayerPrefs.GetInt(Player.P_CASH, 10000);
+            Cash = PlayerPrefs.GetInt(Player.P_CASH, 0);
 
             List<PoolID> poolIdItems = GameplayManager.Inst.HairSkins;
             List<PoolID> weaponItems = GameplayManager.Inst.WeaponNames;

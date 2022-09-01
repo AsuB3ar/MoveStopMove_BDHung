@@ -10,7 +10,7 @@ using MoveStopMove.Core;
 
 public class CanvasVictory : UICanvas
 {
-    public TMP_Text score_txt;
+    public TMP_Text cashText;
     public int currentLevel = 1;
     GameData Data;
 
@@ -18,9 +18,9 @@ public class CanvasVictory : UICanvas
     {
         Data = GameManager.Inst.GameData;
     }
-    public void SetScore(int score)
+    public void SetCash(int score)
     {
-        score_txt.text = score.ToString();
+        cashText.text = '+' + score.ToString();
     }
     public void SetCurrentLevel(int currentLevel)
     {

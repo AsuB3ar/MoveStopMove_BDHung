@@ -40,6 +40,7 @@ public class CanvasShopSkin : UICanvas
     {
         Data = GameManager.Inst.GameData;
         currentButtonTab = tabButtons[0];
+        LoadData();
     }
     private void Start()
     {
@@ -61,7 +62,8 @@ public class CanvasShopSkin : UICanvas
     {
         base.Open();
         GameplayManager.Inst.SetCameraPosition(CameraPosition.ShopSkin);
-        LoadData();
+        cashText.text = Data.Cash.ToString();
+        
     }
     public void OpenTab(int type)
     {
@@ -155,12 +157,13 @@ public class CanvasShopSkin : UICanvas
                 Data.SetDataState(GameData.PANT_SKIN_ITEM_NAME, (int)currentItem.PantType, 1);
                 break;
         }
+        buyButton.gameObject.SetActive(false);
         cashText.text = Data.Cash.ToString();
     }
 
     private void LoadData()
     {
-        cashText.text = Data.Cash.ToString();
+        
 
         for(int i = 0; i < hairItemDatas.Count; i++)
         {

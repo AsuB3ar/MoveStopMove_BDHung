@@ -5,82 +5,111 @@ using MoveStopMove.Manager;
 using MoveStopMove.ContentCreation;
 using MoveStopMove.Core.Data;
 using TMPro;
-
+using UnityEngine.UI;
+using MoveStopMove.Core;
 
 public class CanvasShopWeapon : UICanvas
 {
+    private readonly Vector3 ITEM_ROT = new Vector3(180, 0, 45);
+    
     [SerializeField]
-    TMP_Text cash;
+    TMP_Text cashText;
     [SerializeField]
-    private List<ItemData> itemDatas = new List<ItemData>();
+    private List<UIItemData> itemToObject = new List<UIItemData>();
     [SerializeField]
-    private Transform ContentTF;
-    private Dictionary<UIItem,ItemData> items = new Dictionary<UIItem, ItemData>();
-
+    GameObject buyButton;
     [SerializeField]
-    GameObject cameraScreenSpace;
+    TMP_Text buyButtonText;
+    [SerializeField]
+    GameObject weaponContain;
+    [SerializeField]
+    float speed;
 
     GameData Data;
+    ItemData currentWeapon;
 
-    ItemData weaponUnlock;
+    int currentIndex;
+    int unlockIndex;
+    int currentPrice;
     private void Awake()
     {
         Data = GameManager.Inst.GameData;
+        LoadData();
     }
 
-    private void Start()
+    private void FixedUpdate()
     {
-        for (int i = 0; i < itemDatas.Count; i++)
+        weaponContain.transform.Rotate(Vector3.up * speed * Time.fixedDeltaTime * 10);
+    }
+
+    public void ChangeWeapon(int value)
+    {
+        itemToObject[currentIndex].itemObject.SetActive(false);
+
+        currentIndex += value;
+        if(currentIndex >= itemToObject.Count)
         {
-            GameObject uiItem = PrefabManager.Inst.PopFromPool(PoolID.UIItem);
-            uiItem.transform.position = Vector3.zero;
-
-            UIItem UIItemScript = Cache.GetUIItem(uiItem);
-            UIItemScript.SetData(itemDatas[i]);
-            UIItemScript.SetLock(itemDatas[i].state);
-
-            uiItem.transform.SetParent(ContentTF);
-
-            items.Add(UIItemScript, itemDatas[i]);
-            Subscribe(UIItemScript);
+            currentIndex = 0;
         }
 
+        if(currentIndex < 0)
+        {
+            currentIndex = itemToObject.Count - 1;
+        }       
+        currentWeapon = itemToObject[currentIndex].itemData;
+        itemToObject[currentIndex].itemObject.SetActive(true);
+        currentPrice = currentWeapon.price;
+
+        if(currentWeapon.state == ItemState.Unlock)
+        {
+            EquipWeapon();
+            buyButton.SetActive(false);
+        }
+        else
+        {
+            buyButton.SetActive(true);
+            buyButtonText.text = currentWeapon.price.ToString();
+        }
+
+    }
+
+    
+
+    public void OnBuy()
+    {
+        if (Data.Cash < currentPrice)
+        {
+            Debug.Log("Not enough money!!");
+            return;
+        }
+
+        Data.SetIntData(Player.P_CASH, ref Data.Cash, Data.Cash - currentPrice);
+        Data.SetDataState(GameData.POOL_ID_ITEM_NAME, (int)currentWeapon.poolID, (int)ItemState.Unlock);
+        currentWeapon.state = ItemState.Unlock;
+
+        
+        EquipWeapon();
+        cashText.text = Data.Cash.ToString();
     }
 
     public override void Open()
     {
         base.Open();
         GameplayManager.Inst.SetCameraPosition(CameraPosition.ShopWeapon);
-        //cameraScreenSpace.SetActive(true);
-        LoadData();
-        
-    }
-    public void Subscribe(UIItem item)
-    {
-        item.OnSelectItem += OnItemClick;
-    }
 
-    public void UnSubscribe(UIItem item)
-    {
-        items.Remove(item);
-        item.OnSelectItem -= OnItemClick;
-    }
+        buyButton.SetActive(false);
+        itemToObject[currentIndex].itemObject.SetActive(false);      
+        currentIndex = unlockIndex;
+        currentWeapon = itemToObject[currentIndex].itemData;
+        currentPrice = currentWeapon.price;
+        itemToObject[currentIndex].itemObject.SetActive(true);
 
-    public void OnItemClick(UIItem item)
-    {
-        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
-
-        if (item.Type == UIItemType.Weapon)
-        {
-            GameObject weapon = PrefabManager.Inst.PopFromPool(item.ItemName);
-            GameplayManager.Inst.PlayerScript.ChangeWeapon(Cache.GetBaseWeapon(weapon));
-        }
+        cashText.text = Data.Cash.ToString();
     }
 
     public override void Close()
     {
         base.Close();
-        //cameraScreenSpace.SetActive(false);
     }
     public void CloseButton()
     {
@@ -92,17 +121,32 @@ public class CanvasShopWeapon : UICanvas
 
     private void LoadData()
     {
-        cash.text = Data.Cash.ToString();
-
-        for(int i = 0; i < itemDatas.Count; i++)
+        
+        for(int i = 0; i < itemToObject.Count; i++)
         {
-            itemDatas[i].state = (ItemState)Data.PoolID2State[itemDatas[i].poolID];
-            if(itemDatas[i].state == ItemState.Unlock)
+            ItemData item = itemToObject[i].itemData;
+            item.state = (ItemState)Data.PoolID2State[item.poolID];
+
+            if(item.state == ItemState.Unlock && item.poolID == (PoolID)Data.Weapon)
             {
-                Debug.Log(itemDatas[i].poolID);
-                weaponUnlock = itemDatas[i];
+                unlockIndex = i;
+                
             }
         }
-    }
 
+    }
+    private void EquipWeapon()
+    {
+        unlockIndex = currentIndex;
+        GameObject weapon = PrefabManager.Inst.PopFromPool(currentWeapon.poolID);
+        GameplayManager.Inst.PlayerScript.ChangeWeapon(Cache.GetBaseWeapon(weapon));
+        buyButton.SetActive(false);
+    }
+}
+
+[System.Serializable]
+public class UIItemData
+{
+    public ItemData itemData;
+    public GameObject itemObject;
 }

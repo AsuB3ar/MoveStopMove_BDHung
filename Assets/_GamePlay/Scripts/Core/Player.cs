@@ -58,7 +58,7 @@ namespace MoveStopMove.Core
         public override void OnInit()
         {
             base.OnInit();
-            Data.Hp = 10;
+            Data.Hp = 1;
             ((InputModule)NavigationModule).Active = true;
         }
 

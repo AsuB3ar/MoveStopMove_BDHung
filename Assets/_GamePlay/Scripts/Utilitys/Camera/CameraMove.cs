@@ -89,7 +89,7 @@ public class CameraMove : MonoBehaviour
         {
             targetPos = GameplayPosition;
             targetRot = GameplayRotation;
-            speed = 6;
+            speed = 8;
         }
         else if(position == CameraPosition.ShopSkin)
         {

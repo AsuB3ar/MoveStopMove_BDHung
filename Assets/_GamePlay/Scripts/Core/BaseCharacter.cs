@@ -268,9 +268,22 @@ namespace MoveStopMove.Core
 
             //TODO: Increase Size of character
             //TODO: Increase Size of Attack Range Indicator
-            SoundManager.Inst.PlaySound(SoundManager.Sound.Character_SizeUp, transform.position);
-            PhysicModule.SetScale(GameConst.Type.Character, 1.1f);
+            SoundManager.Inst.PlaySound(SoundManager.Sound.Character_SizeUp, transform.position);           
             VFX_AddStatus.Play();
+            
+            if(Data.Level < 10)
+            {
+                PhysicModule.SetScale(GameConst.Type.Character, 1.1f);
+            }
+            else if(Data.Level < 20)
+            {
+                PhysicModule.SetScale(GameConst.Type.Character, 1.05f);
+            }
+            else
+            {
+                PhysicModule.SetScale(GameConst.Type.Character, 1.02f);
+            }
+
         }
 
         private void Die()

@@ -11,7 +11,8 @@ public class CanvasFail : UICanvas
 {
     [SerializeField]
     TMP_Text text;
-
+    [SerializeField]
+    TMP_Text cashText;
     GameData Data;
 
     private void Awake()
@@ -32,5 +33,9 @@ public class CanvasFail : UICanvas
         {
             Data.SetIntData(Player.P_HIGHTEST_SCORE, ref Data.HighestRank, rank);
         }
+    }
+    public void SetCash(int cash)
+    {
+        cashText.text = '+' + cash.ToString();
     }
 }

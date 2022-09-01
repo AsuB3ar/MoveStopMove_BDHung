@@ -18,6 +18,7 @@ namespace MoveStopMove.Manager
         public Transform Level;
         public Transform StaticEnvironment;
 
+
         private List<BaseCharacter> characters = new List<BaseCharacter>();
         [SerializeField]
         int difficulty = 3;
@@ -31,7 +32,7 @@ namespace MoveStopMove.Manager
         LevelData currentLevelData;
         private Vector3 groundSize;
         private List<GameObject> obstances = new List<GameObject>();
-
+        private GameData GameData;
 
         private int numOfSpawnPlayers;
         private int numOfRemainingPlayers;
@@ -54,6 +55,7 @@ namespace MoveStopMove.Manager
             base.Awake();          
             gameplay = UIManager.Inst.GetUI(UIID.UICGamePlay) as CanvasGameplay;
             gameplay.Close();
+            GameData = GameManager.Inst.GameData;
         }
 
         private void Start()
@@ -83,7 +85,19 @@ namespace MoveStopMove.Manager
         public void OpenLevel(int level)
         {
             //TODO: Set Data Level
-            currentLevel = level;
+            if(level >= levelDatas.Count)
+            {
+                currentLevel = levelDatas.Count - 1;
+            }
+            else if(level < 0)
+            {
+                currentLevel = 0;
+            }
+            else
+            {
+                currentLevel = level;
+            }
+            
             currentLevelData = levelDatas[currentLevel];
             DestructLevel();
             GameplayManager.Inst.PlayerScript.Reset();
@@ -139,11 +153,15 @@ namespace MoveStopMove.Manager
         
         private void OnPlayerDie(BaseCharacter player)
         {
-            ((CanvasFail)UIManager.Inst.OpenUI(UIID.UICFail)).SetRank(NumOfRemainingPlayers + 1);
-            UIManager.Inst.CloseUI(UIID.UICGamePlay);
-            
-            OnLoseLevel?.Invoke();
-            
+            CanvasFail fail = ((CanvasFail)UIManager.Inst.OpenUI(UIID.UICFail));
+            fail.SetRank(NumOfRemainingPlayers + 1);
+
+            int bonusCash = GameplayManager.Inst.PlayerScript.Level * 3 + UnityEngine.Random.Range(10, 20);
+            GameData.SetIntData(Player.P_CASH, ref GameData.Cash, GameData.Cash + bonusCash);
+            fail.SetCash(bonusCash);
+
+            UIManager.Inst.CloseUI(UIID.UICGamePlay);            
+            OnLoseLevel?.Invoke();          
         }
         private void OnEnemyDie(BaseCharacter character)
         {
@@ -158,8 +176,12 @@ namespace MoveStopMove.Manager
             else
             {
                 OnWinLevel?.Invoke();
-                CanvasVictory victory = UIManager.Inst.OpenUI(UIID.UICVictory) as CanvasVictory;               
-                victory.SetScore(GameplayManager.Inst.PlayerScript.Level);
+                CanvasVictory victory = UIManager.Inst.OpenUI(UIID.UICVictory) as CanvasVictory;
+
+                int bonusCash = GameplayManager.Inst.PlayerScript.Level * 3 + UnityEngine.Random.Range(10, 50);
+                GameData.SetIntData(Player.P_CASH, ref GameData.Cash, GameData.Cash + bonusCash);
+
+                victory.SetCash(bonusCash);
                 victory.SetCurrentLevel(currentLevel);
                 currentLevel += 1;
                 UIManager.Inst.CloseUI(UIID.UICGamePlay);

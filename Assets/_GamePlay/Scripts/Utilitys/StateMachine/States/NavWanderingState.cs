@@ -80,7 +80,7 @@ namespace Utilitys.AI
             {
                 Vector3 direction = GameplayManager.Inst.Player.transform.position - Parameter.CharacterTF.position;
                 float angle = Vector3.SignedAngle(Vector3.forward, direction, Vector3.up) + 90;
-                newDirection = MathHelper.GetRandomDirection(angle - 90,angle + 90);
+                newDirection = MathHelper.GetRandomDirection(angle - 45,angle + 45);
             }
             else
             {

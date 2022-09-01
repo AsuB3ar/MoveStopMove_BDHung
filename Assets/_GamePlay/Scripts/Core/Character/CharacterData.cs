@@ -22,8 +22,20 @@ namespace MoveStopMove.Core.Data {
             get => level;
             set
             {
-                size = Mathf.Pow(1.1f, value - 1);
                 level = value;
+                if (value < 10)
+                {
+                    size = Mathf.Pow(1.1f, value - 1);
+                }
+                else if(value < 20)
+                {
+                    size = Mathf.Pow(1.1f, 9) * Mathf.Pow(1.05f, value - 10);
+                }
+                else
+                {
+                    size = Mathf.Pow(1.1f, 9) * Mathf.Pow(1.05f, 10) * Mathf.Pow(1.02f, value - 20);
+                }
+
             }
         }
         public float AttackRange => BaseAttackRange * Size;
