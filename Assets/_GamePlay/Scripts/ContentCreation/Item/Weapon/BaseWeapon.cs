@@ -26,7 +26,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         public BaseCharacter Character;
         public PoolID Name => data.poolID;
              
-        public virtual void DealDamage(Vector3 direction, float range, float scale)
+        public virtual void DealDamage(Vector3 direction, float range, float scale, bool isSpecial = false)
         {
             SoundManager.Inst.PlaySound(SoundManager.Sound.Weapon_Throw,gameObject.transform.position);
         }

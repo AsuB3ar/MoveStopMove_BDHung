@@ -13,7 +13,7 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
         public bool IsHaveObstances = false;
 
         public BaseCharacter TargetCharacter;
-
+        public bool IsSpecialAttack;
 
         protected override void UpdateDataClone()
         {
@@ -27,6 +27,7 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
             Clone.IsHaveObstances = IsHaveObstances;
 
             Clone.TargetCharacter = TargetCharacter;
+            Clone.IsSpecialAttack = IsSpecialAttack;
             //Clone.TargetCharacter = Cache.GetCacheList(Clone.TargetCharacter.GetHashCode(),TargetCharacter);
             //NOTE: Clone list EatBricks
         }

@@ -7,13 +7,16 @@ namespace MoveStopMove.Core.Character.LogicSystem
     using Utilitys;
     public class LogicData : AbstractDataSystem<LogicData>
     {
-        public CharacterData CharacterData;
+        public CharacterData CharacterData;       
         protected override void UpdateDataClone()
         {
             if(Clone == null)
             {
                 Clone = CreateInstance(typeof(LogicData)) as LogicData;
-            }          
+            }
         }
+
+        
+
     }
 }

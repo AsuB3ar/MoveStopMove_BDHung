@@ -13,6 +13,9 @@ namespace MoveStopMove.ContentCreation.Weapon
     }
     public class BaseBullet : MonoBehaviour
     {
+        private const float AMPLIFY_PARAMETER = 60;
+        private const float SPECIAL_MAX_SCALE = 3f;
+
         float range;
         BaseCharacter parentCharacter;
         [SerializeField]
@@ -26,18 +29,32 @@ namespace MoveStopMove.ContentCreation.Weapon
         float rotationSpeed = 30f;
         [SerializeField]
         float speed = 0.1f;
-        float amplifyParameter = 60;
-        Vector3 direction = Vector3.zero;
+        
 
-        float lastSpeed => speed * Time.fixedDeltaTime * amplifyParameter;
+        Vector3 direction = Vector3.zero;
+        bool isSpecial;
+        Vector3 specialScale;       
+        float currentSpeed;
+        float specialSpeed;
+        float lastSpeed => currentSpeed * Time.fixedDeltaTime * AMPLIFY_PARAMETER;
         [HideInInspector]
         public Collider SelfCharacterCollider;
-
+        private void Awake()
+        {
+            currentSpeed = speed;
+        }
         private void FixedUpdate()
         {
+            //Code When Special
+            if (isSpecial)
+            {
+                transform.localScale = Vector3.Lerp(transform.localScale, specialScale, 0.08f);
+                currentSpeed = Mathf.Lerp(currentSpeed, specialSpeed, 0.1f);
+            }
+
             if(Type == BulletType.HorizontalRotation)
             {
-                transform.Rotate(0, 0, -rotationSpeed * Time.fixedDeltaTime * amplifyParameter,Space.Self);
+                transform.Rotate(0, 0, -rotationSpeed * Time.fixedDeltaTime * AMPLIFY_PARAMETER,Space.Self);
             }
             if(direction.sqrMagnitude > 0.001)
             {
@@ -69,12 +86,23 @@ namespace MoveStopMove.ContentCreation.Weapon
 
         }
 
-        public void OnFire(Vector3 direction,float range,BaseCharacter parentCharacter)
+        public void OnFire(Vector3 direction,float range,BaseCharacter parentCharacter, bool isSpecial = false)
         {
             direction.y = 0;
             this.direction = direction.normalized;          
             this.range = range - lastSpeed * 6;
             this.parentCharacter = parentCharacter;
+            this.isSpecial = isSpecial;
+
+            if (isSpecial)
+            {
+                specialScale = transform.localScale * SPECIAL_MAX_SCALE;
+                specialSpeed = speed * BaseCharacter.GIFT_BONUS;
+            }
+            else
+            {
+                currentSpeed = speed;
+            }
 
             if(Type == BulletType.Normal)
             {

@@ -109,6 +109,14 @@ namespace Utilitys
             worldPosition = mainCamera.ScreenToWorldPoint(mousePos);
             return new Vector2(worldPosition.x, worldPosition.y); //Convert the position to 2D
         }
+
+        public static Vector3 GetMouseWorldPositionWithZ(Vector3 screenPosition,Camera camera,float z)
+        {
+            screenPosition.z = z;
+            Vector3 point = camera.ScreenToWorldPoint(screenPosition);
+            point.z = z;
+            return point;
+        }
         public static void RotateObject(Vector2 vec1, Vector2 vec2, GameObject gObject)
         {
             Quaternion quaternion = GetQuaternion2Vector(vec1, vec2);

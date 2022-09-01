@@ -11,6 +11,8 @@ namespace Utilitys.AI
         private int timeFrames;
         Vector3 direction;
         Vector3 targetPosition;
+
+        bool IsSpecialAttack;
         public AttackState(StateMachine<LogicParameter,LogicData> StateMachine, LogicParameter Parameter, LogicData Data, LogicEvent Event) 
             : base(StateMachine ,Parameter, Data, Event)
         {
@@ -19,19 +21,29 @@ namespace Utilitys.AI
         public override void Enter()
         {   
             base.Enter();
-            Event.SetBool_Anim(GameConst.ANIM_IS_ATTACK, true);
+            IsSpecialAttack = Parameter.IsSpecialAttack;
+
+            if (IsSpecialAttack == false)
+            {
+                Event.SetBool_Anim(GameConst.ANIM_IS_ATTACK, true);
+            }
+            else
+            {
+                Event.SetBool_Anim(GameConst.ANIM_IS_ULTI, true);
+            }
+
             Event.SetVelocity(Vector3.zero);
 
-            //TODO: Need to change here
             targetPosition = Parameter.TargetCharacter.gameObject.transform.position;
             direction = Parameter.TargetCharacter.gameObject.transform.position - Parameter.PlayerTF.position;
-            
+
             Quaternion rot = MathHelper.GetQuaternion2Vector(Vector2.up, new Vector2(-direction.x, direction.z));
 
             timeFrames = 0;
             Event.SetRotation(GameConst.Type.Model, rot);
-            Event.SetRotation(GameConst.Type.Sensor, rot);        
+            Event.SetRotation(GameConst.Type.Sensor, rot);
             Data.CharacterData.AttackCount = 0;
+
         }
 
         public override int LogicUpdate()
@@ -46,19 +58,39 @@ namespace Utilitys.AI
 
         public override int PhysicUpdate()
         {           
-            if (Parameter.MoveDirection.sqrMagnitude > 0.001f)
+                      
+            if (!IsSpecialAttack)
             {
-                StateMachine.ChangeState(State.Move);
-            }
-            else if (timeFrames >= GameConst.ANIM_IS_ATTACK_FRAMES)
-            {
-                StateMachine.ChangeState(State.Idle);
-            }          
+                if (Parameter.MoveDirection.sqrMagnitude > 0.001f)
+                {
+                    StateMachine.ChangeState(State.Move);
+                    return 0;
+                }
+                else if (timeFrames >= GameConst.ANIM_IS_ATTACK_FRAMES)
+                {
+                    StateMachine.ChangeState(State.Idle);
+                    return 0;
+                }
 
-            if (timeFrames == 12)
-            {
-                Event.DealDamage(direction, Data.CharacterData.AttackRange);
+                if (timeFrames == 12)
+                {
+                    Event.DealDamage(direction, Data.CharacterData.AttackRange);
+                }
             }
+            else
+            {
+                if (timeFrames >= GameConst.ANIM_IS_SPECIAL_ATTACK_FRAMES)
+                {
+                    StateMachine.ChangeState(State.Idle);
+                    return 0;
+                }
+
+                if (timeFrames == 17) //Animation Attack
+                {
+                    Event.SpecialDealDamage(direction, Data.CharacterData.AttackRange, true);
+                }
+            }
+            
 
             timeFrames++;
             return 0;
@@ -69,7 +101,16 @@ namespace Utilitys.AI
         {
             base.Exit();                     
             Event.SetTargetIndicatorPosition?.Invoke(null, false);
-            Event.SetBool_Anim(GameConst.ANIM_IS_ATTACK, false);
+            if (!IsSpecialAttack)
+            {
+                Event.SetBool_Anim(GameConst.ANIM_IS_ATTACK, false);
+            }
+            else
+            {
+                Event.SetBool_Anim(GameConst.ANIM_IS_ULTI, false);
+                Event.EndGiftBonus?.Invoke();
+            }
+            
         }
 
         

@@ -14,6 +14,32 @@ namespace MoveStopMove.Core.Character.LogicSystem
         public bool IsHaveGround;
         public Transform PlayerTF;
         public BaseCharacter TargetCharacter;
-        
+        #region Attack State Variable
+
+        private bool isSpecialAttack = false;
+        public bool IsSpecialAttack
+        {
+            get
+            {
+                if (isSpecialAttack)
+                {
+                    isSpecialAttack = false;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            set
+            {
+                if (value)
+                {
+                    isSpecialAttack = value;
+                }
+            }
+        }
+        #endregion
     }
 }

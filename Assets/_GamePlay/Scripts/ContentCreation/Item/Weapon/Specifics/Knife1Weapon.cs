@@ -7,9 +7,9 @@ namespace MoveStopMove.ContentCreation.Weapon
     using Manager;
     public class Knife1Weapon : BaseWeapon
     {
-        public override void DealDamage(Vector3 direction, float range, float size)
+        public override void DealDamage(Vector3 direction, float range, float size, bool isSpecial = false)
         {
-            base.DealDamage(direction, range, size);
+            base.DealDamage(direction, range, size, isSpecial);
             if (WeaponType == WeaponType.Normal)
             {
                 GameObject bullet = PrefabManager.Inst.PopFromPool(BulletPoolName);
@@ -17,7 +17,7 @@ namespace MoveStopMove.ContentCreation.Weapon
                 bullet.transform.localScale = Vector3.one * size;
 
                 BaseBullet bulletScript = Cache.GetBaseBullet(bullet);
-                bulletScript.OnFire(direction, range, Character);
+                bulletScript.OnFire(direction, range, Character, isSpecial);
             }
         }
 

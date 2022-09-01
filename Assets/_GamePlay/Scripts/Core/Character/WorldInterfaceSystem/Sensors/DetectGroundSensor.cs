@@ -19,7 +19,8 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
             if(groundCheck != null)
             {
                 Gizmos.DrawSphere(groundCheck.position, distance);
-            }       
+            }     
+            
         }
     }
 }

@@ -1547,10 +1547,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8684538965717568146, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: sensors.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8684538965717568146, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: sensors.Array.data[3]
+      value: 
+      objectReference: {fileID: 857908809153931384}
+    - target: {fileID: 8684538965717568146, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+      propertyPath: sensors.Array.data[4]
       value: 
       objectReference: {fileID: 479464120660480717}
     - target: {fileID: 9000281699598393025, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
@@ -1710,6 +1714,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4516260988997187901, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
   m_PrefabInstance: {fileID: 3789361948585805970}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &857908809153931384 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4571544058964123882, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
+  m_PrefabInstance: {fileID: 3789361948585805970}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 893368099b0e8e444832cf3c55552691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1282303763
 MonoBehaviour:
   m_ObjectHideFlags: 0

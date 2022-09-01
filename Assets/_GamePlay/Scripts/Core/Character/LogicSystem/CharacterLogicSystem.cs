@@ -21,6 +21,7 @@ namespace MoveStopMove.Core.Character.LogicSystem
             module.Initialize(Data,Parameter,Event);
         }
 
+
         public void SetCharacterInformation(CharacterData CharacterData, Transform PlayerTF)
         {
             Data.CharacterData = CharacterData;
@@ -31,6 +32,9 @@ namespace MoveStopMove.Core.Character.LogicSystem
             Parameter.TargetCharacter = Data.TargetCharacter;
             Parameter.IsGrounded = Data.IsGrounded;
             Parameter.IsHaveGround = Data.IsHaveGround;
+            Parameter.IsSpecialAttack = Data.IsSpecialAttack;
+
+            Event.CollideGift?.Invoke(Data.IsSpecialAttack);
             //Debug.Log("Logic:" + Data.CharacterPositions.Count);
         }
 

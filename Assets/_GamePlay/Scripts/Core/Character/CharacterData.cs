@@ -6,6 +6,8 @@ using UnityEngine;
 namespace MoveStopMove.Core.Data {
     public class CharacterData : ScriptableObject
     {
+        public const float BASE_ATTACK_RANGE = 3f;
+
         #region Stats
         private float size = 1;
         private int level = 1;
@@ -14,7 +16,7 @@ namespace MoveStopMove.Core.Data {
         public int Score = 0;
 
         public float Size => size;
-        public float BaseAttackRange = 3f;
+        public float BaseAttackRange = BASE_ATTACK_RANGE;
         public int Hp = 1;
         public int AttackCount = 1;
         public int Level

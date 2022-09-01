@@ -23,8 +23,8 @@ namespace MoveStopMove.Core
     public class BaseCharacter : MonoBehaviour,IInit,IDespawn
     {
         public event Action<BaseCharacter> OnDie;
+        public const float GIFT_BONUS = 1.6f;
 
-        private 
         protected VisualEffectController VFX_Hit;
         protected VisualEffectController VFX_AddStatus;
 
@@ -52,7 +52,6 @@ namespace MoveStopMove.Core
         protected AbstractPhysicModule PhysicModule;
         [SerializeField]
         protected AnimationModule AnimModule;
-        
 
 
         protected CharacterWorldInterfaceSystem WorldInterfaceSystem;
@@ -134,8 +133,11 @@ namespace MoveStopMove.Core
             LogicSystem.Event.SetFloat_Anim += AnimModule.SetFloat;
             LogicSystem.Event.SetInt_Anim += AnimModule.SetInt;
             LogicSystem.Event.DealDamage += DealDamage;
-            AnimModule.UpdateEventAnimationState += LogicSystem.ReceiveInformation;
+            LogicSystem.Event.SpecialDealDamage += DealDamage;
+            LogicSystem.Event.CollideGift += OnCollideGift;
+            LogicSystem.Event.EndGiftBonus += OnEndGiftBonus;
 
+            AnimModule.UpdateEventAnimationState += LogicSystem.ReceiveInformation;
             #endregion           
             
             timerDie.TimeOut1 += TimerEvent;
@@ -159,6 +161,9 @@ namespace MoveStopMove.Core
             LogicSystem.Event.SetFloat_Anim -= AnimModule.SetFloat;
             LogicSystem.Event.SetInt_Anim -= AnimModule.SetInt;
             LogicSystem.Event.DealDamage -= DealDamage;
+            LogicSystem.Event.SpecialDealDamage -= DealDamage;
+            LogicSystem.Event.CollideGift -= OnCollideGift;
+            LogicSystem.Event.EndGiftBonus -= OnEndGiftBonus;
 
             AnimModule.UpdateEventAnimationState -= LogicSystem.ReceiveInformation;
             #endregion
@@ -200,6 +205,11 @@ namespace MoveStopMove.Core
         protected virtual void DealDamage(Vector3 direction, float range)
         {
             Weapon.DealDamage(direction, range ,Data.Size);
+        }
+
+        protected virtual void DealDamage(Vector3 direction, float range, bool isSpecial)
+        {
+            Weapon.DealDamage(direction, range, Data.Size, isSpecial);
         }
 
         public virtual void ChangeColor(GameColor color)
@@ -248,6 +258,7 @@ namespace MoveStopMove.Core
                 Data.Weapon = (int)Weapon.Name;
             }          
         }
+            
         public void TakeDamage(int damage)
         {
             Data.Hp -= damage;
@@ -286,6 +297,18 @@ namespace MoveStopMove.Core
 
         }
 
+        protected virtual void OnCollideGift(bool value)
+        {
+            if (value)
+            {
+                Data.BaseAttackRange = CharacterData.BASE_ATTACK_RANGE * GIFT_BONUS;
+            }
+        }
+
+        protected virtual void OnEndGiftBonus()
+        {
+            Data.BaseAttackRange = CharacterData.BASE_ATTACK_RANGE;
+        }
         private void Die()
         {
             OnDie?.Invoke(this);

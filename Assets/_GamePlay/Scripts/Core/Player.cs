@@ -8,6 +8,7 @@ namespace MoveStopMove.Core
     using MoveStopMove.Core.Character.NavigationSystem;
     using MoveStopMove.Core.Data;
     using MoveStopMove.Manager;
+    using MoveStopMove.Core.Character.WorldInterfaceSystem;
     public class Player : BaseCharacter
     {
         public const string P_SPEED = "PlayerSpeed";
@@ -21,6 +22,10 @@ namespace MoveStopMove.Core
         public const string P_HIGHTEST_SCORE = "PlayerHighestScore";
         public const string P_CURRENT_REGION = "PlayerCurrentRegion";
         public const string P_CASH = "PlayerCash";
+        
+
+        [SerializeField]
+        private AttackIndicator attackIndicator;
 
         private GameData GameData;
 
@@ -37,6 +42,7 @@ namespace MoveStopMove.Core
         {
             base.OnEnable();
             LogicSystem.Event.SetTargetIndicatorPosition += SetIndicatorPosition;
+            
         }
 
         protected override void OnDisable()
@@ -58,7 +64,7 @@ namespace MoveStopMove.Core
         public override void OnInit()
         {
             base.OnInit();
-            Data.Hp = 1;
+            Data.Hp = 10;
             ((InputModule)NavigationModule).Active = true;
         }
 
@@ -100,7 +106,22 @@ namespace MoveStopMove.Core
         {
             ((InputModule)NavigationModule).Active = false;
         }
+        protected override void OnCollideGift(bool value)
+        {
+            base.OnCollideGift(value);
+            if (value)
+            {
+                attackIndicator.ScaleUp(GIFT_BONUS);
+                GameplayManager.Inst.SetCameraPosition(Data.Size * GIFT_BONUS);
+            }           
+        }
 
+        protected override void OnEndGiftBonus()
+        {
+            base.OnEndGiftBonus();
+            attackIndicator.ScaleUp(1);
+            GameplayManager.Inst.SetCameraPosition(Data.Size);
+        }
         private void SetIndicatorPosition(BaseCharacter character, bool active)
         {
             
@@ -110,6 +131,7 @@ namespace MoveStopMove.Core
             GameplayManager.Inst.TargetIndicator.transform.position = character.gameObject.transform.position + Vector3.up * 0.1f;
             GameplayManager.Inst.TargetIndicator.transform.localScale = character.Size * GameplayManager.Inst.InitScaleTargetIndicator;
         }
+
 
         private void LoadData()
         {

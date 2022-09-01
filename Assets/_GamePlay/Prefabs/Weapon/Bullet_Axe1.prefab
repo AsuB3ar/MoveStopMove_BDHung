@@ -50,7 +50,7 @@ MonoBehaviour:
     m_Bits: 64
   Type: 1
   poolName: 1
-  rotationSpeed: 20
+  rotationSpeed: 15
   speed: 0.1
   SelfCharacterCollider: {fileID: 0}
 --- !u!65 &9098460251365871072
