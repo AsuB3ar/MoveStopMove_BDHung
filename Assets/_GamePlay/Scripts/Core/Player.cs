@@ -106,10 +106,10 @@ namespace MoveStopMove.Core
         {
             ((InputModule)NavigationModule).Active = false;
         }
-        protected override void OnCollideGift(bool value)
+        protected override void OnCollideGift(Collider col)
         {
-            base.OnCollideGift(value);
-            if (value)
+            base.OnCollideGift(col);
+            if (col)
             {
                 attackIndicator.ScaleUp(GIFT_BONUS);
                 GameplayManager.Inst.SetCameraPosition(Data.Size * GIFT_BONUS);

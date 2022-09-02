@@ -19,7 +19,7 @@ namespace MoveStopMove.Core.Character.LogicSystem
         public Action<BaseCharacter, bool> SetTargetIndicatorPosition;
 
 
-        public Action<bool> CollideGift;
+        public Action<Collider> CollideGift;
         public Action EndGiftBonus;
     }
 }

@@ -10,6 +10,7 @@ namespace MoveStopMove.Core.Data
 
         public float Size;
         public List<Vector3> ObstancePositions;
+        public List<Vector3> GiftPositions;
         public int numOfPlayers = 50;
     }
 }

@@ -31,9 +31,10 @@ public enum PoolID
     None = 10000,
     UIItem = 10001,
     UITargetIndicator = 10002,
-    Obstance = 10003
-    
+    Obstance = 10003,
+    Gift = 10004
 
+    
 }
 namespace MoveStopMove.Manager
 {
@@ -91,6 +92,8 @@ namespace MoveStopMove.Manager
         [SerializeField]
         GameObject UIIndicator;
         [SerializeField]
+        GameObject Gift;
+        [SerializeField]
         GameObject pool;
         
 
@@ -124,7 +127,7 @@ namespace MoveStopMove.Manager
             CreatePool(UIItem, PoolID.UIItem);
             CreatePool(UIIndicator, PoolID.UITargetIndicator);
             CreatePool(Obstance, PoolID.Obstance);
-
+            CreatePool(Gift, PoolID.Gift);
             
         }
 

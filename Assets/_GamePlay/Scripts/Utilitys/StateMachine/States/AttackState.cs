@@ -21,7 +21,7 @@ namespace Utilitys.AI
         public override void Enter()
         {   
             base.Enter();
-            IsSpecialAttack = Parameter.IsSpecialAttack;
+            IsSpecialAttack = Parameter.Gift;
 
             if (IsSpecialAttack == false)
             {

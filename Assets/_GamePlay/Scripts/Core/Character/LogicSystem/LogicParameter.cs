@@ -17,7 +17,7 @@ namespace MoveStopMove.Core.Character.LogicSystem
         #region Attack State Variable
 
         private bool isSpecialAttack = false;
-        public bool IsSpecialAttack
+        public bool Gift
         {
             get
             {

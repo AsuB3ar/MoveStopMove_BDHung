@@ -48,6 +48,9 @@ MonoBehaviour:
   characterLayer:
     serializedVersion: 2
     m_Bits: 64
+  obstanceLayer:
+    serializedVersion: 2
+    m_Bits: 128
   Type: 1
   poolName: 3
   rotationSpeed: 20

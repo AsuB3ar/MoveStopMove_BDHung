@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 1981291714557465815}
   - component: {fileID: 5884681902314073183}
   - component: {fileID: 8014470013334374111}
-  - component: {fileID: 4199409470380631274}
   m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
@@ -113,20 +112,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4199409470380631274
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2903256673414318249}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &3426766286409808455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1783,17 +1768,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4516260988997187901, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
   m_PrefabInstance: {fileID: 7371453194641440624}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6430518520980692890 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4571544058964123882, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
-  m_PrefabInstance: {fileID: 7371453194641440624}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 893368099b0e8e444832cf3c55552691, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1234612114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1830,8 +1804,7 @@ MonoBehaviour:
   PhysicModule: {fileID: 8452699186967667623}
   AnimModule: {fileID: 3498892711340079917}
   Weapon: {fileID: 2193068112873909060}
-  GiftSensor: {fileID: 6430518520980692890}
-  AttackIndicator: {fileID: 680344163154300117}
+  attackIndicator: {fileID: 0}
 --- !u!1001 &7942242260661931794
 PrefabInstance:
   m_ObjectHideFlags: 0

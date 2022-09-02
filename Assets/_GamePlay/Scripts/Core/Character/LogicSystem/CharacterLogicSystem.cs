@@ -32,9 +32,9 @@ namespace MoveStopMove.Core.Character.LogicSystem
             Parameter.TargetCharacter = Data.TargetCharacter;
             Parameter.IsGrounded = Data.IsGrounded;
             Parameter.IsHaveGround = Data.IsHaveGround;
-            Parameter.IsSpecialAttack = Data.IsSpecialAttack;
+            Parameter.Gift = Data.Gift;
 
-            Event.CollideGift?.Invoke(Data.IsSpecialAttack);
+            Event.CollideGift?.Invoke(Data.Gift);
             //Debug.Log("Logic:" + Data.CharacterPositions.Count);
         }
 

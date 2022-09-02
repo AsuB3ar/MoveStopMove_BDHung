@@ -14,6 +14,7 @@ public enum CameraPosition
 public class CameraMove : MonoBehaviour
 {
     // Start is called before the first frame update
+    public const float SOFT_ZONE_HEIGHT_INIT = 0.05f;
     public readonly Vector3 MainMenuPosition = new Vector3(0, 1.5f, 3);
     public readonly Vector3 MainMenuRotation = new Vector3(15, 175, 0);
 
@@ -115,5 +116,6 @@ public class CameraMove : MonoBehaviour
 
         speed = 6;
         IsReachDestination = false;
+        comp.m_SoftZoneHeight = SOFT_ZONE_HEIGHT_INIT * size;
     }
 }

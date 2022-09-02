@@ -21,6 +21,8 @@ namespace MoveStopMove.ContentCreation.Weapon
         [SerializeField]
         LayerMask characterLayer;
         [SerializeField]
+        LayerMask obstanceLayer;
+        [SerializeField]
         BulletType Type;
         [SerializeField]
         PoolID poolName;
@@ -33,18 +35,35 @@ namespace MoveStopMove.ContentCreation.Weapon
 
         Vector3 direction = Vector3.zero;
         bool isSpecial;
+        bool isStop = false;
+
         Vector3 specialScale;       
         float currentSpeed;
         float specialSpeed;
         float lastSpeed => currentSpeed * Time.fixedDeltaTime * AMPLIFY_PARAMETER;
         [HideInInspector]
         public Collider SelfCharacterCollider;
+        private void OnEnable()
+        {
+            isStop = false;
+        }
         private void Awake()
         {
             currentSpeed = speed;
         }
         private void FixedUpdate()
         {
+            if (range < 0)
+            {
+                PrefabManager.Inst.PushToPool(this.gameObject, poolName, false);
+            }
+            else
+            {
+                range -= lastSpeed;
+            }
+
+            if (isStop)
+                return;
             //Code When Special
             if (isSpecial)
             {
@@ -62,14 +81,7 @@ namespace MoveStopMove.ContentCreation.Weapon
             }
 
             
-            if(range < 0)
-            {
-                PrefabManager.Inst.PushToPool(this.gameObject, poolName, false);
-            }
-            else
-            {
-                range -= lastSpeed;
-            }
+            
         }
         public void OnHit(BaseCharacter character)
         {
@@ -80,10 +92,8 @@ namespace MoveStopMove.ContentCreation.Weapon
                     PrefabManager.Inst.PushToPool(this.gameObject, poolName, false);
                     character.TakeDamage(1);
                     parentCharacter.AddStatus(); 
-                }
-                
+                }               
             }
-
         }
 
         public void OnFire(Vector3 direction,float range,BaseCharacter parentCharacter, bool isSpecial = false)
@@ -113,9 +123,15 @@ namespace MoveStopMove.ContentCreation.Weapon
 
         private void OnTriggerEnter(Collider col)
         {
+            Debug.Log(col.gameObject.layer);
             if(Mathf.Pow(2, col.gameObject.layer) == characterLayer)
             {
                 OnHit(Cache.GetBaseCharacter(col));
+            }
+            else if(Mathf.Pow(2, col.gameObject.layer) == obstanceLayer)
+            {
+                isStop = true;
+                Debug.Log("Collide Obstance");
             }
         }
     }

@@ -12,6 +12,7 @@ namespace MoveStopMove.Core
     using MoveStopMove.Core.Character.NavigationSystem;
     using MoveStopMove.Core.Character.PhysicSystem;
     using MoveStopMove.Core.Character.LogicSystem;
+    using MoveStopMove.ContentCreation;
     using ContentCreation.Weapon;
     using System;
     public enum CharacterType
@@ -297,11 +298,12 @@ namespace MoveStopMove.Core
 
         }
 
-        protected virtual void OnCollideGift(bool value)
+        protected virtual void OnCollideGift(Collider col)
         {
-            if (value)
+            if (col)
             {
                 Data.BaseAttackRange = CharacterData.BASE_ATTACK_RANGE * GIFT_BONUS;
+                Cache.GetGift(col.gameObject).OnDespawn();
             }
         }
 

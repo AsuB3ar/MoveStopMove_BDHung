@@ -7,19 +7,24 @@ namespace MoveStopMove.Manager
 {
     using Core;
     using Core.Data;
+    using ContentCreation;
     using Utilitys;
-    public class LevelManager : Singleton<LevelManager>,IInit,IPersistentData
+    using Utilitys.Timer;
+    public class LevelManager : Singleton<LevelManager>,IInit
     {
         public event Action OnWinLevel;
         public event Action OnLoseLevel;
         public const int MARGIN = 2;
+        public const int NUM_GIFT_MAX = 6;
+        public const float RANDOM_GIFT_POSITION = 2f;
+        public const float RANDOM_GIFT_TIME = 5f;
         public const float GROUNG_HEIGHT_PARAMETER = 0.42f;
+        
 
         public Transform Level;
         public Transform StaticEnvironment;
-
-
         private List<BaseCharacter> characters = new List<BaseCharacter>();
+
         [SerializeField]
         int difficulty = 3;
         [SerializeField]
@@ -32,6 +37,9 @@ namespace MoveStopMove.Manager
         LevelData currentLevelData;
         private Vector3 groundSize;
         private List<GameObject> obstances = new List<GameObject>();
+        private List<Gift> gifts = new List<Gift>();
+        private STimer giftTimer = new STimer();
+
         private GameData GameData;
 
         private int numOfSpawnPlayers;
@@ -66,6 +74,17 @@ namespace MoveStopMove.Manager
             OpenLevel(GameManager.Inst.GameData.CurrentRegion);          
         }
 
+        private void OnEnable()
+        {
+            giftTimer.TimeOut1 += TimerEvent;
+            GameManager.Inst.OnStartGame += StartSpawnGift;
+        }
+
+        private void OnDisable()
+        {
+            giftTimer.TimeOut1 -= TimerEvent;
+            GameManager.Inst.OnStartGame -= StartSpawnGift;
+        }
         public void OnInit()
         {
             characters.Clear();
@@ -80,6 +99,8 @@ namespace MoveStopMove.Manager
             }
             GameplayManager.Inst.PlayerScript.OnInit();
             ConstructLevel();
+
+            
         }
         
         public void OpenLevel(int level)
@@ -139,9 +160,15 @@ namespace MoveStopMove.Manager
         public void DestructLevel()
         {
             numOfSpawnPlayers = 0;
+            giftTimer.Stop();
             for (int i = 0; i < obstances.Count; i++)
             {
                 PrefabManager.Inst.PushToPool(obstances[i], PoolID.Obstance);
+            }
+
+            for(int i = 0; i < gifts.Count; i++)
+            {
+                gifts[i].OnDespawn();
             }
 
             while(characters.Count > 0)
@@ -281,14 +308,63 @@ namespace MoveStopMove.Manager
             return new Vector3(vecX, GameConst.INIT_CHARACTER_HEIGHT, vecZ);
         }
 
-        public void LoadGame(GameData data)
+
+        #region Spawn Gift
+        private void StartSpawnGift()
         {
-            currentLevel = data.CurrentRegion;
+            //Spawn Gift
+            giftTimer.Start(1f);
+        }
+        private void SpawnGift()
+        {
+            Vector3 pos;
+            float sizeScale = GameplayManager.Inst.PlayerScript.Size;
+            if (currentLevelData.GiftPositions.Count == 0)
+            {
+                pos = new Vector3();
+                pos.x = UnityEngine.Random.Range(-0.9f, 0.9f) * currentLevelData.Size;
+                pos.z = UnityEngine.Random.Range(-0.9f, 0.9f) * currentLevelData.Size;
+                pos.y = GameConst.INIT_CHARACTER_HEIGHT + sizeScale/2;
+            }
+            else
+            {
+                int index = UnityEngine.Random.Range(0, currentLevelData.GiftPositions.Count);
+                pos = currentLevelData.GiftPositions[index];
+                pos.x = pos.x * currentLevelData.Size + UnityEngine.Random.Range(-1f, 1f) * RANDOM_GIFT_POSITION;
+                pos.z = pos.z * currentLevelData.Size + UnityEngine.Random.Range(-1f, 1f) * RANDOM_GIFT_POSITION;
+                pos.y = GameConst.INIT_CHARACTER_HEIGHT + sizeScale/2;
+            }
+            GameObject gift = PrefabManager.Inst.PopFromPool(PoolID.Gift);            
+            gift.transform.parent = Level;
+            gift.transform.localPosition = pos;
+            gift.transform.localScale = Vector3.one * sizeScale;
+
+            Gift giftScript = Cache.GetGift(gift);
+            giftScript.OnGiftDespawn += OnGiftDespawn;
+            gifts.Add(giftScript);
         }
 
-        public void SaveGame(ref GameData data)
+        private void OnGiftDespawn(Gift gift)
         {
-            data.CurrentRegion = currentLevel;
+            gift.OnGiftDespawn -= OnGiftDespawn;
+            gifts.Remove(gift);
+            
+            if(gifts.Count < NUM_GIFT_MAX)
+            {
+                float time = UnityEngine.Random.Range(4f, 4f + RANDOM_GIFT_TIME);
+                giftTimer.Start(time);
+            }
         }
+
+        private void TimerEvent(int value)
+        {
+            SpawnGift();
+            if (gifts.Count < NUM_GIFT_MAX)
+            {
+                float time = UnityEngine.Random.Range(4f, 4f + RANDOM_GIFT_TIME);
+                giftTimer.Start(time);
+            }
+        }
+        #endregion
     }
 }
