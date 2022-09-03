@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstance : MonoBehaviour
+namespace MoveStopMove.ContentCreation
 {
-    [SerializeField]
-    GameObject opaqueObject;
-    
-    public void SetTransparent(bool value)
+    public class Obstance : MonoBehaviour
     {
-        opaqueObject.SetActive(!value);
+        [SerializeField]
+        GameObject opaqueObject;
+
+        public void SetTransparent(bool value)
+        {
+            opaqueObject.SetActive(!value);
+        }
     }
 }

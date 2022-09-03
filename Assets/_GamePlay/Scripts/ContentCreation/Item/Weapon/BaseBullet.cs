@@ -123,7 +123,6 @@ namespace MoveStopMove.ContentCreation.Weapon
 
         private void OnTriggerEnter(Collider col)
         {
-            Debug.Log(col.gameObject.layer);
             if(Mathf.Pow(2, col.gameObject.layer) == characterLayer)
             {
                 OnHit(Cache.GetBaseCharacter(col));
@@ -131,7 +130,6 @@ namespace MoveStopMove.ContentCreation.Weapon
             else if(Mathf.Pow(2, col.gameObject.layer) == obstanceLayer)
             {
                 isStop = true;
-                Debug.Log("Collide Obstance");
             }
         }
     }

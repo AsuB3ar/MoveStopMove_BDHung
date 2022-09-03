@@ -447,6 +447,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 544fd8abc0aed9c489c61a7390387f8f, type: 2}
   Ground: {fileID: 295663988}
   position: {x: 0, y: 0, z: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &483365650 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 38504644878032177, guid: 9d05394a2f38c044cab8440c1ffec4a0, type: 3}

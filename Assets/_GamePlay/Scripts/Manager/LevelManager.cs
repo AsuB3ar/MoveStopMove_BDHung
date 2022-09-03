@@ -23,6 +23,7 @@ namespace MoveStopMove.Manager
 
         public Transform Level;
         public Transform StaticEnvironment;
+        private List<Obstance> obstances = new List<Obstance>();
         private List<BaseCharacter> characters = new List<BaseCharacter>();
 
         [SerializeField]
@@ -34,9 +35,12 @@ namespace MoveStopMove.Manager
         private GameObject Ground;
         [SerializeField]             
         private Vector3 position = Vector3.zero;
+        [SerializeField]
+        private LayerMask groundLayer;
+
         LevelData currentLevelData;
-        private Vector3 groundSize;
-        private List<GameObject> obstances = new List<GameObject>();
+        private Vector3 groundSize;  
+        
         private List<Gift> gifts = new List<Gift>();
         private STimer giftTimer = new STimer();
 
@@ -84,6 +88,11 @@ namespace MoveStopMove.Manager
         {
             giftTimer.TimeOut1 -= TimerEvent;
             GameManager.Inst.OnStartGame -= StartSpawnGift;
+        }
+
+        private void FixedUpdate()
+        {
+            TransparentObstance();
         }
         public void OnInit()
         {
@@ -141,6 +150,7 @@ namespace MoveStopMove.Manager
             for (int i = 0; i < currentLevelData.ObstancePositions.Count; i++)
             {
                 GameObject obstance = PrefabManager.Inst.PopFromPool(PoolID.Obstance);
+                Obstance obstanceScript = Cache.GetObstance(obstance);
                 obstance.transform.parent = StaticEnvironment;
 
                 float value = UnityEngine.Random.Range(3, 6f);
@@ -153,7 +163,7 @@ namespace MoveStopMove.Manager
                 obstance.transform.localRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
 
                 
-                obstances.Add(obstance);
+                obstances.Add(obstanceScript);
             }
         }
 
@@ -163,7 +173,8 @@ namespace MoveStopMove.Manager
             giftTimer.Stop();
             for (int i = 0; i < obstances.Count; i++)
             {
-                PrefabManager.Inst.PushToPool(obstances[i], PoolID.Obstance);
+                PrefabManager.Inst.PushToPool(obstances[i].gameObject, PoolID.Obstance);
+                obstances[i].SetTransparent(false);
             }
 
             for(int i = 0; i < gifts.Count; i++)
@@ -364,6 +375,41 @@ namespace MoveStopMove.Manager
                 float time = UnityEngine.Random.Range(4f, 4f + RANDOM_GIFT_TIME);
                 giftTimer.Start(time);
             }
+        }
+        #endregion
+
+        #region Check Obstance
+        Ray ray = new Ray();
+        Obstance oldObstance;
+        private void TransparentObstance()
+        {
+            Vector3 pos1 = GameplayManager.Inst.PlayerCamera.transform.position;
+            Vector3 pos2 = GameplayManager.Inst.Player.transform.position + Vector3.up * 0.5f;
+            Vector3 direction = pos2 - pos1;
+
+            ray.origin = pos1;
+            ray.direction = direction;
+
+            RaycastHit hitInfo;
+            if (Physics.Raycast(ray, out hitInfo, direction.magnitude, groundLayer))
+            {
+                Obstance obstance = Cache.GetObstance(hitInfo.collider.gameObject);
+                if(obstance != null)
+                {
+                    oldObstance = obstance;
+                    obstance.SetTransparent(true);
+                }
+                else
+                {
+                    Debug.Log(hitInfo.collider.gameObject.name);
+                }
+                
+            }
+            else
+            {
+                oldObstance.SetTransparent(false);
+            }
+
         }
         #endregion
     }

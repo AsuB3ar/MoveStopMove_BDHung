@@ -20,6 +20,7 @@ public static class Cache
     private static Dictionary<GameObject, VisualEffectController> gameObj2VisualEffectController = new Dictionary<GameObject, VisualEffectController>();
     private static Dictionary<GameObject, AudioSource> gameObj2AudioSource = new Dictionary<GameObject, AudioSource>();
     private static Dictionary<GameObject, Gift> gameObj2Gift = new Dictionary<GameObject, Gift>();
+    private static Dictionary<GameObject, Obstance> gameObj2Obstance = new Dictionary<GameObject, Obstance>();
 
     public static List<Vector3> GetCacheList(int hashCode)
     {
@@ -135,5 +136,14 @@ public static class Cache
             gameObj2Gift.Add(obj, obj.GetComponent<Gift>());
         }
         return gameObj2Gift[obj];
+    }
+
+    public static Obstance GetObstance(GameObject obj)
+    {
+        if (!gameObj2Obstance.ContainsKey(obj))
+        {
+            gameObj2Obstance.Add(obj, obj.GetComponent<Obstance>());
+        }
+        return gameObj2Obstance[obj];
     }
 }
