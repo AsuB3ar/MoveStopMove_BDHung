@@ -28,11 +28,14 @@ public enum PoolID
     Hair_Horn = 1005,
     Hair_Beard = 1006,
     #endregion
+
     None = 10000,
     UIItem = 10001,
     UITargetIndicator = 10002,
     Obstance = 10003,
-    Gift = 10004
+    Gift = 10004,
+    BaseWeapon = 10005,
+    ObjectCreateWeapon = 10006
 
     
 }
@@ -86,13 +89,18 @@ namespace MoveStopMove.Manager
         #endregion
         [SerializeField]
         GameObject Obstance;
-        //-----
+        
         [SerializeField]
         GameObject UIItem;
         [SerializeField]
         GameObject UIIndicator;
         [SerializeField]
         GameObject Gift;
+        [SerializeField]
+        GameObject BaseWeapon;
+        [SerializeField]
+        GameObject ObjectCreateWeapon;
+        //-----
         [SerializeField]
         GameObject pool;
         
@@ -128,7 +136,8 @@ namespace MoveStopMove.Manager
             CreatePool(UIIndicator, PoolID.UITargetIndicator);
             CreatePool(Obstance, PoolID.Obstance);
             CreatePool(Gift, PoolID.Gift);
-            
+            CreatePool(BaseWeapon, PoolID.BaseWeapon, Quaternion.identity, 5);
+            CreatePool(ObjectCreateWeapon, PoolID.ObjectCreateWeapon, Quaternion.identity, 50);
         }
 
 

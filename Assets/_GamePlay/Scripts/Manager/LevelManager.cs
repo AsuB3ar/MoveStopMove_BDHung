@@ -170,6 +170,7 @@ namespace MoveStopMove.Manager
         public void DestructLevel()
         {
             numOfSpawnPlayers = 0;
+            oldObstance = null;
             giftTimer.Stop();
             for (int i = 0; i < obstances.Count; i++)
             {

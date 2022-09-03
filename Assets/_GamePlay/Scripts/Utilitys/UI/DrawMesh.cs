@@ -12,6 +12,9 @@ public class DrawMesh : MonoBehaviour
     float samplePeriodicDistance = 1f;
     [SerializeField]
     float z;
+
+    [SerializeField]
+    GameObject baseWeapon;
     [SerializeField]
     GameObject obj;
 
@@ -22,6 +25,7 @@ public class DrawMesh : MonoBehaviour
     private float lastSmooth;
     private float lastLineThickless;
     private List<Vector3> pointsData = new List<Vector3>();
+    private List<GameObject> pointObjects = new List<GameObject>();
 
     private void Awake()
     {
@@ -146,17 +150,32 @@ public class DrawMesh : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            CreateWeapon();
+            CreateModelWeaponNormalize();
         }
     }
 
-    private void CreateWeapon()
+    
+    private void CreateModelWeaponNormalize()
     {
+        GameObject baseWeaponObj = Instantiate(baseWeapon); //TODO: Use Pool Here
         for(int i = 0; i < pointsData.Count; i++)
         {
-            GameObject newGameObj = Instantiate(obj);
+            GameObject newGameObj = Instantiate(obj); //TODO: Use Pool Here
+            newGameObj.transform.parent = baseWeaponObj.transform.GetChild(0).transform;
             newGameObj.transform.localScale = lastSmooth * Vector3.one * 5f;
             newGameObj.transform.localPosition = pointsData[i];
+            pointObjects.Add(newGameObj);
         }
     }
+
+    float scale = 1f;
+    private void CreateWeapon()
+    {
+        for(int i = 0; i < pointObjects.Count; i++)
+        {
+            pointObjects[i].transform.localPosition = pointObjects[i].transform.localPosition * scale / pointObjects[i].transform.localScale.x;
+            pointObjects[i].transform.localScale = Vector3.one * scale;           
+        }
+    }
+  
 }

@@ -644,6 +644,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3441801778444366144, guid: 71cf5219fda9298469d93051f95cb0c7, type: 3}
+      propertyPath: baseWeapon
+      value: 
+      objectReference: {fileID: 5618273737373822372, guid: 2502da38ba921e046b980471ca5fb9bd, type: 3}
     - target: {fileID: 3441801778444366145, guid: 71cf5219fda9298469d93051f95cb0c7, type: 3}
       propertyPath: m_Name
       value: DrawMesh
