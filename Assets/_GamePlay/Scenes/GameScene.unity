@@ -1669,6 +1669,8 @@ MonoBehaviour:
   UIItem: {fileID: 5344068530080740687, guid: 6dd789418a3cf4245be5fe26c29703dd, type: 3}
   UIIndicator: {fileID: 5550999801274606342, guid: ba4bc4d0a50f5724496af4fc14490a61, type: 3}
   Gift: {fileID: 1390617833159307850, guid: 62d2391ebd7c82e4ebc2d2dba3c2070b, type: 3}
+  BaseWeapon: {fileID: 5618273737373822372, guid: 2502da38ba921e046b980471ca5fb9bd, type: 3}
+  ObjectCreateWeapon: {fileID: 7874771411103903161, guid: 529b556c2f4ea6945bae82ad11051267, type: 3}
   pool: {fileID: 7117338696727486318, guid: b572d35da52b1cb459c582254e88fffa, type: 3}
 --- !u!114 &2098688380 stripped
 MonoBehaviour:
