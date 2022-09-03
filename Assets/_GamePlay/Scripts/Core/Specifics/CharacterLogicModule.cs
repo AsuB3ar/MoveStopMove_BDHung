@@ -58,6 +58,8 @@ namespace MoveStopMove.Core.Character.LogicSystem
         public void StartStateMachine()
         {
             StateMachine.Start(State.Idle);
+
+            bool value = Parameter.Gift; //TODO: Need to change
         }
 
         public void StopStateMachine()

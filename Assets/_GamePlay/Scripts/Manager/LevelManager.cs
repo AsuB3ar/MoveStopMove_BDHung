@@ -408,7 +408,10 @@ namespace MoveStopMove.Manager
             }
             else
             {
-                oldObstance.SetTransparent(false);
+                if(oldObstance != null)
+                {
+                    oldObstance.SetTransparent(false);
+                }
             }
 
         }
