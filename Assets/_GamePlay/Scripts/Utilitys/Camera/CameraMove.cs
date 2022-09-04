@@ -114,7 +114,7 @@ public class CameraMove : MonoBehaviour
         targetPos.y *= size;
         targetPos.z *= size;
 
-        speed = 6;
+        speed = 10;
         IsReachDestination = false;
         comp.m_SoftZoneHeight = SOFT_ZONE_HEIGHT_INIT * size;
     }

@@ -31,6 +31,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         float rotationSpeed = 30f;
         [SerializeField]
         float speed = 0.1f;
+        float speedRatio = 1f;
         
 
         Vector3 direction = Vector3.zero;
@@ -40,7 +41,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         Vector3 specialScale;       
         float currentSpeed;
         float specialSpeed;
-        float lastSpeed => currentSpeed * Time.fixedDeltaTime * AMPLIFY_PARAMETER;
+        float lastSpeed => currentSpeed * Time.fixedDeltaTime * AMPLIFY_PARAMETER * speedRatio;
         [HideInInspector]
         public Collider SelfCharacterCollider;
         private void OnEnable()
@@ -96,18 +97,19 @@ namespace MoveStopMove.ContentCreation.Weapon
             }
         }
 
-        public void OnFire(Vector3 direction,float range,BaseCharacter parentCharacter, bool isSpecial = false)
+        public void OnFire(Vector3 direction, float range, BaseCharacter parentCharacter, bool isSpecial = false, float speedRatio = 1)
         {
             direction.y = 0;
             this.direction = direction.normalized;          
             this.range = range - lastSpeed * 6;
             this.parentCharacter = parentCharacter;
             this.isSpecial = isSpecial;
+            this.speedRatio = speedRatio;
 
             if (isSpecial)
             {
                 specialScale = transform.localScale * SPECIAL_MAX_SCALE;
-                specialSpeed = speed * BaseCharacter.GIFT_BONUS;
+                specialSpeed = speed * BaseCharacter.GIFT_BONUS * speedRatio;
             }
             else
             {

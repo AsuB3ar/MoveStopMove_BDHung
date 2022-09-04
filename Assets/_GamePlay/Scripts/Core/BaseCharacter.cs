@@ -188,7 +188,7 @@ namespace MoveStopMove.Core
         public void SetLevel(int level)
         {
             Data.Level = level;
-            transform.localScale = Vector3.one * Data.Size;
+            PhysicModule.SetScale(GameConst.Type.Character, Vector3.one * Data.Size);
         }
         protected virtual void Update()
         {
@@ -205,12 +205,12 @@ namespace MoveStopMove.Core
 
         protected virtual void DealDamage(Vector3 direction, float range)
         {
-            Weapon.DealDamage(direction, range ,Data.Size);
+            Weapon.DealDamage(direction, range ,Data.Size,false ,Data.Speed / CharacterData.BASE_SPEED);
         }
 
         protected virtual void DealDamage(Vector3 direction, float range, bool isSpecial)
         {
-            Weapon.DealDamage(direction, range, Data.Size, isSpecial);
+            Weapon.DealDamage(direction, range, Data.Size, isSpecial, Data.Speed / CharacterData.BASE_SPEED);
         }
 
         public virtual void ChangeColor(GameColor color)
@@ -276,25 +276,13 @@ namespace MoveStopMove.Core
         //TODO: Combat Function(Covert to a system)
         public virtual void AddStatus()
         {
-            Data.Level += 1;
 
             //TODO: Increase Size of character
             //TODO: Increase Size of Attack Range Indicator
+            Data.Level += 1;
             SoundManager.Inst.PlaySound(SoundManager.Sound.Character_SizeUp, transform.position);           
             VFX_AddStatus.Play();
-            
-            if(Data.Level < 10)
-            {
-                PhysicModule.SetScale(GameConst.Type.Character, 1.1f);
-            }
-            else if(Data.Level < 20)
-            {
-                PhysicModule.SetScale(GameConst.Type.Character, 1.05f);
-            }
-            else
-            {
-                PhysicModule.SetScale(GameConst.Type.Character, 1.02f);
-            }
+            PhysicModule.SetScale(GameConst.Type.Character, Vector3.one * Data.Size);          
 
         }
 

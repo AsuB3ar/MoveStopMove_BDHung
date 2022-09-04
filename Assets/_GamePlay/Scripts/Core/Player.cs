@@ -64,7 +64,7 @@ namespace MoveStopMove.Core
         public override void OnInit()
         {
             base.OnInit();
-            Data.Hp = 1;
+            Data.Hp = 10;
             ((InputModule)NavigationModule).Active = true;
             attackIndicator.ScaleUp(1);
         }
@@ -137,7 +137,7 @@ namespace MoveStopMove.Core
         private void LoadData()
         {
             
-            Data.Speed = GameData.Speed;
+            //Data.Speed = GameData.Speed;
             Data.Weapon = GameData.Weapon;
 
             Data.Color = GameData.Color;

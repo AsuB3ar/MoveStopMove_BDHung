@@ -13,9 +13,9 @@ namespace MoveStopMove.ContentCreation.Weapon
         {
             SetTranformData();
         }
-        public override void DealDamage(Vector3 direction, float range, float size, bool isSpecial = false)
+        public override void DealDamage(Vector3 direction, float range, float size, bool isSpecial,float speedRatio)
         {
-            base.DealDamage(direction, range, size,isSpecial);
+            base.DealDamage(direction, range, size,isSpecial,speedRatio);
             if(WeaponType == WeaponType.Has3Ray)
             {
 
@@ -44,13 +44,13 @@ namespace MoveStopMove.ContentCreation.Weapon
                 bullet2.transform.localScale = Vector3.one * size;
 
                 BaseBullet bulletScript = Cache.GetBaseBullet(bullet);
-                bulletScript.OnFire(direction, range, Character,isSpecial);
+                bulletScript.OnFire(direction, range, Character, isSpecial, speedRatio);
 
                 BaseBullet bulletScript1 = Cache.GetBaseBullet(bullet1);
-                bulletScript1.OnFire(direction1, range, Character,isSpecial);
+                bulletScript1.OnFire(direction1, range, Character, isSpecial, speedRatio);
 
                 BaseBullet bulletScript2 = Cache.GetBaseBullet(bullet2);
-                bulletScript2.OnFire(direction2, range, Character,isSpecial);
+                bulletScript2.OnFire(direction2, range, Character, isSpecial, speedRatio);
             }        
         }
     }
