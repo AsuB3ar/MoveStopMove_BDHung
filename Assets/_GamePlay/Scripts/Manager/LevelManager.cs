@@ -335,11 +335,9 @@ namespace MoveStopMove.Manager
                 giftPositions.Enqueue(currentLevelData.GiftPositions[i]);
             }
             giftTimer.Start(1f);
-            Debug.Log("Start Spawn Gift");
         }
         private void SpawnGift()
         {
-            Debug.Log("Spawn Gift");
             Debug.Log(giftPositions.Count);
             Vector3 pos;
             float sizeScale = GameplayManager.Inst.PlayerScript.Size;
@@ -385,8 +383,6 @@ namespace MoveStopMove.Manager
 
         private void TimerEvent(int value)
         {
-            Debug.Log("Timer Spawn Gift");
-            Debug.Log(gifts.Count);
             SpawnGift();
             if (gifts.Count < NUM_GIFT_MAX)
             {

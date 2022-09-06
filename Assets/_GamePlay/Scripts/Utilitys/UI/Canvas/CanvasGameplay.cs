@@ -81,6 +81,7 @@ public class CanvasGameplay : UICanvas
     public void SettingButton()
     {
         UIManager.Inst.OpenUI(UIID.UICSetting);
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
     }
 
     public override void Open()

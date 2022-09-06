@@ -59,7 +59,7 @@ namespace MoveStopMove.Manager
         }
         public void PlaySound(Sound sound)
         {
-            globalAudioSource.PlayOneShot(GameAssets.Inst.SoundAssets[sound]);
+            globalAudioSource.PlayOneShot(GameAssets.Inst.SoundAssets[sound],volume);
         }
         
         public void PlaySound(Sound sound, Vector3 position)
@@ -105,6 +105,14 @@ namespace MoveStopMove.Manager
                     return Sound.Character_Die5;
                 default:
                     return Sound.Character_Die1;
+            }
+        }
+
+        public void SetVolume(float value)
+        {
+            if(value >= 0 && value <= 1)
+            {
+                volume = value;
             }
         }
     }

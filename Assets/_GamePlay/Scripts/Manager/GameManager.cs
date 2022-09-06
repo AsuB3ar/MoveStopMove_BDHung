@@ -30,6 +30,9 @@ namespace MoveStopMove.Manager
         private List<IPersistentData> persistentDataObjects;
         [SerializeField]
         public GameData GameData;
+
+        int maxScreenHeight = 1280;
+        float screenRatio;
         protected override void Awake()
         {
             base.Awake();
@@ -37,11 +40,10 @@ namespace MoveStopMove.Manager
             Application.targetFrameRate = 60;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-            int maxScreenHeight = 1280;
-            float ratio = (float)Screen.currentResolution.width / (float)Screen.currentResolution.height;
+            screenRatio = (float)Screen.currentResolution.width / (float)Screen.currentResolution.height;
             if (Screen.currentResolution.height > maxScreenHeight)
             {
-                Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
+                Screen.SetResolution(Mathf.RoundToInt(screenRatio * (float)maxScreenHeight), maxScreenHeight, true);
             }
 
             //csv.OnInit();
@@ -50,12 +52,17 @@ namespace MoveStopMove.Manager
             //ChangeState(GameState.MainMenu);
             LoadGame();
             UIManager.Inst.OpenUI(UIID.UICMainMenu);
-            
+
         }
 
-        private void Start()
+        public void SetResolution(int width, int height)
         {
-               
+            Screen.SetResolution(width, height, true);
+        }
+
+        public void SetFullScreen()
+        {
+            Screen.SetResolution(Mathf.RoundToInt(screenRatio * (float)maxScreenHeight), maxScreenHeight, true);
         }
 
         public void StartGame()
@@ -71,25 +78,9 @@ namespace MoveStopMove.Manager
             OnStopGame?.Invoke();
         }
 
-
-        public void NewGame()
-        {
-            
-        }
         public void LoadGame()
         {
             GameData.OnInitData();
-        }
-        public void SaveGame()
-        {
-            
-        }
-
-
-
-        private void OnApplicationQuit()
-        {
-            SaveGame();
-        }
+        }      
     }
 }
