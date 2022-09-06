@@ -40,8 +40,10 @@ public class CanvasVictory : UICanvas
         UIManager.Inst.OpenUI(UIID.UICGamePlay);
         LevelManager.Inst.OpenLevel(currentLevel);
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
+
         Data.SetIntData(Player.P_CURRENT_REGION,ref Data.CurrentRegion, currentLevel);
         Data.SetIntData(Player.P_HIGHTEST_SCORE, ref Data.HighestRank, 100);
+        GameManager.Inst.StartGame();
         
         Close();
     }
@@ -51,8 +53,10 @@ public class CanvasVictory : UICanvas
         UIManager.Inst.OpenUI(UIID.UICGamePlay);
         LevelManager.Inst.OpenLevel(currentLevel);
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
+
         Data.SetIntData(Player.P_CURRENT_REGION, ref Data.CurrentRegion, currentLevel);
         Data.SetIntData(Player.P_HIGHTEST_SCORE, ref Data.HighestRank, 1);
+        GameManager.Inst.StartGame();
         Close();
     }
 }

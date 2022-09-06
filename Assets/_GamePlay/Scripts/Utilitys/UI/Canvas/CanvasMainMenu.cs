@@ -27,8 +27,8 @@ public class CanvasMainMenu : UICanvas
     public void PlayGameButton()
     {
         UIManager.Inst.OpenUI(UIID.UICGamePlay);
-        GameManager.Inst.StartGame();
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
+        GameManager.Inst.StartGame();
         Close();
     }
 

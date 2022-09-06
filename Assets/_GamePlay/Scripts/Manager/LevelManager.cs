@@ -42,6 +42,7 @@ namespace MoveStopMove.Manager
         private Vector3 groundSize;  
         
         private List<Gift> gifts = new List<Gift>();
+        private Queue<Vector3> giftPositions = new Queue<Vector3>();
         private STimer giftTimer = new STimer();
 
         private GameData GameData;
@@ -98,8 +99,10 @@ namespace MoveStopMove.Manager
         {
             characters.Clear();
             obstances.Clear();
+            
             NumOfRemainingPlayers = currentLevelData.numOfPlayers;
             numOfSpawnPlayers = currentLevelData.numOfPlayers;
+            
             
             for (int i = 0; i < 10; i++)
             {
@@ -326,10 +329,18 @@ namespace MoveStopMove.Manager
         private void StartSpawnGift()
         {
             //Spawn Gift
+            giftPositions.Clear();
+            for (int i = 0; i < currentLevelData.GiftPositions.Count; i++)
+            {
+                giftPositions.Enqueue(currentLevelData.GiftPositions[i]);
+            }
             giftTimer.Start(1f);
+            Debug.Log("Start Spawn Gift");
         }
         private void SpawnGift()
         {
+            Debug.Log("Spawn Gift");
+            Debug.Log(giftPositions.Count);
             Vector3 pos;
             float sizeScale = GameplayManager.Inst.PlayerScript.Size;
             if (currentLevelData.GiftPositions.Count == 0)
@@ -341,8 +352,11 @@ namespace MoveStopMove.Manager
             }
             else
             {
-                int index = UnityEngine.Random.Range(0, currentLevelData.GiftPositions.Count);
-                pos = currentLevelData.GiftPositions[index];
+
+                pos = giftPositions.Dequeue();
+                giftPositions.Enqueue(pos); //Circle Queue
+                Debug.Log(pos);
+
                 pos.x = pos.x * currentLevelData.Size + UnityEngine.Random.Range(-1f, 1f) * RANDOM_GIFT_POSITION;
                 pos.z = pos.z * currentLevelData.Size + UnityEngine.Random.Range(-1f, 1f) * RANDOM_GIFT_POSITION;
                 pos.y = GameConst.INIT_CHARACTER_HEIGHT + sizeScale/2;
@@ -371,6 +385,8 @@ namespace MoveStopMove.Manager
 
         private void TimerEvent(int value)
         {
+            Debug.Log("Timer Spawn Gift");
+            Debug.Log(gifts.Count);
             SpawnGift();
             if (gifts.Count < NUM_GIFT_MAX)
             {
