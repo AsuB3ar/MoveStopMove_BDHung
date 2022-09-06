@@ -30,7 +30,10 @@ public class UITargetIndicator : MonoBehaviour
         directionImage.color = color;
     }
 
-    
+    public void SetActiveDirection(bool value)
+    {
+        directionTF.gameObject.SetActive(value);        
+    }
     public void SetDirection()
     {
         //NOTE: Direction Vector must be normalize

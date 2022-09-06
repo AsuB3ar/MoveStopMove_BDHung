@@ -31,7 +31,7 @@ namespace MoveStopMove.Manager
         [SerializeField]
         public GameData GameData;
 
-        int maxScreenHeight = 1280;
+        int maxScreenHeight = 1080;
         float screenRatio;
         protected override void Awake()
         {
@@ -57,6 +57,13 @@ namespace MoveStopMove.Manager
 
         public void SetResolution(int width, int height)
         {
+            Screen.SetResolution(width, height, true);
+        }
+
+        public void SetResolution(float ratio)
+        {
+            int height = Screen.currentResolution.height;
+            int width = Mathf.RoundToInt(ratio * height);
             Screen.SetResolution(width, height, true);
         }
 

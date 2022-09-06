@@ -28,7 +28,7 @@ public class CanvasGameplay : UICanvas
     private void Start()
     {
         playerCamera = GameplayManager.Inst.PlayerCamera;
-        SubscribeTarget(GameplayManager.Inst.PlayerScript);
+        SubscribeTarget(GameplayManager.Inst.PlayerScript,true);
     }
     public void FixedUpdate()
     {
@@ -57,7 +57,7 @@ public class CanvasGameplay : UICanvas
     {
         remainingPlayersNum.text = num.ToString();
     }
-    public void SubscribeTarget(BaseCharacter character)
+    public void SubscribeTarget(BaseCharacter character, bool isPlayer = false)
     {
         if (character == null)
             return;
@@ -67,6 +67,11 @@ public class CanvasGameplay : UICanvas
 
         //indicatorScript.SetColor(new UnityEngine.Color(1f, 107f/255, 107f/255, 1f));
         indicatorScript.SetColor(GameplayManager.Inst.GetColor(character.Color));
+        if (isPlayer)
+        {
+            indicatorScript.SetActiveDirection(false);
+        }
+
         uiIndicator.transform.SetParent(canvasIndicatorTF);
         indicators.Add(character, indicatorScript);
         characters.Add(character);
