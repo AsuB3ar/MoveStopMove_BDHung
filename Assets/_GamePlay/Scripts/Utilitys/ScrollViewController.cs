@@ -21,12 +21,13 @@ namespace Utilitys {
             UIItemScript.SetData(data);
             UIItemScript.SetLock(data.state);
 
+            Vector3 initScale = uiItemObject.transform.localScale;
             uiItemObject.transform.SetParent(contentTranform);
+            uiItemObject.transform.localScale = initScale; //NOTE: Change to not scale
             uiItemObjects.Add(uiItemObject);
 
             return UIItemScript;
         }
-
         public bool RemoveUIItem(UIItem uiItem)
         {
             GameObject uiItemObj = uiItem.gameObject;

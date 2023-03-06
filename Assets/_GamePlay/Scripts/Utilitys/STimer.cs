@@ -80,7 +80,6 @@ namespace Utilitys.Timer
             timeRemaining = 0;
             timeFrame = 0;
         }
-
         private void TriggerEvent()
         {
             TimeOut1?.Invoke(code);
@@ -113,7 +112,6 @@ namespace Utilitys.Timer
                 FrameUpdate?.Invoke();
             }
         }
-
         ~STimer()
         {
             MotherTimer.Inst.TimerUpdate.RemoveListener(Update);

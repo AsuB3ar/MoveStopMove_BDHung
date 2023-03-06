@@ -72,7 +72,10 @@ public class CanvasGameplay : UICanvas
             indicatorScript.SetActiveDirection(false);
         }
 
+        Vector2 initLocalScale = uiIndicator.transform.localScale;
         uiIndicator.transform.SetParent(canvasIndicatorTF);
+        uiIndicator.transform.localScale = initLocalScale;
+
         indicators.Add(character, indicatorScript);
         characters.Add(character);
     }

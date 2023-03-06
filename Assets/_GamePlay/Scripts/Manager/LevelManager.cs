@@ -50,7 +50,6 @@ namespace MoveStopMove.Manager
         private int numOfSpawnPlayers;
         private int numOfRemainingPlayers;
         private int currentLevel = 0;
-
         private int NumOfRemainingPlayers
         {
             get => numOfRemainingPlayers;
@@ -62,7 +61,6 @@ namespace MoveStopMove.Manager
         }
 
         CanvasGameplay gameplay;
-
         protected override void Awake()
         {
             base.Awake();          
@@ -70,7 +68,6 @@ namespace MoveStopMove.Manager
             gameplay.Close();
             GameData = GameManager.Inst.GameData;
         }
-
         private void Start()
         {
             GameplayManager.Inst.PlayerScript = Cache.GetBaseCharacter(GameplayManager.Inst.Player);
@@ -78,19 +75,16 @@ namespace MoveStopMove.Manager
             GameManager.Inst.OnStartGame += RunLevel;
             OpenLevel(GameManager.Inst.GameData.CurrentRegion);          
         }
-
         private void OnEnable()
         {
             giftTimer.TimeOut1 += TimerEvent;
             GameManager.Inst.OnStartGame += StartSpawnGift;
         }
-
         private void OnDisable()
         {
             giftTimer.TimeOut1 -= TimerEvent;
             GameManager.Inst.OnStartGame -= StartSpawnGift;
         }
-
         private void FixedUpdate()
         {
             TransparentObstance();
@@ -113,8 +107,7 @@ namespace MoveStopMove.Manager
             ConstructLevel();
 
             
-        }
-        
+        }      
         public void OpenLevel(int level)
         {
             //TODO: Set Data Level
@@ -136,7 +129,6 @@ namespace MoveStopMove.Manager
             GameplayManager.Inst.PlayerScript.Reset();
             OnInit();
         }
-
         public void RunLevel()
         {
             for (int i = 0; i < characters.Count; i++)
@@ -144,7 +136,6 @@ namespace MoveStopMove.Manager
                 characters[i].Run();
             }
         }
-
         public void ConstructLevel()
         {
             groundSize = Vector3.one * currentLevelData.Size * 2;
@@ -169,7 +160,6 @@ namespace MoveStopMove.Manager
                 obstances.Add(obstanceScript);
             }
         }
-
         public void DestructLevel()
         {
             numOfSpawnPlayers = 0;
@@ -192,8 +182,7 @@ namespace MoveStopMove.Manager
                 characters[0].OnDespawn();
                 RemoveCharacter(characters[0]);
             }
-        }
-        
+        }   
         private void OnPlayerDie(BaseCharacter player)
         {
             CanvasFail fail = ((CanvasFail)UIManager.Inst.OpenUI(UIID.UICFail));
@@ -230,7 +219,6 @@ namespace MoveStopMove.Manager
                 UIManager.Inst.CloseUI(UIID.UICGamePlay);
             }
         }
-
         private void RemoveCharacter(BaseCharacter character)
         {
             character.OnDie -= OnEnemyDie;
@@ -295,7 +283,6 @@ namespace MoveStopMove.Manager
             return characterScript;
                      
         }
-
         private Vector3 GetRandomPositionCharacter()
         {
             int value = UnityEngine.Random.Range(0, 4);
@@ -323,7 +310,6 @@ namespace MoveStopMove.Manager
             }
             return new Vector3(vecX, GameConst.INIT_CHARACTER_HEIGHT, vecZ);
         }
-
 
         #region Spawn Gift
         private void StartSpawnGift()
@@ -368,10 +354,8 @@ namespace MoveStopMove.Manager
             giftScript.OnGiftDespawn += OnGiftDespawn;
             gifts.Add(giftScript);
         }
-
         private void OnGiftDespawn(Gift gift)
         {
-            gift.OnGiftDespawn -= OnGiftDespawn;
             gifts.Remove(gift);
             
             if(gifts.Count < NUM_GIFT_MAX)
@@ -380,7 +364,6 @@ namespace MoveStopMove.Manager
                 giftTimer.Start(time);
             }
         }
-
         private void TimerEvent(int value)
         {
             SpawnGift();

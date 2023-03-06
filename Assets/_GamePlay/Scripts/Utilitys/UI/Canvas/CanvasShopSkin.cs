@@ -49,7 +49,7 @@ public class CanvasShopSkin : UICanvas
         for(int i = 0; i < hairItemDatas.Count; i++)
         {
             UIItem UIItemScript = scrollViews[0].AddUIItem(hairItemDatas[i]);       
-            Subscribe(UIItemScript);
+            Subscribe(UIItemScript);        
         }
 
         for(int i = 0; i < pantItemDatas.Count; i++)
@@ -94,7 +94,7 @@ public class CanvasShopSkin : UICanvas
         item.OnSelectItem += OnItemClick;
     }
 
-    public void UnSubscribe(UIItem item)
+    public void Unsubscribe(UIItem item)
     {
         items.Remove(item);
         item.OnSelectItem -= OnItemClick;
