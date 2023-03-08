@@ -6,12 +6,12 @@ namespace Utilitys
 {
     public class Pool : MonoBehaviour
     {
-        public GameObject mainPool;
+        [SerializeField]
+        protected GameObject mainPool;
+        [SerializeField]
+        bool isSetParent = false;
         [HideInInspector]
         private GameObject obj;
-
-        //List<GameObject> unavailable;
-        //List<GameObject> available;
         Queue<GameObject> objects;
 
         Quaternion initQuaternion;
@@ -20,8 +20,6 @@ namespace Utilitys
         {
             this.numObj = numObj;
             this.obj = obj;
-            //unavailable = new List<GameObject>();
-            //available = new List<GameObject>();
             objects = new Queue<GameObject>();
             this.initQuaternion = initQuaternion;
             AddObject();
@@ -50,7 +48,10 @@ namespace Utilitys
             objects.Enqueue(obj);
 
             obj.SetActive(false);
-            //obj.transform.parent = mainPool.transform;
+            if (isSetParent)
+            {
+                obj.transform.parent = mainPool.transform;
+            }
             obj.transform.position = Vector3.zero;
         }
 

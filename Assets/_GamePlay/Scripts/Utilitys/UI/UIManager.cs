@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using System.Numerics;
 using Utilitys;
 
 public enum UIID
@@ -25,9 +24,10 @@ public class UIManager : Singleton<UIManager>
 {
     
     private Dictionary<UIID, UICanvas> UICanvas = new Dictionary<UIID, UICanvas>();
-
-    public Transform CanvasParentTF;
-    public UICanvas ShopWeaponCanvas;
+    [SerializeField]
+    protected Transform OverlayCanvas;
+    [SerializeField]
+    protected Transform CameraCanvas;
     #region Canvas
 
     protected override void Awake()
@@ -39,11 +39,23 @@ public class UIManager : Singleton<UIManager>
         return UICanvas.ContainsKey(ID) && UICanvas[ID] != null && UICanvas[ID].gameObject.activeInHierarchy;
     }
 
-    public UICanvas GetUI(UIID ID)
+    public UICanvas GetUI(UIID ID, RenderMode type = RenderMode.ScreenSpaceOverlay)
     {
+        UICanvas canvas;
+        Transform parentTF = null;
+        switch (type)
+        {
+            case RenderMode.ScreenSpaceOverlay:
+                parentTF = OverlayCanvas;
+                break;
+            case RenderMode.ScreenSpaceCamera:
+                parentTF = CameraCanvas;
+                break;
+        }
+       
         if (!UICanvas.ContainsKey(ID) || UICanvas[ID] == null)
         {
-            UICanvas canvas = Instantiate(Resources.Load<UICanvas>("UI/" + ID.ToString()), CanvasParentTF);
+            canvas = Instantiate(Resources.Load<UICanvas>("UI/" + ID.ToString()), parentTF);
             UICanvas[ID] = canvas;
         }
 
@@ -55,19 +67,28 @@ public class UIManager : Singleton<UIManager>
         return GetUI(ID) as T;
     }
 
-    public UICanvas OpenUI(UIID ID)
+    public UICanvas OpenUI(UIID ID, RenderMode type = RenderMode.ScreenSpaceOverlay)
     {
-        UICanvas canvas = GetUI(ID);
+        UICanvas canvas = GetUI(ID, type);
 
         canvas.Setup();
         canvas.Open();
 
+        switch (type)
+        {
+            case RenderMode.ScreenSpaceCamera:
+                canvas.gameObject.transform.SetParent(CameraCanvas);
+                break;
+            case RenderMode.ScreenSpaceOverlay:
+                canvas.gameObject.transform.SetParent(OverlayCanvas);
+                break;
+        }
         return canvas;
     }  
     
-    public T OpenUI<T>(UIID ID) where T : UICanvas
+    public T OpenUI<T>(UIID ID, RenderMode type = RenderMode.ScreenSpaceOverlay) where T : UICanvas
     {
-        return OpenUI(ID) as T;
+        return OpenUI(ID, type) as T;
     }
 
     public bool IsOpened(UIID ID)

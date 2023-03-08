@@ -5,14 +5,16 @@ using UnityEngine;
 public class UICanvas : MonoBehaviour
 {
     //public bool IsAvoidBackKey = false;
-    public bool IsDestroyOnClose = false;
+    [SerializeField]
+    protected bool IsDestroyOnClose = false;
 
     protected RectTransform m_RectTransform;
+    public RectTransform RectTransform => m_RectTransform;
     private Animator m_Animator;
     private bool m_IsInit = false;
     private float m_OffsetY = 0;
 
-    private void Start()
+    private void Awake()
     {
         Init();
     }
@@ -21,21 +23,6 @@ public class UICanvas : MonoBehaviour
     {
         m_RectTransform = GetComponent<RectTransform>();
         m_Animator = GetComponent<Animator>();
-
-        //float ratio = (float)Screen.height / (float)Screen.width;
-
-        //// xu ly tai tho
-        //if (ratio > 2.1f)
-        //{
-        //    Vector2 leftBottom = m_RectTransform.offsetMin;
-        //    Vector2 rightTop = m_RectTransform.offsetMax;
-        //    rightTop.y = -100f;
-        //    m_RectTransform.offsetMax = rightTop;
-        //    leftBottom.y = 0f;
-        //    m_RectTransform.offsetMin = leftBottom;
-        //    m_OffsetY = 100f;
-        //}
-        //m_IsInit = true;
     }
 
     public virtual void Setup()

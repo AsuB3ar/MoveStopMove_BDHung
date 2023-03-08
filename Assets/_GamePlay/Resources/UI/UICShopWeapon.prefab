@@ -490,7 +490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3582554860822475437
 RectTransform:
   m_ObjectHideFlags: 0
@@ -593,6 +593,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsDestroyOnClose: 0
   cashText: {fileID: 5502616867977726938}
+  buyButton: {fileID: 8668528111953195779}
+  buyButtonText: {fileID: 4805351323406370068}
+  weaponContain: {fileID: 1168215360}
+  speed: 7
+  canvas: {fileID: 3582554860822475434}
   itemToObject:
   - itemData: {fileID: 11400000, guid: 9596789fb2bad7647832cbbb6800dae9, type: 2}
     itemObject: {fileID: 2485118370878305414}
@@ -602,10 +607,6 @@ MonoBehaviour:
     itemObject: {fileID: 5342148421725693804}
   - itemData: {fileID: 11400000, guid: b2373e241a93d004bacb5909a88ac5a3, type: 2}
     itemObject: {fileID: 5515967798179334947}
-  buyButton: {fileID: 8668528111953195779}
-  buyButtonText: {fileID: 4805351323406370068}
-  weaponContain: {fileID: 1168215360}
-  speed: 7
 --- !u!1001 &55010446
 PrefabInstance:
   m_ObjectHideFlags: 0

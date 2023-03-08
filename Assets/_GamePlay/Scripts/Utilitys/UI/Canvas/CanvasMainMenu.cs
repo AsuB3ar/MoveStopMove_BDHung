@@ -41,7 +41,8 @@ public class CanvasMainMenu : UICanvas
 
     public void ShopWeaponButton()
     {
-        UIManager.Inst.ShopWeaponCanvas.Open();
+        CanvasShopWeapon shopCanvas = UIManager.Inst.OpenUI<CanvasShopWeapon>(UIID.UICShopWeapon, RenderMode.ScreenSpaceCamera);
+        shopCanvas.SetCanvasCamera(GameplayManager.Inst.PlayerCamera);
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
     }

@@ -15,8 +15,6 @@ public class CanvasShopWeapon : UICanvas
     [SerializeField]
     TMP_Text cashText;
     [SerializeField]
-    private List<UIItemData> itemToObject = new List<UIItemData>();
-    [SerializeField]
     GameObject buyButton;
     [SerializeField]
     TMP_Text buyButtonText;
@@ -24,6 +22,11 @@ public class CanvasShopWeapon : UICanvas
     GameObject weaponContain;
     [SerializeField]
     float speed;
+    [SerializeField]
+    Canvas canvas;
+
+    [SerializeField]
+    private List<UIItemData> itemToObject = new List<UIItemData>();
 
     GameData Data;
     ItemData currentWeapon;
@@ -72,9 +75,6 @@ public class CanvasShopWeapon : UICanvas
         }
 
     }
-
-    
-
     public void OnBuy()
     {
         if (Data.Cash < currentPrice)
@@ -91,7 +91,6 @@ public class CanvasShopWeapon : UICanvas
         EquipWeapon();
         cashText.text = Data.Cash.ToString();
     }
-
     public override void Open()
     {
         base.Open();
@@ -106,7 +105,6 @@ public class CanvasShopWeapon : UICanvas
 
         cashText.text = Data.Cash.ToString();
     }
-
     public override void Close()
     {
         base.Close();
@@ -118,7 +116,10 @@ public class CanvasShopWeapon : UICanvas
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
     }
-
+    public void SetCanvasCamera(Camera camera)
+    {
+        canvas.worldCamera = camera;
+    }
     private void LoadData()
     {
         

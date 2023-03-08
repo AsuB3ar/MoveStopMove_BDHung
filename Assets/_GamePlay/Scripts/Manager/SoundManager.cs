@@ -8,18 +8,16 @@ namespace MoveStopMove.Manager
     public class SoundManager : Singleton<SoundManager>
     {
         [SerializeField]
-        AudioSource globalAudioSource;
-
+        AudioSource globalAudioSource;       
         [SerializeField]
-        GameObject soundPool;
-        [SerializeField]
-        GameObject audioSourceObject;
-
+        private Pool soundPoolScript;
         [Range(0, 1)]
         [SerializeField]
         float volume = 1f;
 
-        private Pool soundPoolScript;
+        [SerializeField]
+        GameObject audioSourceObject;
+
         private List<GameObject> currentPlayAudioSource = new List<GameObject>();
         public enum Sound
         {
@@ -41,7 +39,6 @@ namespace MoveStopMove.Manager
         protected override void Awake()
         {
             base.Awake();
-            soundPoolScript = soundPool.GetComponent<Pool>();
             soundPoolScript.Initialize(audioSourceObject);
         }
 
