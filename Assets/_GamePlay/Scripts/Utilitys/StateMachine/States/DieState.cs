@@ -18,7 +18,7 @@ namespace Utilitys.AI
         public override void Enter()
         {
             Event.SetVelocity(Vector3.zero);
-            Event.SetBool_Anim(GameConst.ANIM_IS_DEAD, true);
+            Event.SetBool_Anim(GAMECONST.ANIM_IS_DEAD, true);
             Event.SetPhysicModuleActive(false);
             base.Enter();
         }
@@ -32,7 +32,7 @@ namespace Utilitys.AI
         public override void Exit()
         {
             base.Exit();
-            Event.SetBool_Anim(GameConst.ANIM_IS_DEAD, false);
+            Event.SetBool_Anim(GAMECONST.ANIM_IS_DEAD, false);
             Event.SetPhysicModuleActive(true);
         }
 

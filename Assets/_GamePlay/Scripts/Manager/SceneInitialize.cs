@@ -13,8 +13,8 @@ public class SceneInitialize : MonoBehaviour
     {
         INIT = 0,
         LOAD_START = 1,
-        PVE = 2,
-        PVP = 3,
+        STANDARD_PVE = 2,
+        STANDARD_PVP = 3,
     }
     [SerializeField]
     SCENE_TYPE type;
@@ -22,16 +22,16 @@ public class SceneInitialize : MonoBehaviour
     [ConditionalField(nameof(type), false, SCENE_TYPE.INIT)]
     [SerializeField]
     GameData gameData;
-    [ConditionalField(nameof(type), false, SCENE_TYPE.PVE, SCENE_TYPE.PVP)]
+    [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
     [SerializeField]
     Camera playerCamera;
-    [ConditionalField(nameof(type), false, SCENE_TYPE.PVE, SCENE_TYPE.PVP)]
+    [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
     [SerializeField]
     BaseCharacter playerScript;
-    [ConditionalField(nameof(type), false, SCENE_TYPE.PVE, SCENE_TYPE.PVP)]
+    [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
     [SerializeField]
     GameObject targetIndicator;
-    [ConditionalField(nameof(type), false, SCENE_TYPE.PVE, SCENE_TYPE.PVP)]
+    [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
     [SerializeField]
     CameraMove cameraMove;
     private void Awake()
@@ -39,19 +39,19 @@ public class SceneInitialize : MonoBehaviour
         switch (type)
         {
             case SCENE_TYPE.INIT:
-                SceneManager.Inst.LoadScene("LoadStart");
+                SceneManager.Inst.LoadScene(GAMECONST.LOAD_START_SCENE);
                 SceneManager.Inst._OnSceneLoaded += (name) =>
                 {
-                    if (string.Compare(name, "LoadStart") == 0)
+                    if (string.Compare(name, GAMECONST.LOAD_START_SCENE) == 0)
                     {
-                        SceneManager.Inst.LoadScene("PveScene");
+                        SceneManager.Inst.LoadScene(GAMECONST.STANDARD_PVE_SCENE);
                         Debug.Log($"<color=green>Complete Load LoadStart Scene</color>");
                     }
                 };
                 break;
             case SCENE_TYPE.LOAD_START:
                 break;
-            case SCENE_TYPE.PVE:
+            case SCENE_TYPE.STANDARD_PVE:
                 GameplayManager.Inst.PlayerScript = playerScript;
                 GameplayManager.Inst.PlayerCamera = playerCamera;
                 GameplayManager.Inst.TargetIndicator = targetIndicator;
@@ -59,7 +59,7 @@ public class SceneInitialize : MonoBehaviour
                 gameData.OnInitData();
                 
                 break;
-            case SCENE_TYPE.PVP:
+            case SCENE_TYPE.STANDARD_PVP:
                 GameplayManager.Inst.PlayerScript = playerScript;
                 GameplayManager.Inst.PlayerCamera = playerCamera;
                 GameplayManager.Inst.TargetIndicator = targetIndicator;
@@ -72,11 +72,11 @@ public class SceneInitialize : MonoBehaviour
     {
         switch (type)
         {
-            case SCENE_TYPE.PVE:
+            case SCENE_TYPE.STANDARD_PVE:
                 UIManager.Inst.OpenUI(UIID.UICMainMenu);
                 break;
-            case SCENE_TYPE.PVP:
-                UIManager.Inst.OpenUI(UIID.UICMainMenu);
+            case SCENE_TYPE.STANDARD_PVP:
+                UIManager.Inst.OpenUI(UIID.UICPvpMainMenu);
                 break;
         }
     }

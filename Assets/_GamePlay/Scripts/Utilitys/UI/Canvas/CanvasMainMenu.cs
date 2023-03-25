@@ -7,8 +7,6 @@ using MoveStopMove.Core.Data;
 
 public class CanvasMainMenu : UICanvas
 {
-    bool isDirty = false;
-    
     [SerializeField]
     TMP_Text descriptionPlayText;
     [SerializeField]
@@ -18,7 +16,6 @@ public class CanvasMainMenu : UICanvas
     GameData Data;
     private const string ZONE = "Zone:";
     private const string BEST = " - Best:#";
-    private const string PVPSCENE_NAME = "PvpScene";
 
     public void Awake()
     {
@@ -49,7 +46,7 @@ public class CanvasMainMenu : UICanvas
 
     public void PlayPvpButton()
     {
-        SceneManager.Inst.LoadScene(PVPSCENE_NAME, LevelManager.Inst.DestructLevel);
+        SceneManager.Inst.LoadScene(GAMECONST.STANDARD_PVP_SCENE, LevelManager.Inst.DestructLevel);
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
     }
@@ -64,17 +61,10 @@ public class CanvasMainMenu : UICanvas
     public override void Open()
     {
         base.Open();       
-        if (isDirty)
-        {
             //GameplayManager.Inst.PlayerScript.Reset();
-            GameManager.Inst.StopGame();
-            LevelManager.Inst.OpenLevel(Data.CurrentRegion);
-            SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);            
-        }
-        else
-        {
-            isDirty = true;
-        }
+        GameManager.Inst.StopGame();
+        LevelManager.Inst.OpenLevel(Data.CurrentRegion);
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);            
         GameplayManager.Inst.SetCameraPosition(CameraPosition.MainMenu);
         UpdateData();
     }

@@ -20,22 +20,22 @@ namespace MoveStopMove.Core.Character.PhysicSystem
             module.SetVelocity(velocity);
         }
 
-        public void SetRotation(GameConst.Type type,Quaternion rotation)
+        public void SetRotation(GAMECONST.PHYSIC_OTYPE type,Quaternion rotation)
         {
             module.SetRotation(type,rotation);
         }
 
-        public void SetSmoothRotation(GameConst.Type type, Vector3 direction)
+        public void SetSmoothRotation(GAMECONST.PHYSIC_OTYPE type, Vector3 direction)
         {
             module.SetSmoothRotation(type, direction);
         }
 
-        public void SetScale(GameConst.Type type,Vector3 scale)
+        public void SetScale(GAMECONST.PHYSIC_OTYPE type,Vector3 scale)
         {
             module.SetScale(type, scale);
         }
 
-        public void SetScale(GameConst.Type type, float ratio)
+        public void SetScale(GAMECONST.PHYSIC_OTYPE type, float ratio)
         {
             module.SetScale(type, ratio);
         }

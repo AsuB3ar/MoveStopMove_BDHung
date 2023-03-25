@@ -113,8 +113,8 @@ namespace MoveStopMove.Core
         {
             PhysicModule.SetActive(true);
             transform.localScale = Vector3.one * Data.Size;
-            PhysicModule.SetRotation(GameConst.Type.Model, Quaternion.Euler(0, 0, 0));
-            PhysicModule.SetRotation(GameConst.Type.Sensor, Quaternion.Euler(0, 0, 0));          
+            PhysicModule.SetRotation(GAMECONST.PHYSIC_OTYPE.Model, Quaternion.Euler(0, 0, 0));
+            PhysicModule.SetRotation(GAMECONST.PHYSIC_OTYPE.Sensor, Quaternion.Euler(0, 0, 0));          
             Data.AttackCount = 0;
             OnEnable();
             ((CharacterLogicModule)LogicModule).StartStateMachine();            
@@ -187,7 +187,7 @@ namespace MoveStopMove.Core
         public void Reset()
         {
             SetLevel(1);
-            SetPosition(new Vector3(0, GameConst.INIT_CHARACTER_HEIGHT, 0));
+            SetPosition(new Vector3(0, GAMECONST.INIT_CHARACTER_HEIGHT, 0));
             OnInit();
         }
 
@@ -201,7 +201,7 @@ namespace MoveStopMove.Core
         public void SetLevel(int level)
         {
             Data.Level = level;
-            PhysicModule.SetScale(GameConst.Type.Character, Vector3.one * Data.Size);
+            PhysicModule.SetScale(GAMECONST.PHYSIC_OTYPE.Character, Vector3.one * Data.Size);
         }
         protected virtual void Update()
         {
@@ -275,7 +275,7 @@ namespace MoveStopMove.Core
         protected void CalculateActionAndTime()
         {
             #region DIE EVENTS
-            dieTimes = new List<float>() { GameConst.ANIM_IS_DEAD_TIME, GameConst.ANIM_IS_DEAD_TIME + despawnTime };
+            dieTimes = new List<float>() { GAMECONST.ANIM_IS_DEAD_TIME, GAMECONST.ANIM_IS_DEAD_TIME + despawnTime };
             dieActions = new List<Action>() { () => OnDie?.Invoke(this), OnDespawn };
             #endregion
         }
@@ -300,7 +300,7 @@ namespace MoveStopMove.Core
             Data.Level += 1;
             SoundManager.Inst.PlaySound(SoundManager.Sound.Character_SizeUp, transform.position);           
             VFX_AddStatus.Play();
-            PhysicModule.SetScale(GameConst.Type.Character, Vector3.one * Data.Size);          
+            PhysicModule.SetScale(GAMECONST.PHYSIC_OTYPE.Character, Vector3.one * Data.Size);          
         }
 
         protected virtual void OnCollideGift(Collider col)

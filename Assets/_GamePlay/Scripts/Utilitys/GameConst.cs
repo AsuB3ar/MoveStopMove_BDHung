@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public static class GameConst
+public static class GAMECONST
 {
 
-    public enum Type
+    public enum PHYSIC_OTYPE
     {
         Character = 0,
         Sensor = 1,
         Model = 2
     }
 
+    public enum GAMEPLAY_MODE
+    {
+        STANDARD_PVP = 0,
+        STANDARD_PVE = 1,
+    }
+
+    #region GAME_PLAY
     public static readonly string ANIM_IS_IDLE = "IsIdle";
     public static readonly string ANIM_IS_DEAD = "IsDead";
     public static readonly string ANIM_IS_ATTACK = "IsAttack";
@@ -26,4 +33,12 @@ public static class GameConst
     public const float ANIM_IS_ATTACK_TIME = 1.03f;
     public const float ANIM_IS_DEAD_TIME = 2.06f;
     public const float INIT_CHARACTER_HEIGHT = 0.63f;
+    #endregion
+
+    #region SCENE_NAME
+    public static readonly string INIT_SCENE = "InitScene";
+    public static readonly string LOAD_START_SCENE = "LoadStartScene";
+    public static readonly string STANDARD_PVE_SCENE = "PveStandardScene";
+    public static readonly string STANDARD_PVP_SCENE = "PvpStandardScene";
+    #endregion
 }

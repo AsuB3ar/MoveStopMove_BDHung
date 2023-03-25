@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using CustomAttribute;
 
 namespace MoveStopMove.Manager
 {
@@ -25,6 +26,10 @@ namespace MoveStopMove.Manager
         private List<Obstance> obstances = new List<Obstance>();
         private List<BaseCharacter> characters = new List<BaseCharacter>();
 
+        [SerializeField]
+        GAMECONST.GAMEPLAY_MODE Mode;
+
+        [ConditionalField(nameof(Mode), false, GAMECONST.GAMEPLAY_MODE.STANDARD_PVE)]
         [SerializeField]
         int difficulty = 3;
         [SerializeField]
@@ -113,18 +118,7 @@ namespace MoveStopMove.Manager
         public void OpenLevel(int level)
         {
             //TODO: Set Data Level
-            if(level >= levelDatas.Count)
-            {
-                currentLevel = levelDatas.Count - 1;
-            }
-            else if(level < 0)
-            {
-                currentLevel = 0;
-            }
-            else
-            {
-                currentLevel = level;
-            }
+            currentLevel = Mathf.Clamp(currentLevel, 0, levelDatas.Count - 1);
             
             currentLevelData = levelDatas[currentLevel];
             DestructLevel();
@@ -311,7 +305,7 @@ namespace MoveStopMove.Manager
                 vecZ = -(currentLevelData.Size - MARGIN);
                 vecX = UnityEngine.Random.Range(-(currentLevelData.Size - MARGIN) + position.x, currentLevelData.Size - MARGIN + position.x);
             }
-            return new Vector3(vecX, GameConst.INIT_CHARACTER_HEIGHT, vecZ);
+            return new Vector3(vecX, GAMECONST.INIT_CHARACTER_HEIGHT, vecZ);
         }
         #endregion
         #region Spawn Gift
@@ -334,7 +328,7 @@ namespace MoveStopMove.Manager
                 pos = new Vector3();
                 pos.x = UnityEngine.Random.Range(-0.9f, 0.9f) * currentLevelData.Size;
                 pos.z = UnityEngine.Random.Range(-0.9f, 0.9f) * currentLevelData.Size;
-                pos.y = GameConst.INIT_CHARACTER_HEIGHT + sizeScale/2;
+                pos.y = GAMECONST.INIT_CHARACTER_HEIGHT + sizeScale/2;
             }
             else
             {
@@ -345,7 +339,7 @@ namespace MoveStopMove.Manager
 
                 pos.x = pos.x * currentLevelData.Size + UnityEngine.Random.Range(-1f, 1f) * RANDOM_GIFT_POSITION;
                 pos.z = pos.z * currentLevelData.Size + UnityEngine.Random.Range(-1f, 1f) * RANDOM_GIFT_POSITION;
-                pos.y = GameConst.INIT_CHARACTER_HEIGHT + sizeScale/2;
+                pos.y = GAMECONST.INIT_CHARACTER_HEIGHT + sizeScale/2;
             }
             GameObject gift = PrefabManager.Inst.PopFromPool(PoolID.Gift);            
             gift.transform.parent = Level;

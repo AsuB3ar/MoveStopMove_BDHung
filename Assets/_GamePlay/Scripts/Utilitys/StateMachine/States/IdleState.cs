@@ -18,7 +18,7 @@ namespace Utilitys.AI
             base.Enter();
             //TODO: Play Animation 
             Event.SetVelocity(Vector3.zero);           
-            Event.SetBool_Anim(GameConst.ANIM_IS_IDLE, true);
+            Event.SetBool_Anim(GAMECONST.ANIM_IS_IDLE, true);
         }
 
         public override void Exit()

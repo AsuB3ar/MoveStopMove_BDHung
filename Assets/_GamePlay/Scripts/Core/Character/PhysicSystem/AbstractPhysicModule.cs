@@ -14,11 +14,11 @@ namespace MoveStopMove.Core.Character.PhysicSystem
             this.Parameter = Parameter;
         }
         public abstract void SetVelocity(Vector3 velocity);
-        public abstract void SetRotation(GameConst.Type type,Quaternion rotation);
-        public abstract void SetSmoothRotation(GameConst.Type type, Vector3 direction);
+        public abstract void SetRotation(GAMECONST.PHYSIC_OTYPE type,Quaternion rotation);
+        public abstract void SetSmoothRotation(GAMECONST.PHYSIC_OTYPE type, Vector3 direction);
 
-        public abstract void SetScale(GameConst.Type type, Vector3 scale);
-        public abstract void SetScale(GameConst.Type type, float ratio);
+        public abstract void SetScale(GAMECONST.PHYSIC_OTYPE type, Vector3 scale);
+        public abstract void SetScale(GAMECONST.PHYSIC_OTYPE type, float ratio);
         public abstract void SetActive(bool value);
 
         public abstract void OnInit();

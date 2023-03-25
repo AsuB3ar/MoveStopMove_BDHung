@@ -33,37 +33,37 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
             SetActive(true);
         }
 
-        public override void SetRotation(GameConst.Type type,Quaternion rotation)
+        public override void SetRotation(GAMECONST.PHYSIC_OTYPE type,Quaternion rotation)
         {
             controller.enabled = false;
-            if(type == GameConst.Type.Character)
+            if(type == GAMECONST.PHYSIC_OTYPE.Character)
             {
                 gameObject.transform.rotation = rotation;
             }
-            else if(type == GameConst.Type.Model)
+            else if(type == GAMECONST.PHYSIC_OTYPE.Model)
             {
                 charModel.transform.rotation = rotation;
             }
-            else if(type == GameConst.Type.Sensor)
+            else if(type == GAMECONST.PHYSIC_OTYPE.Sensor)
             {
                 charSensor.transform.rotation = rotation;
             }
             controller.enabled = true;
         }
 
-        public override void SetSmoothRotation(GameConst.Type type, Vector3 direction)
+        public override void SetSmoothRotation(GAMECONST.PHYSIC_OTYPE type, Vector3 direction)
         {
-            if (type == GameConst.Type.Character)
+            if (type == GAMECONST.PHYSIC_OTYPE.Character)
             {
                 rotGoal = Quaternion.LookRotation(direction);
                 gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, rotGoal, rotateSpeed * Time.deltaTime);
             }
-            else if (type == GameConst.Type.Model)
+            else if (type == GAMECONST.PHYSIC_OTYPE.Model)
             {
                 rotGoal = Quaternion.LookRotation(direction);
                 charModel.transform.rotation = Quaternion.Slerp(charModel.transform.rotation, rotGoal, rotateSpeed * Time.deltaTime);
             }
-            else if (type == GameConst.Type.Sensor)
+            else if (type == GAMECONST.PHYSIC_OTYPE.Sensor)
             {
                 rotGoal = Quaternion.LookRotation(direction);
                 charSensor.transform.rotation = Quaternion.Slerp(charSensor.transform.rotation, rotGoal, rotateSpeed * Time.deltaTime);
@@ -71,34 +71,34 @@ namespace MoveStopMove.Core.Character.PhysicSystem {
 
         }
 
-        public override void SetScale(GameConst.Type type, Vector3 scale)
+        public override void SetScale(GAMECONST.PHYSIC_OTYPE type, Vector3 scale)
         {
-            if (type == GameConst.Type.Character)
+            if (type == GAMECONST.PHYSIC_OTYPE.Character)
             {
                 gameObject.transform.localScale = scale;
             }
-            else if (type == GameConst.Type.Model)
+            else if (type == GAMECONST.PHYSIC_OTYPE.Model)
             {
                 charModel.transform.localScale = scale;
             }
-            else if (type == GameConst.Type.Sensor)
+            else if (type == GAMECONST.PHYSIC_OTYPE.Sensor)
             {
                 charSensor.transform.localScale = scale;
             }
         }
 
-        public override void SetScale(GameConst.Type type, float ratio)
+        public override void SetScale(GAMECONST.PHYSIC_OTYPE type, float ratio)
         {
-            if (type == GameConst.Type.Character)
+            if (type == GAMECONST.PHYSIC_OTYPE.Character)
             {
                 gameObject.transform.localScale = gameObject.transform.localScale * ratio;
             }
-            else if (type == GameConst.Type.Model)
+            else if (type == GAMECONST.PHYSIC_OTYPE.Model)
             {
                 charModel.transform.localScale = charModel.transform.localScale = gameObject.transform.localScale * ratio;
 
             }
-            else if (type == GameConst.Type.Sensor)
+            else if (type == GAMECONST.PHYSIC_OTYPE.Sensor)
             {
                 charSensor.transform.localScale = charSensor.transform.localScale = gameObject.transform.localScale * ratio;
             }

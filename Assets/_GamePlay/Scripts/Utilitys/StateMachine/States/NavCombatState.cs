@@ -72,7 +72,7 @@ namespace Utilitys.AI
             }
             isCanAttack = !isCanAttack;
 
-            float time = Random.Range(GameConst.ANIM_IS_ATTACK_TIME + avgTimeHitAndRun * 0.8f,GameConst.ANIM_IS_ATTACK_TIME + avgTimeHitAndRun * 1.2f);
+            float time = Random.Range(GAMECONST.ANIM_IS_ATTACK_TIME + avgTimeHitAndRun * 0.8f,GAMECONST.ANIM_IS_ATTACK_TIME + avgTimeHitAndRun * 1.2f);
             timerHitAndRun.Start(time, 1);
         }
 

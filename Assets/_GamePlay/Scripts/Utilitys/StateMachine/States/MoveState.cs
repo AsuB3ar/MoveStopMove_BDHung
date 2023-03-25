@@ -16,7 +16,7 @@ namespace Utilitys.AI
         public override void Enter()
         {
             base.Enter();
-            Event.SetBool_Anim(GameConst.ANIM_IS_IDLE, false);
+            Event.SetBool_Anim(GAMECONST.ANIM_IS_IDLE, false);
             Data.CharacterData.AttackCount = 1;
             //TODO: Play Move Animation
             //TODO: Set up Timer
@@ -70,8 +70,8 @@ namespace Utilitys.AI
 
         private void RotationHandle()
         {
-            Event.SetSmoothRotation(GameConst.Type.Model, Parameter.MoveDirection);
-            Event.SetSmoothRotation(GameConst.Type.Sensor, Parameter.MoveDirection);
+            Event.SetSmoothRotation(GAMECONST.PHYSIC_OTYPE.Model, Parameter.MoveDirection);
+            Event.SetSmoothRotation(GAMECONST.PHYSIC_OTYPE.Sensor, Parameter.MoveDirection);
         }
         
 

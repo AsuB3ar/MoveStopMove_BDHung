@@ -7,8 +7,8 @@ namespace MoveStopMove.Core.Character.LogicSystem
     public class LogicEvent : ScriptableObject
     {
         public Action<Vector3> SetVelocity;
-        public Action<GameConst.Type,Quaternion> SetRotation;
-        public Action<GameConst.Type, Vector3> SetSmoothRotation;
+        public Action<GAMECONST.PHYSIC_OTYPE,Quaternion> SetRotation;
+        public Action<GAMECONST.PHYSIC_OTYPE, Vector3> SetSmoothRotation;
 
         public Action<string, bool> SetBool_Anim;
         public Action<string, float> SetFloat_Anim;

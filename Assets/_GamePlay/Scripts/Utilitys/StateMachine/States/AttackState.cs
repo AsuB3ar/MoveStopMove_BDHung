@@ -25,11 +25,11 @@ namespace Utilitys.AI
 
             if (IsSpecialAttack == false)
             {
-                Event.SetBool_Anim(GameConst.ANIM_IS_ATTACK, true);
+                Event.SetBool_Anim(GAMECONST.ANIM_IS_ATTACK, true);
             }
             else
             {
-                Event.SetBool_Anim(GameConst.ANIM_IS_ULTI, true);
+                Event.SetBool_Anim(GAMECONST.ANIM_IS_ULTI, true);
             }
 
             Event.SetVelocity(Vector3.zero);
@@ -40,8 +40,8 @@ namespace Utilitys.AI
             Quaternion rot = MathHelper.GetQuaternion2Vector(Vector2.up, new Vector2(-direction.x, direction.z));
 
             timeFrames = 0;
-            Event.SetRotation(GameConst.Type.Model, rot);
-            Event.SetRotation(GameConst.Type.Sensor, rot);
+            Event.SetRotation(GAMECONST.PHYSIC_OTYPE.Model, rot);
+            Event.SetRotation(GAMECONST.PHYSIC_OTYPE.Sensor, rot);
             Data.CharacterData.AttackCount = 0;
 
         }
@@ -66,7 +66,7 @@ namespace Utilitys.AI
                     StateMachine.ChangeState(State.Move);
                     return 0;
                 }
-                else if (timeFrames >= GameConst.ANIM_IS_ATTACK_FRAMES)
+                else if (timeFrames >= GAMECONST.ANIM_IS_ATTACK_FRAMES)
                 {
                     StateMachine.ChangeState(State.Idle);
                     return 0;
@@ -79,7 +79,7 @@ namespace Utilitys.AI
             }
             else
             {
-                if (timeFrames >= GameConst.ANIM_IS_SPECIAL_ATTACK_FRAMES)
+                if (timeFrames >= GAMECONST.ANIM_IS_SPECIAL_ATTACK_FRAMES)
                 {
                     StateMachine.ChangeState(State.Idle);
                     return 0;
@@ -103,11 +103,11 @@ namespace Utilitys.AI
             Event.SetTargetIndicatorPosition?.Invoke(null, false);
             if (!IsSpecialAttack)
             {
-                Event.SetBool_Anim(GameConst.ANIM_IS_ATTACK, false);
+                Event.SetBool_Anim(GAMECONST.ANIM_IS_ATTACK, false);
             }
             else
             {
-                Event.SetBool_Anim(GameConst.ANIM_IS_ULTI, false);
+                Event.SetBool_Anim(GAMECONST.ANIM_IS_ULTI, false);
                 Event.EndGiftBonus?.Invoke();
             }
             
