@@ -32,7 +32,6 @@ namespace MoveStopMove.Core
         protected override void Awake()
         {
             base.Awake();
-            Data = ScriptableObject.CreateInstance(typeof(CharacterData)) as CharacterData;
             LogicSystem.SetCharacterInformation(Data, gameObject.transform);
             WorldInterfaceSystem.SetCharacterInformation(Data);
             GameData = GameManager.Inst.GameData;

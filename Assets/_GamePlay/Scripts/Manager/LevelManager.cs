@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -43,7 +42,7 @@ namespace MoveStopMove.Manager
         
         private List<Gift> gifts = new List<Gift>();
         private Queue<Vector3> giftPositions = new Queue<Vector3>();
-        private STimer giftTimer = new STimer();
+        private STimer giftTimer;
 
         private GameData GameData;
 
@@ -67,22 +66,24 @@ namespace MoveStopMove.Manager
             gameplay = UIManager.Inst.GetUI(UIID.UICGamePlay) as CanvasGameplay;
             gameplay.Close();
             GameData = GameManager.Inst.GameData;
+            giftTimer = TimerManager.Inst.PopSTimer();
         }
         private void Start()
         {
             GameplayManager.Inst.PlayerScript = Cache.GetBaseCharacter(GameplayManager.Inst.Player);
             GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
             GameManager.Inst.OnStartGame += RunLevel;
-            OpenLevel(GameManager.Inst.GameData.CurrentRegion);          
+            OpenLevel(GameManager.Inst.GameData.CurrentRegion);
+            
         }
         private void OnEnable()
         {
-            giftTimer.TimeOut1 += TimerEvent;
+            giftTimer.TimeOut += TimerEvent;
             GameManager.Inst.OnStartGame += StartSpawnGift;
         }
         private void OnDisable()
         {
-            giftTimer.TimeOut1 -= TimerEvent;
+            giftTimer.TimeOut -= TimerEvent;
             GameManager.Inst.OnStartGame -= StartSpawnGift;
         }
         private void FixedUpdate()
@@ -107,7 +108,8 @@ namespace MoveStopMove.Manager
             ConstructLevel();
 
             
-        }      
+        }
+        #region Level 
         public void OpenLevel(int level)
         {
             //TODO: Set Data Level
@@ -182,7 +184,9 @@ namespace MoveStopMove.Manager
                 characters[0].OnDespawn();
                 RemoveCharacter(characters[0]);
             }
-        }   
+        }
+        #endregion
+        #region Character 
         private void OnPlayerDie(BaseCharacter player)
         {
             CanvasFail fail = ((CanvasFail)UIManager.Inst.OpenUI(UIID.UICFail));
@@ -236,12 +240,11 @@ namespace MoveStopMove.Manager
             GameObject character = PrefabManager.Inst.PopFromPool(PoolID.Character);
             character.transform.parent = Level;           
 
-            BaseCharacter characterScript = Cache.GetBaseCharacter(character);
-            
+            BaseCharacter characterScript = Cache.GetBaseCharacter(character);           
             Vector3 randomPos;
             do
             {
-                randomPos = GetRandomPositionCharacter();
+                randomPos = CharacterRandomPosition();
             } while ((randomPos - GameplayManager.Inst.Player.transform.position).sqrMagnitude < 2 * GameplayManager.Inst.PlayerScript.AttackRange);
             
             
@@ -283,7 +286,7 @@ namespace MoveStopMove.Manager
             return characterScript;
                      
         }
-        private Vector3 GetRandomPositionCharacter()
+        private Vector3 CharacterRandomPosition()
         {
             int value = UnityEngine.Random.Range(0, 4);
             float vecX;
@@ -310,7 +313,7 @@ namespace MoveStopMove.Manager
             }
             return new Vector3(vecX, GameConst.INIT_CHARACTER_HEIGHT, vecZ);
         }
-
+        #endregion
         #region Spawn Gift
         private void StartSpawnGift()
         {
@@ -324,7 +327,6 @@ namespace MoveStopMove.Manager
         }
         private void SpawnGift()
         {
-            Debug.Log(giftPositions.Count);
             Vector3 pos;
             float sizeScale = GameplayManager.Inst.PlayerScript.Size;
             if (currentLevelData.GiftPositions.Count == 0)
@@ -356,8 +358,7 @@ namespace MoveStopMove.Manager
         }
         private void OnGiftDespawn(Gift gift)
         {
-            gifts.Remove(gift);
-            
+            gifts.Remove(gift);          
             if(gifts.Count < NUM_GIFT_MAX)
             {
                 float time = UnityEngine.Random.Range(4f, 4f + RANDOM_GIFT_TIME);
@@ -374,10 +375,12 @@ namespace MoveStopMove.Manager
             }
         }
         #endregion
-
         #region Check Obstance
         Ray ray = new Ray();
         Obstance oldObstance;
+        /// <summary>
+        /// Making object transparent when overlapping the camera
+        /// </summary>
         private void TransparentObstance()
         {
             Vector3 pos1 = GameplayManager.Inst.PlayerCamera.transform.position;

@@ -9,7 +9,7 @@ namespace Utilitys
         [SerializeField]
         protected GameObject mainPool;
         [SerializeField]
-        bool isSetParent = false;
+        public bool IsSetParent = false;
         [HideInInspector]
         private GameObject obj;
         Queue<GameObject> objects;
@@ -37,21 +37,20 @@ namespace Utilitys
         }
 
         public void Push(GameObject obj,bool checkContain = true)
-        {
+        {           
             if (checkContain)
             {
                 if (objects.Contains(obj))
                     return;
-            }
-            
-
+            }            
             objects.Enqueue(obj);
-
-            obj.SetActive(false);
-            if (isSetParent)
+          
+            if (IsSetParent)
             {
-                obj.transform.parent = mainPool.transform;
+                //obj.transform.parent = mainPool.transform;
+                obj.transform.SetParent(mainPool.transform);
             }
+            obj.SetActive(false);
             obj.transform.position = Vector3.zero;
         }
 

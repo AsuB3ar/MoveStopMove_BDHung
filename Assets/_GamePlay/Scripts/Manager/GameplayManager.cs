@@ -38,11 +38,22 @@ namespace MoveStopMove.Manager
 
     [DefaultExecutionOrder(-20)]
     public class GameplayManager : Singleton<GameplayManager>
-    {
+    {       
         public GameObject Player => PlayerScript.gameObject;
         public BaseCharacter PlayerScript;
         public Camera PlayerCamera;
-        public GameObject TargetIndicator;
+        [SerializeField]
+        GameObject targetIndicator;
+        public GameObject TargetIndicator
+        {
+            get => targetIndicator;
+            set
+            {
+                targetIndicator = value;
+                InitScaleTargetIndicator = TargetIndicator.transform.localScale;
+            }
+        }
+
         public Vector3 InitScaleTargetIndicator;
         [SerializeField]
         CameraMove cameraMove;
@@ -50,6 +61,15 @@ namespace MoveStopMove.Manager
         List<Material> materials;
         [SerializeField]
         List<Material> pantSkins;
+
+        public CameraMove CameraMove
+        {
+            set
+            {
+                if (cameraMove == null)
+                    cameraMove = value;
+            }
+        }
         
         public readonly List<PoolID> HairSkins = new List<PoolID>() { PoolID.Hair_Arrow, PoolID.Hair_Cowboy, PoolID.Hair_Headphone,PoolID.Hair_Ear, PoolID.Hair_Crown, PoolID.Hair_Horn, PoolID.Hair_Beard ,PoolID.None };
         public readonly List<PantSkin> PantSkins = new List<PantSkin>() { PantSkin.Batman, PantSkin.Chambi, PantSkin.Comy, PantSkin.Dabao, PantSkin.Onion, PantSkin.Pokemon, PantSkin.Rainbow, PantSkin.Skull, PantSkin.Vantim };
@@ -58,9 +78,9 @@ namespace MoveStopMove.Manager
         protected override void Awake()
         {
             base.Awake();
-            InitScaleTargetIndicator = TargetIndicator.transform.localScale;
+            //InitScaleTargetIndicator = TargetIndicator.transform.localScale;
         }
-        public UnityEngine.Color GetColor(GameColor color)
+        public Color GetColor(GameColor color)
         {
             return GetMaterial(color).color;
         }

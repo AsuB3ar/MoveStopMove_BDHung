@@ -28,6 +28,18 @@ namespace MoveStopMove.Core
 
         protected VisualEffectController VFX_Hit;
         protected VisualEffectController VFX_AddStatus;
+        protected CharacterData data = null;
+        protected CharacterData Data
+        {
+            get
+            {
+                if(data == null)
+                {
+                    data = ScriptableObject.CreateInstance(typeof(CharacterData)) as CharacterData;
+                }
+                return data;
+            }
+        }
 
         [SerializeField]
         protected SkinnedMeshRenderer meshCharacter;
@@ -41,7 +53,7 @@ namespace MoveStopMove.Core
         protected Transform ContainWeaponTF;
         [SerializeField]
         protected Transform ContainHairTF;
-        protected CharacterData Data;
+        
 
         [SerializeField]
         protected WorldInterfaceModule WorldInterfaceModule;
@@ -58,10 +70,14 @@ namespace MoveStopMove.Core
         protected CharacterWorldInterfaceSystem WorldInterfaceSystem;
         protected CharacterNavigationSystem NavigationSystem;
         protected CharacterLogicSystem LogicSystem;
-        protected CharacterPhysicSystem PhysicSystem;
-        protected STimer timerDie = new STimer();
+        protected CharacterPhysicSystem PhysicSystem;     
 
         public BaseWeapon Weapon;
+
+        protected STimer dieTimer;
+        private float despawnTime = 2f;
+        private List<float> dieTimes;
+        private List<Action> dieActions;
         public bool IsDie
         {
             get
@@ -74,7 +90,6 @@ namespace MoveStopMove.Core
         public float AttackRange => Data.AttackRange;
         public int Level => Data.Level;
         public GameColor Color => (GameColor)Data.Color;
-
         public bool IsRun => ((CharacterAI)NavigationModule).StateMachine.IsStarted;
 
 
@@ -87,6 +102,8 @@ namespace MoveStopMove.Core
 
                        
             NavigationSystem.SetCharacterInformation(transform, SensorTF, GetInstanceID());
+            dieTimer = TimerManager.Inst.PopSTimer();
+            CalculateActionAndTime();
             //NOTE: When change wepon need to set this line of code
             
         }
@@ -127,7 +144,7 @@ namespace MoveStopMove.Core
 
             LogicSystem.Event.SetVelocity += PhysicSystem.SetVelocity;
             LogicSystem.Event.SetRotation += PhysicSystem.SetRotation;
-            LogicSystem.Event.SetActive += PhysicModule.SetActive;
+            LogicSystem.Event.SetPhysicModuleActive += PhysicModule.SetActive;
 
             LogicSystem.Event.SetSmoothRotation += PhysicSystem.SetSmoothRotation;
             LogicSystem.Event.SetBool_Anim += AnimModule.SetBool;
@@ -140,8 +157,6 @@ namespace MoveStopMove.Core
 
             AnimModule.UpdateEventAnimationState += LogicSystem.ReceiveInformation;
             #endregion           
-            
-            timerDie.TimeOut1 += TimerEvent;
         }
 
         protected virtual void OnDisable()
@@ -155,7 +170,7 @@ namespace MoveStopMove.Core
 
             LogicSystem.Event.SetVelocity -= PhysicSystem.SetVelocity;
             LogicSystem.Event.SetRotation -= PhysicSystem.SetRotation;
-            LogicSystem.Event.SetActive -= PhysicModule.SetActive;
+            LogicSystem.Event.SetPhysicModuleActive -= PhysicModule.SetActive;
 
             LogicSystem.Event.SetSmoothRotation -= PhysicSystem.SetSmoothRotation;
             LogicSystem.Event.SetBool_Anim -= AnimModule.SetBool;
@@ -168,8 +183,6 @@ namespace MoveStopMove.Core
 
             AnimModule.UpdateEventAnimationState -= LogicSystem.ReceiveInformation;
             #endregion
-            
-            timerDie.TimeOut1 -= TimerEvent;
         }
         public void Reset()
         {
@@ -258,8 +271,15 @@ namespace MoveStopMove.Core
                 Weapon.SetTranformData();
                 Data.Weapon = (int)Weapon.Name;
             }          
+        }      
+        protected void CalculateActionAndTime()
+        {
+            #region DIE EVENTS
+            dieTimes = new List<float>() { GameConst.ANIM_IS_DEAD_TIME, GameConst.ANIM_IS_DEAD_TIME + despawnTime };
+            dieActions = new List<Action>() { () => OnDie?.Invoke(this), OnDespawn };
+            #endregion
         }
-            
+
         public void TakeDamage(int damage)
         {
             Data.Hp -= damage;
@@ -268,22 +288,19 @@ namespace MoveStopMove.Core
             if(Data.Hp <= 0)
             {
                 SoundManager.Inst.PlaySound(SoundManager.Inst.GetRandomDieSound(), transform.position);
-                timerDie.Start(GameConst.ANIM_IS_DEAD_TIME, 0);
-              
+                dieTimer.Start(dieTimes, dieActions);
             }
         }
 
         //TODO: Combat Function(Covert to a system)
         public virtual void AddStatus()
         {
-
             //TODO: Increase Size of character
             //TODO: Increase Size of Attack Range Indicator
             Data.Level += 1;
             SoundManager.Inst.PlaySound(SoundManager.Sound.Character_SizeUp, transform.position);           
             VFX_AddStatus.Play();
             PhysicModule.SetScale(GameConst.Type.Character, Vector3.one * Data.Size);          
-
         }
 
         protected virtual void OnCollideGift(Collider col)
@@ -299,23 +316,7 @@ namespace MoveStopMove.Core
         {
             Data.BaseAttackRange = CharacterData.BASE_ATTACK_RANGE;
         }
-        private void Die()
-        {
-            OnDie?.Invoke(this);
-            timerDie.Start(2f, 1);
-        }
 
-        private void TimerEvent(int code)
-        {
-            if(code == 0)
-            {
-                Die();
-            }
-            else if(code == 1)
-            {
-                OnDespawn();             
-            }
-        }
-        
+             
     }
 }

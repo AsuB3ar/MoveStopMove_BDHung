@@ -16,11 +16,12 @@ public enum UIID
     UICFail = 4,
     UICVictory = 5,
     UICShopSkin = 6,
-    UICShopWeapon = 7
+    UICShopWeapon = 7,
+    UICPvpMainMenu = 8,      
 }
 
 [DefaultExecutionOrder(-15)]
-public class UIManager : Singleton<UIManager>
+public class UIManager : SingletonPersistent<UIManager>
 {
     
     private Dictionary<UIID, UICanvas> UICanvas = new Dictionary<UIID, UICanvas>();

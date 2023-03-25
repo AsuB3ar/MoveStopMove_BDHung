@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
 using MoveStopMove.Manager;
 using MoveStopMove.Core.Data;
 
@@ -19,6 +18,7 @@ public class CanvasMainMenu : UICanvas
     GameData Data;
     private const string ZONE = "Zone:";
     private const string BEST = " - Best:#";
+    private const string PVPSCENE_NAME = "PvpScene";
 
     public void Awake()
     {
@@ -46,6 +46,14 @@ public class CanvasMainMenu : UICanvas
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         Close();
     }
+
+    public void PlayPvpButton()
+    {
+        SceneManager.Inst.LoadScene(PVPSCENE_NAME, LevelManager.Inst.DestructLevel);
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
+        Close();
+    }
+
 
     public void SettingButton()
     {

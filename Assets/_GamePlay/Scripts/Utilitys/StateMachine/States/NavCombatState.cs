@@ -8,8 +8,8 @@ namespace Utilitys.AI
     using Utilitys.Timer;
     public class NavCombatState : BaseState<NavigationParameter, NavigationData>
     {
-        STimer timerEndState = new STimer();
-        STimer timerHitAndRun = new STimer();
+        STimer timerEndState;
+        STimer timerHitAndRun;
 
         float avgTimeHitAndRun = 0.2f;
         float avgTimeEndState = 3;
@@ -19,8 +19,10 @@ namespace Utilitys.AI
         public NavCombatState(StateMachine<NavigationParameter, NavigationData> StateMachine, NavigationParameter Parameter, NavigationData Data) 
             : base(StateMachine, Parameter, Data, null)
         {
-            timerEndState.TimeOut1 += TimerEvent;
-            timerHitAndRun.TimeOut1 += TimerEvent;
+            timerEndState = TimerManager.Inst.PopSTimer();
+            timerHitAndRun = TimerManager.Inst.PopSTimer();
+            timerEndState.TimeOut += TimerEvent;
+            timerHitAndRun.TimeOut += TimerEvent;
         }
 
         public override void Enter()
@@ -116,8 +118,8 @@ namespace Utilitys.AI
 
         ~NavCombatState()
         {
-            timerEndState.TimeOut1 -= TimerEvent;
-            timerHitAndRun.TimeOut1 -= TimerEvent;
+            timerEndState.TimeOut -= TimerEvent;
+            timerHitAndRun.TimeOut -= TimerEvent;
         }
 
     }

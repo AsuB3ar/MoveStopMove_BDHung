@@ -15,11 +15,12 @@ namespace MoveStopMove.Core.Character.LogicSystem
         public Action<string, int> SetInt_Anim;
         public Action<Vector3, float> DealDamage;
         public Action<Vector3, float, bool> SpecialDealDamage;
-        public Action<bool> SetActive;
+        public Action<bool> SetPhysicModuleActive;
         public Action<BaseCharacter, bool> SetTargetIndicatorPosition;
-
+        public Action OnDespawn;
 
         public Action<Collider> CollideGift;
         public Action EndGiftBonus;
+        
     }
 }

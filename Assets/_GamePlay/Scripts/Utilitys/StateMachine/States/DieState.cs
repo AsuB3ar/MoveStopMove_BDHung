@@ -6,6 +6,8 @@ using UnityEngine;
 namespace Utilitys.AI
 {
     using MoveStopMove.Core.Character.LogicSystem;
+    using Utilitys.Timer;
+
     public class DieState : BaseState<LogicParameter,LogicData>
     {
         public DieState(StateMachine<LogicParameter,LogicData> StateMachine, LogicParameter Parameter, LogicData Data, LogicEvent Event) 
@@ -17,7 +19,7 @@ namespace Utilitys.AI
         {
             Event.SetVelocity(Vector3.zero);
             Event.SetBool_Anim(GameConst.ANIM_IS_DEAD, true);
-            Event.SetActive(false);
+            Event.SetPhysicModuleActive(false);
             base.Enter();
         }
 
@@ -31,18 +33,7 @@ namespace Utilitys.AI
         {
             base.Exit();
             Event.SetBool_Anim(GameConst.ANIM_IS_DEAD, false);
-            Event.SetActive(true);
-        }
-
-
-        public override int LogicUpdate()
-        {
-            return base.LogicUpdate();
-        }
-
-        public override int PhysicUpdate()
-        {
-            return base.PhysicUpdate();
+            Event.SetPhysicModuleActive(true);
         }
 
     }

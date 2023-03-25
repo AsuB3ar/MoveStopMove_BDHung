@@ -17,7 +17,6 @@ namespace MoveStopMove.Manager
 
         [SerializeField]
         GameObject audioSourceObject;
-
         private List<GameObject> currentPlayAudioSource = new List<GameObject>();
         public enum Sound
         {
@@ -35,13 +34,11 @@ namespace MoveStopMove.Manager
             Button_Click = 1000,
 
         }
-
         protected override void Awake()
         {
             base.Awake();
             soundPoolScript.Initialize(audioSourceObject);
         }
-
         private void FixedUpdate()
         {
             for(int i = 0; i < currentPlayAudioSource.Count; i++)
@@ -58,7 +55,6 @@ namespace MoveStopMove.Manager
         {
             globalAudioSource.PlayOneShot(GameAssets.Inst.SoundAssets[sound],volume);
         }
-        
         public void PlaySound(Sound sound, Vector3 position)
         {
             GameObject soundObj = soundPoolScript.Pop();
@@ -83,7 +79,6 @@ namespace MoveStopMove.Manager
 
             currentPlayAudioSource.Add(soundObj);
         }
-
         public Sound GetRandomDieSound()
         {
             int value = Random.Range(0, 5);
@@ -104,7 +99,6 @@ namespace MoveStopMove.Manager
                     return Sound.Character_Die1;
             }
         }
-
         public void SetVolume(float value)
         {
             if(value >= 0 && value <= 1)

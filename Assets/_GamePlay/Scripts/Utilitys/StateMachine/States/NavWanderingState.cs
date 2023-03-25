@@ -9,13 +9,14 @@ namespace Utilitys.AI
     using MoveStopMove.Manager;
     public class NavWanderingState : BaseState<NavigationParameter,NavigationData>
     {
-        STimer timer = new STimer();
+        STimer timer;
         float timeWandering;
         float avgTimeWandering = 2f;
         public NavWanderingState(StateMachine<NavigationParameter, NavigationData> StateMachine, NavigationParameter Parameter, NavigationData Data)
             :base(StateMachine,Parameter,Data,null)
         {
-            timer.TimeOut1 += TimerEvent;
+            timer = TimerManager.Inst.PopSTimer();
+            timer.TimeOut += TimerEvent;
         }
 
         public override void Enter()
@@ -92,7 +93,7 @@ namespace Utilitys.AI
 
         ~NavWanderingState()
         {
-            timer.TimeOut1 -= TimerEvent;
+            timer.TimeOut -= TimerEvent;
         }
     }
 }

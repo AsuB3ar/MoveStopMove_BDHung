@@ -14,7 +14,7 @@ namespace MoveStopMove.Manager
     public class VisualEffectManager : Singleton<VisualEffectManager>
     {
 
-
+        private GameObject VisualEffectPool;
         [SerializeField]
         GameObject hitEffect;
         [SerializeField]
@@ -26,8 +26,12 @@ namespace MoveStopMove.Manager
         protected override void Awake()
         {
             base.Awake();
+            VisualEffectPool = Instantiate(pool);
+            VisualEffectPool.name = "VisualEffectPool";
             CreatePool(hitEffect, VisualEffect.VFX_Hit);
             CreatePool(addStatusEffect, VisualEffect.VFX_AddStatus);
+
+            DontDestroyOnLoad(VisualEffectPool);
         }
 
 
@@ -35,8 +39,10 @@ namespace MoveStopMove.Manager
         {
             if (!visualEffectData.ContainsKey(nameEffect))
             {
-                GameObject newPool = Instantiate(pool, Vector3.zero, Quaternion.identity);
+                GameObject newPool;
+                newPool = Instantiate(pool, Vector3.zero, Quaternion.identity, VisualEffectPool.transform);
                 Pool poolScript = newPool.GetComponent<Pool>();
+                poolScript.IsSetParent = true;
                 newPool.name = nameEffect.ToString();
                 poolScript.Initialize(obj, quaternion, numObj);
                 visualEffectData.Add(nameEffect, poolScript);

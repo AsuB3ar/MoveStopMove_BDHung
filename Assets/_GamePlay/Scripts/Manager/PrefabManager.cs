@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum PoolID
 {
+    Player = -1,
     Character = 0,
     #region Bullet
     Bullet_Axe1 = 1,
@@ -49,6 +50,8 @@ namespace MoveStopMove.Manager
 
         //NOTE:Specific for game,remove to reuse
         private GameObject PrefabPool;
+        [SerializeField]
+        GameObject Player;
         [SerializeField]
         GameObject Character;
         #region Bullet
@@ -113,6 +116,7 @@ namespace MoveStopMove.Manager
             PrefabPool = Instantiate(pool);
             PrefabPool.name = "PrefabPool";
 
+            //CreatePool(Player, PoolID.Player, Quaternion.Euler(0, 0, 0), 20);
             CreatePool(Character, PoolID.Character, Quaternion.Euler(0, 0, 0), 15);
             CreatePool(Bullet_Axe1, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0));
             CreatePool(Bullet_Knife1, PoolID.Bullet_Knife1, Quaternion.Euler(0, 0, 0));
@@ -138,6 +142,8 @@ namespace MoveStopMove.Manager
             CreatePool(Gift, PoolID.Gift);
             CreatePool(BaseWeapon, PoolID.BaseWeapon, Quaternion.identity, 5);
             CreatePool(ObjectCreateWeapon, PoolID.ObjectCreateWeapon, Quaternion.identity, 50);
+
+            DontDestroyOnLoad(PrefabPool);
         }
 
 
@@ -145,11 +151,12 @@ namespace MoveStopMove.Manager
         {
             if (!poolData.ContainsKey(namePool))
             {
-                GameObject newPool = Instantiate(pool, Vector3.zero, Quaternion.identity);
+                GameObject newPool = Instantiate(pool, Vector3.zero, Quaternion.identity, transform);
                 newPool.transform.parent = PrefabPool.transform;
                 Pool poolScript = newPool.GetComponent<Pool>();
+                poolScript.IsSetParent = true;
                 newPool.name = namePool.ToString();
-                poolScript.Initialize(obj, quaternion, numObj);
+                poolScript.Initialize(obj, quaternion, numObj);                
                 poolData.Add(namePool, poolScript);
             }
         }

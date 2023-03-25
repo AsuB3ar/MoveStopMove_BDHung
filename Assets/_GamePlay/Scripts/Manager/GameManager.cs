@@ -12,10 +12,8 @@ namespace MoveStopMove.Manager
     using System;
     using Utilitys;
     using MoveStopMove.Core.Data;
-    using MoveStopMove.Core;
-    using System.Linq;
     [DefaultExecutionOrder(-10)]
-    public class GameManager : Singleton<GameManager>
+    public class GameManager : SingletonPersistent<GameManager>
     {
         //[SerializeField] UserData userData;
         //[SerializeField] CSVData csv;
@@ -46,13 +44,8 @@ namespace MoveStopMove.Manager
                 Screen.SetResolution(Mathf.RoundToInt(screenRatio * (float)maxScreenHeight), maxScreenHeight, true);
             }
 
-            //csv.OnInit();
-            //userData?.OnInitData();
-
-            //ChangeState(GameState.MainMenu);
-            LoadGame();
-            UIManager.Inst.OpenUI(UIID.UICMainMenu);
-
+            //LoadGame();
+            //UIManager.Inst.OpenUI(UIID.UICMainMenu);
         }
 
         public void SetResolution(int width, int height)
