@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using MoveStopMove.Manager;
 using MoveStopMove.Core.Data;
+using Photon.Pun;
 
 public class CanvasMainMenu : UICanvas
 {
@@ -46,8 +47,11 @@ public class CanvasMainMenu : UICanvas
 
     public void PlayPvpButton()
     {
-        SceneManager.Inst.LoadScene(GAMECONST.STANDARD_PVP_SCENE, LevelManager.Inst.DestructLevel);
+        PhotonNetwork.ConnectUsingSettings();
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
+        NetworkManager.Inst._OnConnectedToMaster += () => PhotonNetwork.JoinLobby();
+        NetworkManager.Inst._OnJoinedLobby += () => SceneManager.Inst.LoadScene(GAMECONST.PVP_LOBBY_SCENE, LevelManager.Inst.DestructLevel);       
+        NetworkManager.Inst.ConnectToServer();
         Close();
     }
 

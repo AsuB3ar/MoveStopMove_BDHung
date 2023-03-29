@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/_GamePlay/Scenes/GameScene/PveStandardScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
+    path: Assets/_GamePlay/Scenes/GameScene/PvpLobbyScene.unity
+    guid: afcc1130e767bfe4c9f29270020ae08b
+  - enabled: 1
     path: Assets/_GamePlay/Scenes/GameScene/PvpStandardScene.unity
     guid: 6cb457a9689f35f4f8479920ce75cdd0
   m_configObjects: {}

@@ -75,21 +75,30 @@ namespace MoveStopMove.Manager
         }
         private void Start()
         {
-            GameplayManager.Inst.PlayerScript = Cache.GetBaseCharacter(GameplayManager.Inst.Player);
-            GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
-            GameManager.Inst.OnStartGame += RunLevel;
-            OpenLevel(GameManager.Inst.GameData.CurrentRegion);
-            
-        }
-        private void OnEnable()
-        {
+            //GameplayManager.Inst.PlayerScript = Cache.GetBaseCharacter(GameplayManager.Inst.Player);
             giftTimer.TimeOut += TimerEvent;
             GameManager.Inst.OnStartGame += StartSpawnGift;
+            switch (Mode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
+                    GameManager.Inst.OnStartGame += RunLevel;
+                    OpenLevel(GameManager.Inst.GameData.CurrentRegion);
+                    break;
+            }             
         }
-        private void OnDisable()
+
+        private void OnDestroy()
         {
             giftTimer.TimeOut -= TimerEvent;
             GameManager.Inst.OnStartGame -= StartSpawnGift;
+            switch (Mode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    GameplayManager.Inst.PlayerScript.OnDie -= OnPlayerDie;
+                    GameManager.Inst.OnStartGame -= RunLevel;
+                    break;
+            }
         }
         private void FixedUpdate()
         {
@@ -101,25 +110,20 @@ namespace MoveStopMove.Manager
             obstances.Clear();
             
             NumOfRemainingPlayers = currentLevelData.numOfPlayers;
-            numOfSpawnPlayers = currentLevelData.numOfPlayers;
-            
-            
+            numOfSpawnPlayers = currentLevelData.numOfPlayers;                      
             for (int i = 0; i < 10; i++)
             {
                 //NOTE: UI Target Indicator
                 gameplay.SubscribeTarget(SpawnCharacter());
             }
             GameplayManager.Inst.PlayerScript.OnInit();
-            ConstructLevel();
-
-            
+            ConstructLevel();           
         }
         #region Level 
         public void OpenLevel(int level)
         {
             //TODO: Set Data Level
-            currentLevel = Mathf.Clamp(currentLevel, 0, levelDatas.Count - 1);
-            
+            currentLevel = Mathf.Clamp(currentLevel, 0, levelDatas.Count - 1);          
             currentLevelData = levelDatas[currentLevel];
             DestructLevel();
             GameplayManager.Inst.PlayerScript.Reset();

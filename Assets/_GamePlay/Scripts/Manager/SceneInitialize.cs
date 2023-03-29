@@ -45,7 +45,6 @@ public class SceneInitialize : MonoBehaviour
                     if (string.Compare(name, GAMECONST.LOAD_START_SCENE) == 0)
                     {
                         SceneManager.Inst.LoadScene(GAMECONST.STANDARD_PVE_SCENE);
-                        Debug.Log($"<color=green>Complete Load LoadStart Scene</color>");
                     }
                 };
                 break;

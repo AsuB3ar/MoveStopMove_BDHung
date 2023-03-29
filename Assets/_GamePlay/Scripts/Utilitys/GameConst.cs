@@ -40,5 +40,6 @@ public static class GAMECONST
     public static readonly string LOAD_START_SCENE = "LoadStartScene";
     public static readonly string STANDARD_PVE_SCENE = "PveStandardScene";
     public static readonly string STANDARD_PVP_SCENE = "PvpStandardScene";
+    public static readonly string PVP_LOBBY_SCENE = "PvpLobbyScene";
     #endregion
 }

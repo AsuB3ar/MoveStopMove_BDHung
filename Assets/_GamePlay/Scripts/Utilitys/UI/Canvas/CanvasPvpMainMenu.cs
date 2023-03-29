@@ -1,14 +1,11 @@
 using MoveStopMove.Manager;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CanvasPvpMainMenu : UICanvas
 {
     public void PlayGameButton()
     {
-       
+        
     }
 
     public void SkinShopButton()

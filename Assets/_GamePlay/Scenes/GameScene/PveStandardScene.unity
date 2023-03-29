@@ -1660,7 +1660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8032057855635813058, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -11.2
       objectReference: {fileID: 0}
     - target: {fileID: 8032057855635813058, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
       propertyPath: m_LocalRotation.w

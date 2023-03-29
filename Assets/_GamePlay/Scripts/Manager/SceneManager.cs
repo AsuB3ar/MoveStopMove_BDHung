@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Utilitys;
+using Photon.Pun;
 
 namespace MoveStopMove.Manager
 {
@@ -22,7 +23,7 @@ namespace MoveStopMove.Manager
 
             await Task.Delay(500);
             scene.allowSceneActivation = true;
-            Debug.Log($"<color=red>COMPLETE LOADING SCENE</color>");
+            Debug.Log($"<color=green>SCENE</color>: Complete Loading Scene");
             _OnSceneLoaded.Invoke(sceneName);
         }
 
@@ -30,6 +31,11 @@ namespace MoveStopMove.Manager
         {
             destructScene?.Invoke();
             LoadScene(sceneName);
+        }
+
+        public void LoadPhotonScene(string name)
+        {
+            PhotonNetwork.LoadLevel(name);
         }
     }
 }
