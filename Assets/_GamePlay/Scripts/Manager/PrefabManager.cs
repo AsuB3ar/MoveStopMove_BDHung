@@ -51,8 +51,6 @@ namespace MoveStopMove.Manager
         //NOTE:Specific for game,remove to reuse
         private GameObject PrefabPool;
         [SerializeField]
-        GameObject Player;
-        [SerializeField]
         GameObject Character;
         #region Bullet
         [SerializeField]
@@ -116,7 +114,6 @@ namespace MoveStopMove.Manager
             PrefabPool = Instantiate(pool);
             PrefabPool.name = "PrefabPool";
 
-            //CreatePool(Player, PoolID.Player, Quaternion.Euler(0, 0, 0), 20);
             CreatePool(Character, PoolID.Character, Quaternion.Euler(0, 0, 0), 15);
             CreatePool(Bullet_Axe1, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0));
             CreatePool(Bullet_Knife1, PoolID.Bullet_Knife1, Quaternion.Euler(0, 0, 0));

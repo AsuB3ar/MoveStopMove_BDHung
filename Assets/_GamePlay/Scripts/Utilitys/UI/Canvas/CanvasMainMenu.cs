@@ -47,6 +47,7 @@ public class CanvasMainMenu : UICanvas
 
     public void PlayPvpButton()
     {
+        NetworkManager.Inst.ClearEvent(); //NOTE: Clear All Events Before
         PhotonNetwork.ConnectUsingSettings();
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
         NetworkManager.Inst._OnConnectedToMaster += () => PhotonNetwork.JoinLobby();

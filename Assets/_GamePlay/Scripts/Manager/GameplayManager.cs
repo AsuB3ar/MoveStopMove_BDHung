@@ -127,5 +127,10 @@ namespace MoveStopMove.Manager
         {
             cameraMove.MoveTo(size);
         }
+
+        public void SetCameraFollow(Transform followObject)
+        {
+            cameraMove.Follow(followObject);
+        }
     }
 }

@@ -118,4 +118,8 @@ public class CameraMove : MonoBehaviour
         IsReachDestination = false;
         comp.m_SoftZoneHeight = SOFT_ZONE_HEIGHT_INIT * size;
     }
+    public void Follow(Transform followObject)
+    {
+        virtualCamera.Follow = followObject;
+    }
 }

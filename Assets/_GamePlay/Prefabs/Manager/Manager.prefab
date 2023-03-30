@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eae697a968e5894d89083a1547d780a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 3968126923357204953, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+  Player: {fileID: 870338678254615286, guid: 4bb4c4e09b90b614eb100bd60c22c456, type: 3}
   Character: {fileID: 7335153693828646459, guid: b83f21ee2e98db64aadf2a61bea824a7, type: 3}
   Bullet_Axe1: {fileID: 6022436429646713834, guid: 13ac9a0ebd1debc48934a67c60f2db6f, type: 3}
   Bullet_Knife1: {fileID: 3624077002375939049, guid: 0eb98e3e4dd11b846aec847cd7d7ebee, type: 3}

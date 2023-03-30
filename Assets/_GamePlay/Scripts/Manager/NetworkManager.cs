@@ -61,6 +61,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _OnJoinedRoom?.Invoke();
         Debug.Log($"<color=green>NETWORK</color>: Joined Room");
     }
+
+    public GameObject Instantiate(string name, Vector3 position = default, Quaternion rotation = default)
+    {
+        return PhotonNetwork.Instantiate(name, position, rotation);
+    }
     public void ClearEvent()
     {
         _OnConnectedToMaster = null;

@@ -34,6 +34,9 @@ public class SceneInitialize : MonoBehaviour
     [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
     [SerializeField]
     CameraMove cameraMove;
+    [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
+    [SerializeField]
+    GameObject playerPvp;
     private void Awake()
     {
         switch (type)
@@ -59,10 +62,17 @@ public class SceneInitialize : MonoBehaviour
                 
                 break;
             case SCENE_TYPE.STANDARD_PVP:
-                GameplayManager.Inst.PlayerScript = playerScript;
                 GameplayManager.Inst.PlayerCamera = playerCamera;
                 GameplayManager.Inst.TargetIndicator = targetIndicator;
                 GameplayManager.Inst.CameraMove = cameraMove;
+
+                GameObject character = NetworkManager.Inst.Instantiate(playerPvp.name);
+                //character.transform.parent = Level;
+                BaseCharacter characterScript = Cache.GetBaseCharacter(character);
+                GameplayManager.Inst.PlayerScript = characterScript;
+                GameplayManager.Inst.SetCameraFollow(GameplayManager.Inst.Player.transform);
+                GameplayManager.Inst.Player.transform.parent = gameObject.transform;
+                GameplayManager.Inst.PlayerScript.OnInit();
                 break;
         }
     }

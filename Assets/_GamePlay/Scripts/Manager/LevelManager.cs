@@ -32,6 +32,9 @@ namespace MoveStopMove.Manager
         [ConditionalField(nameof(Mode), false, GAMECONST.GAMEPLAY_MODE.STANDARD_PVE)]
         [SerializeField]
         int difficulty = 3;
+        [ConditionalField(nameof(Mode), false, GAMECONST.GAMEPLAY_MODE.STANDARD_PVP)]
+        [SerializeField]
+        GameObject playerPvp;
         [SerializeField]
         List<LevelData> levelDatas;
         
@@ -87,7 +90,6 @@ namespace MoveStopMove.Manager
                     break;
             }             
         }
-
         private void OnDestroy()
         {
             giftTimer.TimeOut -= TimerEvent;
@@ -108,15 +110,19 @@ namespace MoveStopMove.Manager
         {
             characters.Clear();
             obstances.Clear();
-            
             NumOfRemainingPlayers = currentLevelData.numOfPlayers;
-            numOfSpawnPlayers = currentLevelData.numOfPlayers;                      
-            for (int i = 0; i < 10; i++)
+            numOfSpawnPlayers = currentLevelData.numOfPlayers;
+            switch (Mode)
             {
-                //NOTE: UI Target Indicator
-                gameplay.SubscribeTarget(SpawnCharacter());
-            }
-            GameplayManager.Inst.PlayerScript.OnInit();
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:                   
+                    for (int i = 0; i < 10; i++)
+                    {
+                        //NOTE: UI Target Indicator
+                        gameplay.SubscribeTarget(SpawnCharacter());
+                    }
+                    GameplayManager.Inst.PlayerScript.OnInit();
+                    break;
+            }                       
             ConstructLevel();           
         }
         #region Level 
@@ -283,6 +289,62 @@ namespace MoveStopMove.Manager
             characters.Add(characterScript);
             return characterScript;
                      
+        }
+        private BaseCharacter SpawnPlayer()
+        {
+            if (numOfSpawnPlayers <= 0)
+            {
+                return null;
+            }
+
+            numOfSpawnPlayers -= 1;
+            GameObject character = GameplayManager.Inst.Player;
+            character.transform.parent = Level;
+
+            BaseCharacter characterScript = GameplayManager.Inst.PlayerScript;
+            Vector3 randomPos;
+            do
+            {
+                randomPos = CharacterRandomPosition();
+            } while ((randomPos - GameplayManager.Inst.Player.transform.position).sqrMagnitude < 2 * GameplayManager.Inst.PlayerScript.AttackRange);
+
+
+            characterScript.SetPosition(randomPos);
+
+            int level;
+            if (GameplayManager.Inst.PlayerScript.Level <= difficulty)
+            {
+                level = UnityEngine.Random.Range(1, GameplayManager.Inst.PlayerScript.Level + difficulty);
+            }
+            else
+            {
+                level = UnityEngine.Random.Range(GameplayManager.Inst.PlayerScript.Level - difficulty, GameplayManager.Inst.PlayerScript.Level + difficulty);
+            }
+
+            characterScript.SetLevel(level);
+            characterScript.OnInit();
+            if (GameManager.Inst.GameIsRun)
+            {
+                characterScript.Run();
+            }
+            else
+            {
+                characterScript.Stop();
+            }
+            characterScript.ChangeWeapon(GameplayManager.Inst.GetRandomWeapon());
+            characterScript.OnDie += OnEnemyDie;
+
+
+
+            GameColor color = GameplayManager.Inst.GetRandomColor();
+            characterScript.ChangeColor(color);
+            PantSkin pantName = GameplayManager.Inst.GetRandomPantSkin();
+            characterScript.ChangePant(pantName);
+            PoolID hairname = GameplayManager.Inst.GetRandomHair();
+            characterScript.ChangeHair(hairname);
+
+            characters.Add(characterScript);
+            return characterScript;
         }
         private Vector3 CharacterRandomPosition()
         {
