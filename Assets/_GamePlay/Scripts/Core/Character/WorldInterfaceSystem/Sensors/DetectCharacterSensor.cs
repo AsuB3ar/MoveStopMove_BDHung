@@ -65,7 +65,6 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
             }
             
         }
-
         private void EnterCheck(Collider[] characters)
         {
             Data.TargetCharacter = null;
@@ -90,9 +89,9 @@ namespace MoveStopMove.Core.Character.WorldInterfaceSystem
             }
             
         }
-
         private void OnDrawGizmos()
         {
+            Gizmos.color = Color.green;
             if (checkPoint != null)
             {
                 Gizmos.DrawCube(checkPoint.position, unit * checkRadius * 2);

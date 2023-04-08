@@ -62,8 +62,9 @@ public class SceneInitialize : MonoBehaviour
                 gameData.OnInitData();
                 
                 break;
-            case SCENE_TYPE.STANDARD_PVP:
+            case SCENE_TYPE.STANDARD_PVP:              
                 GameplayManager.Inst.GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVP;
+                PrefabManager.Inst.SpawnPoolPvP();
                 GameplayManager.Inst.PlayerCamera = playerCamera;
                 GameplayManager.Inst.TargetIndicator = targetIndicator;
                 GameplayManager.Inst.CameraMove = cameraMove;

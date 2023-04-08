@@ -12,12 +12,14 @@ namespace Utilitys
         public bool IsSetParent = false;
         [HideInInspector]
         private GameObject obj;
+        private bool network = false;
         Queue<GameObject> objects;
 
         Quaternion initQuaternion;
         int numObj = 10;
-        public void Initialize(GameObject obj,Quaternion initQuaternion = default,int numObj = 10)
+        public void Initialize(GameObject obj,Quaternion initQuaternion = default,int numObj = 10, bool network = false)
         {
+            this.network = network;
             this.numObj = numObj;
             this.obj = obj;
             objects = new Queue<GameObject>();
@@ -30,7 +32,11 @@ namespace Utilitys
         {
             for (int i = 0; i < numObj; i++)
             {
-                GameObject obj = Instantiate(this.obj, Vector3.zero, this.initQuaternion, mainPool.transform);
+                GameObject obj;
+                if (network == false)
+                    obj = Instantiate(this.obj, Vector3.zero, this.initQuaternion, mainPool.transform);
+                else
+                    obj = NetworkManager.Inst.Instantiate(this.obj.name);
                 obj.SetActive(false);
                 objects.Enqueue(obj);
             }

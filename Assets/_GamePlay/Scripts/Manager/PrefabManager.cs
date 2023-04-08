@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CustomAttribute;
 
 public enum PoolID
 {
@@ -102,6 +103,28 @@ namespace MoveStopMove.Manager
         [SerializeField]
         GameObject ObjectCreateWeapon;
         //-----
+        [Separator]
+        #region Bullet
+        [SerializeField]
+        GameObject Bullet_Axe1Pvp;
+        [SerializeField]
+        GameObject Bullet_Knife1Pvp;
+        [SerializeField]
+        GameObject Bullet_Axe2Pvp;
+        [SerializeField]
+        GameObject Bullet_ArrowPvp;
+        #endregion
+        #region Weapon
+        [SerializeField]
+        GameObject Weapon_Axe1Pvp;
+        [SerializeField]
+        GameObject Weapon_Knife1Pvp;
+        [SerializeField]
+        GameObject Weapon_Axe2Pvp;
+        [SerializeField]
+        GameObject Weapon_ArrowPvp;
+        #endregion
+        [Separator]
         [SerializeField]
         GameObject pool;
         
@@ -113,18 +136,8 @@ namespace MoveStopMove.Manager
 
             PrefabPool = Instantiate(pool);
             PrefabPool.name = "PrefabPool";
-
-            CreatePool(Character, PoolID.Character, Quaternion.Euler(0, 0, 0), 15);
-            CreatePool(Bullet_Axe1, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0));
-            CreatePool(Bullet_Knife1, PoolID.Bullet_Knife1, Quaternion.Euler(0, 0, 0));
-            CreatePool(Bullet_Axe2, PoolID.Bullet_Axe2, Quaternion.Euler(0, 0, 0));
-            CreatePool(Bullet_Arrow, PoolID.Bullet_Arrow, Quaternion.Euler(0, 0, 0));
-
-            CreatePool(Weapon_Axe1, PoolID.Weapon_Axe1, Quaternion.Euler(0, 0, 0));
-            CreatePool(Weapon_Knife1, PoolID.Weapon_Knife1, Quaternion.Euler(0, 0, 0));
-            CreatePool(Weapon_Axe2, PoolID.Weapon_Axe2, Quaternion.Euler(0, 0, 0));
-            CreatePool(Weapon_Arrow, PoolID.Weapon_Arrow, Quaternion.Euler(0, 0, 0));
-
+         
+            SpawnPoolPvE();
             CreatePool(Hair_Arrow, PoolID.Hair_Arrow);
             CreatePool(Hair_Cowboy, PoolID.Hair_Cowboy);
             CreatePool(Hair_Headphone, PoolID.Hair_Headphone);
@@ -142,22 +155,37 @@ namespace MoveStopMove.Manager
 
             DontDestroyOnLoad(PrefabPool);
         }
-
-
-        public void CreatePool(GameObject obj, PoolID namePool, Quaternion quaternion = default, int numObj = 10)
+        public void CreatePool(GameObject obj, PoolID namePool, Quaternion quaternion = default, int numObj = 10, bool network = false)
         {
+            GameObject newPool;
+            if(network == false)
+            {
+                newPool = Instantiate(pool, Vector3.zero, Quaternion.identity, transform);
+                newPool.transform.parent = PrefabPool.transform;
+            }
+            else
+            {
+                newPool = NetworkManager.Inst.Instantiate(pool.name);
+            }
+            
+            Pool poolScript = newPool.GetComponent<Pool>();
+            poolScript.IsSetParent = true;
+            newPool.name = namePool.ToString();
+
             if (!poolData.ContainsKey(namePool))
             {
-                GameObject newPool = Instantiate(pool, Vector3.zero, Quaternion.identity, transform);
-                newPool.transform.parent = PrefabPool.transform;
-                Pool poolScript = newPool.GetComponent<Pool>();
-                poolScript.IsSetParent = true;
-                newPool.name = namePool.ToString();
-                poolScript.Initialize(obj, quaternion, numObj);                
+                poolScript.Initialize(obj, quaternion, numObj);
                 poolData.Add(namePool, poolScript);
             }
-        }
+            else
+            {
+                
+                poolScript.Initialize(obj, quaternion, numObj);
+                Destroy(poolData[namePool].gameObject);
+                poolData[namePool] = poolScript;
+            }
 
+        }
         public void PushToPool(GameObject obj, PoolID namePool, bool checkContain = true)
         {
             if (!poolData.ContainsKey(namePool))
@@ -167,7 +195,6 @@ namespace MoveStopMove.Manager
 
             poolData[namePool].Push(obj, checkContain);
         }
-
         public GameObject PopFromPool(PoolID namePool, GameObject obj = null)
         {
             if (!poolData.ContainsKey(namePool))
@@ -182,5 +209,31 @@ namespace MoveStopMove.Manager
             return poolData[namePool].Pop();
         }
 
+        public void SpawnPoolPvP()
+        {
+            CreatePool(Bullet_Axe1Pvp, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Bullet_Knife1Pvp, PoolID.Bullet_Knife1, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Bullet_Axe2Pvp, PoolID.Bullet_Axe2, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Bullet_ArrowPvp, PoolID.Bullet_Arrow, Quaternion.Euler(0, 0, 0), 10, true);
+
+            CreatePool(Weapon_Axe1Pvp, PoolID.Weapon_Axe1, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Weapon_Knife1Pvp, PoolID.Weapon_Knife1, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Weapon_Axe2Pvp, PoolID.Weapon_Axe2, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Weapon_ArrowPvp, PoolID.Weapon_Arrow, Quaternion.Euler(0, 0, 0), 10, true);
+        }
+
+        public void SpawnPoolPvE()
+        {
+            CreatePool(Character, PoolID.Character, Quaternion.Euler(0, 0, 0), 15);
+            CreatePool(Bullet_Axe1, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Bullet_Knife1, PoolID.Bullet_Knife1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Bullet_Axe2, PoolID.Bullet_Axe2, Quaternion.Euler(0, 0, 0));
+            CreatePool(Bullet_Arrow, PoolID.Bullet_Arrow, Quaternion.Euler(0, 0, 0));
+
+            CreatePool(Weapon_Axe1, PoolID.Weapon_Axe1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Weapon_Knife1, PoolID.Weapon_Knife1, Quaternion.Euler(0, 0, 0));
+            CreatePool(Weapon_Axe2, PoolID.Weapon_Axe2, Quaternion.Euler(0, 0, 0));
+            CreatePool(Weapon_Arrow, PoolID.Weapon_Arrow, Quaternion.Euler(0, 0, 0));
+        }
     }
 }

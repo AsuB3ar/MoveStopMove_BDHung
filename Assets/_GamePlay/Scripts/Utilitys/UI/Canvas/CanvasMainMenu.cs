@@ -49,7 +49,7 @@ public class CanvasMainMenu : UICanvas
     {
         NetworkManager.Inst.ClearEvent(); //NOTE: Clear All Events Before
         PhotonNetwork.ConnectUsingSettings();
-        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);       
         NetworkManager.Inst._OnConnectedToMaster += () => PhotonNetwork.JoinLobby();
         NetworkManager.Inst._OnJoinedLobby += () => SceneManager.Inst.LoadScene(GAMECONST.PVP_LOBBY_SCENE, LevelManager.Inst.DestructLevel);       
         NetworkManager.Inst.ConnectToServer();

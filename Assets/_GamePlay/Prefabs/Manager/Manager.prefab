@@ -132,7 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eae697a968e5894d89083a1547d780a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 870338678254615286, guid: 4bb4c4e09b90b614eb100bd60c22c456, type: 3}
   Character: {fileID: 7335153693828646459, guid: b83f21ee2e98db64aadf2a61bea824a7, type: 3}
   Bullet_Axe1: {fileID: 6022436429646713834, guid: 13ac9a0ebd1debc48934a67c60f2db6f, type: 3}
   Bullet_Knife1: {fileID: 3624077002375939049, guid: 0eb98e3e4dd11b846aec847cd7d7ebee, type: 3}
@@ -155,6 +154,14 @@ MonoBehaviour:
   Gift: {fileID: 1390617833159307850, guid: 62d2391ebd7c82e4ebc2d2dba3c2070b, type: 3}
   BaseWeapon: {fileID: 5618273737373822372, guid: 2502da38ba921e046b980471ca5fb9bd, type: 3}
   ObjectCreateWeapon: {fileID: 7874771411103903161, guid: 529b556c2f4ea6945bae82ad11051267, type: 3}
+  Bullet_Axe1Pvp: {fileID: 7421363500163638967, guid: c158f85cb24d9c6408c401a4fc20a6e0, type: 3}
+  Bullet_Knife1Pvp: {fileID: 6705574684389302752, guid: 3df6e0ff70f98f3469cd13e194ad47be, type: 3}
+  Bullet_Axe2Pvp: {fileID: 2400407191981236949, guid: 66afd2d76d7a25748b25a66c38dbc952, type: 3}
+  Bullet_ArrowPvp: {fileID: 2054201637825101391, guid: d5d5ffb241fc44e4abc67dc13d9e088f, type: 3}
+  Weapon_Axe1Pvp: {fileID: 3470079041639399995, guid: e53009947e52a9e4aab10a1137c0d702, type: 3}
+  Weapon_Knife1Pvp: {fileID: 8402059698006968807, guid: 43d4253ec9309a140ac4fc1ecdac32d8, type: 3}
+  Weapon_Axe2Pvp: {fileID: 4098866060226302153, guid: 5df6a206102b0e840ba003dab370ceee, type: 3}
+  Weapon_ArrowPvp: {fileID: 3692015420960399204, guid: 53b5c21ba13c475458b3d109398ccba7, type: 3}
   pool: {fileID: 7117338696727486318, guid: b572d35da52b1cb459c582254e88fffa, type: 3}
 --- !u!1 &6919841215682026330
 GameObject:
