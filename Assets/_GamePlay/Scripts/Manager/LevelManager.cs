@@ -88,6 +88,9 @@ namespace MoveStopMove.Manager
                     GameManager.Inst.OnStartGame += RunLevel;
                     OpenLevel(GameManager.Inst.GameData.CurrentRegion);
                     break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    OpenLevel(0);
+                    break;
             }             
         }
         private void OnDestroy()
@@ -129,11 +132,21 @@ namespace MoveStopMove.Manager
         public void OpenLevel(int level)
         {
             //TODO: Set Data Level
-            currentLevel = Mathf.Clamp(currentLevel, 0, levelDatas.Count - 1);          
+            currentLevel = Mathf.Clamp(level, 0, levelDatas.Count - 1);
             currentLevelData = levelDatas[currentLevel];
-            DestructLevel();
-            GameplayManager.Inst.PlayerScript.Reset();
-            OnInit();
+            switch (Mode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:                   
+                    DestructLevel();
+                    GameplayManager.Inst.PlayerScript.Reset();
+                    OnInit();
+                    break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    GameplayManager.Inst.PlayerScript.transform.position = RandomPlayerPosition();
+                    OnInit();
+                    break;
+            }
+            
         }
         public void RunLevel()
         {
@@ -248,7 +261,7 @@ namespace MoveStopMove.Manager
             Vector3 randomPos;
             do
             {
-                randomPos = CharacterRandomPosition();
+                randomPos = RandomCharacterPosition();
             } while ((randomPos - GameplayManager.Inst.Player.transform.position).sqrMagnitude < 2 * GameplayManager.Inst.PlayerScript.AttackRange);
             
             
@@ -305,7 +318,7 @@ namespace MoveStopMove.Manager
             Vector3 randomPos;
             do
             {
-                randomPos = CharacterRandomPosition();
+                randomPos = RandomCharacterPosition();
             } while ((randomPos - GameplayManager.Inst.Player.transform.position).sqrMagnitude < 2 * GameplayManager.Inst.PlayerScript.AttackRange);
 
 
@@ -346,7 +359,13 @@ namespace MoveStopMove.Manager
             characters.Add(characterScript);
             return characterScript;
         }
-        private Vector3 CharacterRandomPosition()
+        private Vector3 RandomPlayerPosition()
+        {
+            float vecX = UnityEngine.Random.Range(-(currentLevelData.Size - MARGIN) + position.x, currentLevelData.Size - MARGIN + position.x);
+            float vecZ = UnityEngine.Random.Range(-(currentLevelData.Size - MARGIN) + position.z, currentLevelData.Size - MARGIN + position.z);
+            return new Vector3(vecX, GAMECONST.INIT_CHARACTER_HEIGHT, vecZ);
+        }
+        private Vector3 RandomCharacterPosition()
         {
             int value = UnityEngine.Random.Range(0, 4);
             float vecX;

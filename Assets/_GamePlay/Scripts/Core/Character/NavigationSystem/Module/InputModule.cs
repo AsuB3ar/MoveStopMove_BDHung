@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace MoveStopMove.Core.Character.NavigationSystem
 {
+    using MoveStopMove.Manager;
     using Utilitys.Input;
-    using Utilitys;
     public class InputModule : AbstractNavigationModule
     {
         JoyStick joyStick;
@@ -33,8 +33,16 @@ namespace MoveStopMove.Core.Character.NavigationSystem
         }
         public override void UpdateData()
         {
-            if (!active) return;
+            switch (GameplayManager.Inst.GameMode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    if (!active) return;                   
+                    break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
 
+                    if (!active) return;
+                    break;
+            }
             Vector3 move = (Vector3.right * moveDirection.x + Vector3.forward * moveDirection.y).normalized;
             Data.MoveDirection = move;
         }

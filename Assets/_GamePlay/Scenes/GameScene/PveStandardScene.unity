@@ -213,6 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 435945792}
   - component: {fileID: 435945793}
+  - component: {fileID: 435945794}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -252,6 +253,7 @@ MonoBehaviour:
   StaticEnvironment: {fileID: 914025758}
   Mode: 1
   difficulty: 3
+  playerPvp: {fileID: 0}
   levelDatas:
   - {fileID: 11400000, guid: 703fa0898061efc4083935161a5e49ca, type: 2}
   - {fileID: 11400000, guid: 95d2a9500912d4e4abd0f82dfa7754d9, type: 2}
@@ -261,6 +263,28 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &435945794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435945791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &593069393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,11 +1065,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8624629664701187512, guid: 9ae60503bb116c64aae4d64a9e03e0fd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.557072
+      value: 5.557071
       objectReference: {fileID: 0}
     - target: {fileID: 8624629664701187512, guid: 9ae60503bb116c64aae4d64a9e03e0fd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.407072
+      value: 4.992929
       objectReference: {fileID: 0}
     - target: {fileID: 8624629664701187512, guid: 9ae60503bb116c64aae4d64a9e03e0fd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1089,11 +1113,11 @@ PrefabInstance:
       objectReference: {fileID: 1058184504}
     - target: {fileID: 8624629664985742070, guid: 9ae60503bb116c64aae4d64a9e03e0fd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 15.839191
       objectReference: {fileID: 0}
     - target: {fileID: 8624629664985742070, guid: 9ae60503bb116c64aae4d64a9e03e0fd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 15.839193
       objectReference: {fileID: 0}
     - target: {fileID: 8624629665884890104, guid: 9ae60503bb116c64aae4d64a9e03e0fd, type: 3}
       propertyPath: m_SoftZoneWidth

@@ -43,9 +43,7 @@ namespace MoveStopMove.Manager
             {
                 Screen.SetResolution(Mathf.RoundToInt(screenRatio * (float)maxScreenHeight), maxScreenHeight, true);
             }
-
-            //LoadGame();
-            //UIManager.Inst.OpenUI(UIID.UICMainMenu);
+            Screen.fullScreen = false;
         }
 
         public void SetResolution(int width, int height)

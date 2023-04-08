@@ -42,6 +42,7 @@ namespace MoveStopMove.Manager
         public GameObject Player => PlayerScript.gameObject;
         public BaseCharacter PlayerScript;
         public Camera PlayerCamera;
+        public GAMECONST.GAMEPLAY_MODE GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVE;
         [SerializeField]
         GameObject targetIndicator;
         public GameObject TargetIndicator

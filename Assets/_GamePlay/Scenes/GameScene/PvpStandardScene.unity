@@ -213,6 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 435945792}
   - component: {fileID: 435945793}
+  - component: {fileID: 435945794}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -261,6 +262,14 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!81 &435945794
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435945791}
+  m_Enabled: 1
 --- !u!1 &593069393
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +688,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5161443022837097950, guid: b34c0e20557d1cc4eba537de4fa71d24, type: 3}
+      propertyPath: playerPvp
+      value: 
+      objectReference: {fileID: 870338678254615286, guid: 4bb4c4e09b90b614eb100bd60c22c456, type: 3}
+    - target: {fileID: 5161443022837097950, guid: b34c0e20557d1cc4eba537de4fa71d24, type: 3}
       propertyPath: cameraMove
       value: 
       objectReference: {fileID: 675559048}
@@ -834,6 +847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerScript: {fileID: 0}
   PlayerCamera: {fileID: 675559050}
+  GameMode: 1
   targetIndicator: {fileID: 0}
   InitScaleTargetIndicator: {x: 0, y: 0, z: 0}
   cameraMove: {fileID: 675559048}

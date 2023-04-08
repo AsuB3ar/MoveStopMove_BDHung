@@ -5,7 +5,10 @@ public class CanvasPvpMainMenu : UICanvas
 {
     public void PlayGameButton()
     {
-        
+        UIManager.Inst.OpenUI(UIID.UICGamePlay);
+        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
+        GameManager.Inst.StartGame();
+        Close();
     }
 
     public void SkinShopButton()

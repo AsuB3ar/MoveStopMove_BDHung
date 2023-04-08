@@ -25,7 +25,7 @@ public class SceneInitialize : MonoBehaviour
     [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
     [SerializeField]
     Camera playerCamera;
-    [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
+    [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE)]
     [SerializeField]
     BaseCharacter playerScript;
     [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
@@ -54,6 +54,7 @@ public class SceneInitialize : MonoBehaviour
             case SCENE_TYPE.LOAD_START:
                 break;
             case SCENE_TYPE.STANDARD_PVE:
+                GameplayManager.Inst.GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVE;
                 GameplayManager.Inst.PlayerScript = playerScript;
                 GameplayManager.Inst.PlayerCamera = playerCamera;
                 GameplayManager.Inst.TargetIndicator = targetIndicator;
@@ -62,6 +63,7 @@ public class SceneInitialize : MonoBehaviour
                 
                 break;
             case SCENE_TYPE.STANDARD_PVP:
+                GameplayManager.Inst.GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVP;
                 GameplayManager.Inst.PlayerCamera = playerCamera;
                 GameplayManager.Inst.TargetIndicator = targetIndicator;
                 GameplayManager.Inst.CameraMove = cameraMove;
