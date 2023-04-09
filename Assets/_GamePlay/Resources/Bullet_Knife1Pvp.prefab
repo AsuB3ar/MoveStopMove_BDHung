@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6705574684389302503}
   - component: {fileID: -7247264591366888331}
   - component: {fileID: -4210616107570505747}
+  - component: {fileID: -3744631815020985616}
   m_Layer: 0
   m_Name: Bullet_Knife1Pvp
   m_TagString: Untagged
@@ -91,6 +92,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: -4210616107570505747}
+  - {fileID: -3744631815020985616}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -127,6 +129,20 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-3744631815020985616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6705574684389302752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 541c735ba59fc304390884cbbbc6f034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncActive: 1
+  SyncName: 1
 --- !u!1001 &8018010908215606987
 PrefabInstance:
   m_ObjectHideFlags: 0

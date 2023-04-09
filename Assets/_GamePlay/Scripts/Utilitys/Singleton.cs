@@ -7,7 +7,7 @@ namespace Utilitys
     public class Singleton<T> : MonoBehaviour
         where T : Component
     {
-        private static T inst;
+        protected static T inst;
         public static T Inst => inst;
 
         protected virtual void Awake()
@@ -26,7 +26,7 @@ namespace Utilitys
     public class SingletonPersistent<T> : MonoBehaviour
         where T : Component
     {
-        private static T inst;
+        protected static T inst;
         public static T Inst => inst;
 
         protected virtual void Awake()

@@ -23,19 +23,17 @@ public class CanvasGameplay : UICanvas
     TMP_Text remainingPlayersNum;
     Dictionary<BaseCharacter, UITargetIndicator> indicators = new Dictionary<BaseCharacter, UITargetIndicator>();
     List<BaseCharacter> characters = new List<BaseCharacter>();
-    Camera playerCamera;
 
     private void Start()
     {
-        playerCamera = GameplayManager.Inst.PlayerCamera;
-        SubscribeTarget(GameplayManager.Inst.PlayerScript,true);
+        //SubscribeTarget(GameplayManager.Inst.PlayerScript,true);
     }
     public void FixedUpdate()
     {
         for(int i = 0; i < characters.Count; i++)
         {
             indicators[characters[i]].SetLevel(characters[i].Level);
-            Vector3 pos = playerCamera.WorldToScreenPoint(characters[i].transform.position + TARGET_INDICATOR_UP * characters[i].Size);
+            Vector3 pos = GameplayManager.Inst.PlayerCamera.WorldToScreenPoint(characters[i].transform.position + TARGET_INDICATOR_UP * characters[i].Size);
 
             //NOTE: Because Clippane camera do not stick exactly to camera(0.01 forward)
             //=> Indicator error when character bettween the clippane camera plane and the actual camera plane
@@ -82,6 +80,7 @@ public class CanvasGameplay : UICanvas
 
     public void UnsubcribeTarget(BaseCharacter character)
     {
+        if (!indicators.ContainsKey(character)) return; //DEV: Need to optimize
         PrefabManager.Inst.PushToPool(indicators[character].gameObject, PoolID.UITargetIndicator);
         indicators.Remove(character);
         characters.Remove(character);

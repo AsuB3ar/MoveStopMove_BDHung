@@ -86,6 +86,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         }
         public void OnHit(BaseCharacter character)
         {
+            if (parentCharacter == null) return;
             if(character != parentCharacter)
             {
                 if (!character.IsDie)

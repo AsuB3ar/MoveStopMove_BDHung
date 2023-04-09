@@ -36,7 +36,11 @@ namespace Utilitys
                 if (network == false)
                     obj = Instantiate(this.obj, Vector3.zero, this.initQuaternion, mainPool.transform);
                 else
+                {
                     obj = NetworkManager.Inst.Instantiate(this.obj.name);
+                    obj.transform.parent = transform;
+                }
+                    
                 obj.SetActive(false);
                 objects.Enqueue(obj);
             }

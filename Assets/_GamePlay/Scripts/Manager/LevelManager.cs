@@ -89,7 +89,7 @@ namespace MoveStopMove.Manager
                     OpenLevel(GameManager.Inst.GameData.CurrentRegion);
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    OpenLevel(0);
+                    //OpenLevel(0);
                     break;
             }             
         }
@@ -115,6 +115,7 @@ namespace MoveStopMove.Manager
             obstances.Clear();
             NumOfRemainingPlayers = currentLevelData.numOfPlayers;
             numOfSpawnPlayers = currentLevelData.numOfPlayers;
+            gameplay.SubscribeTarget(GameplayManager.inst.PlayerScript, true);
             switch (Mode)
             {
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:                   
@@ -201,6 +202,7 @@ namespace MoveStopMove.Manager
                 characters[0].OnDespawn();
                 RemoveCharacter(characters[0]);
             }
+            gameplay.UnsubcribeTarget(GameplayManager.inst.PlayerScript);
         }
         #endregion
         #region Character 
@@ -462,6 +464,7 @@ namespace MoveStopMove.Manager
         /// </summary>
         private void TransparentObstance()
         {
+            if (GameplayManager.Inst.PlayerCamera == null) return;
             Vector3 pos1 = GameplayManager.Inst.PlayerCamera.transform.position;
             Vector3 pos2 = GameplayManager.Inst.Player.transform.position + Vector3.up * 0.5f;
             Vector3 direction = pos2 - pos1;

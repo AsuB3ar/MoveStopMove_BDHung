@@ -91,10 +91,25 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 162594175342054361}
   - {fileID: 478529151595393586}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &162594175342054361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8402059698006968807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 541c735ba59fc304390884cbbbc6f034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncActive: 1
+  SyncName: 1
 --- !u!114 &478529151595393586
 MonoBehaviour:
   m_ObjectHideFlags: 0

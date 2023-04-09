@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System;
+using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -60,6 +61,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         _OnJoinedRoom?.Invoke();
         Debug.Log($"<color=green>NETWORK</color>: Joined Room");
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        for(int i = 0; i < roomList.Count; i++)
+        {
+            Debug.Log($"<color=green>NETWORK - ROOM</color>:{roomList[0].Name}");
+        }
+        
     }
 
     public GameObject Instantiate(string name, Vector3 position = default, Quaternion rotation = default)

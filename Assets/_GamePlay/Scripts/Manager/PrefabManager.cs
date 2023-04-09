@@ -43,6 +43,7 @@ public enum PoolID
 }
 namespace MoveStopMove.Manager
 {
+    using Photon.Pun;
     using Utilitys;
 
     [DefaultExecutionOrder(-1)]
@@ -50,6 +51,8 @@ namespace MoveStopMove.Manager
     {
 
         //NOTE:Specific for game,remove to reuse
+        [SerializeField]
+        GAMECONST.GAMEPLAY_MODE mode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVE;
         private GameObject PrefabPool;
         [SerializeField]
         GameObject Character;
@@ -127,33 +130,26 @@ namespace MoveStopMove.Manager
         [Separator]
         [SerializeField]
         GameObject pool;
-        
-
+        [Separator]
+        [SerializeField]
+        PhotonPrefabManager photon;
+        private PrefabManager pvePrefabManager;       
         Dictionary<PoolID, Pool> poolData = new Dictionary<PoolID, Pool>();
+        List<KeyValuePair<int, int>> serializeData = new List<KeyValuePair<int, int>>();
         protected override void Awake()
-        {
+        {          
+            if(mode == GAMECONST.GAMEPLAY_MODE.STANDARD_PVP)
+            {               
+                pvePrefabManager = inst;
+                inst = null;              
+                Debug.Log("Prefab Manager PvP Instantiate!");
+                photon.SetDataSerialize(ref serializeData);
+            }
             base.Awake();
 
-            PrefabPool = Instantiate(pool);
-            PrefabPool.name = "PrefabPool";
-         
-            SpawnPoolPvE();
-            CreatePool(Hair_Arrow, PoolID.Hair_Arrow);
-            CreatePool(Hair_Cowboy, PoolID.Hair_Cowboy);
-            CreatePool(Hair_Headphone, PoolID.Hair_Headphone);
-            CreatePool(Hair_Ear, PoolID.Hair_Ear);
-            CreatePool(Hair_Crown, PoolID.Hair_Crown);
-            CreatePool(Hair_Horn, PoolID.Hair_Horn);
-            CreatePool(Hair_Beard, PoolID.Hair_Beard);
+            if (mode == GAMECONST.GAMEPLAY_MODE.STANDARD_PVE)
+                SpawnObjectPvE();
 
-            CreatePool(UIItem, PoolID.UIItem);
-            CreatePool(UIIndicator, PoolID.UITargetIndicator);
-            CreatePool(Obstance, PoolID.Obstance);
-            CreatePool(Gift, PoolID.Gift);
-            CreatePool(BaseWeapon, PoolID.BaseWeapon, Quaternion.identity, 5);
-            CreatePool(ObjectCreateWeapon, PoolID.ObjectCreateWeapon, Quaternion.identity, 50);
-
-            DontDestroyOnLoad(PrefabPool);
         }
         public void CreatePool(GameObject obj, PoolID namePool, Quaternion quaternion = default, int numObj = 10, bool network = false)
         {
@@ -166,6 +162,7 @@ namespace MoveStopMove.Manager
             else
             {
                 newPool = NetworkManager.Inst.Instantiate(pool.name);
+                newPool.transform.parent = transform;
             }
             
             Pool poolScript = newPool.GetComponent<Pool>();
@@ -174,23 +171,33 @@ namespace MoveStopMove.Manager
 
             if (!poolData.ContainsKey(namePool))
             {
-                poolScript.Initialize(obj, quaternion, numObj);
+                poolScript.Initialize(obj, quaternion, numObj, network);
                 poolData.Add(namePool, poolScript);
             }
             else
             {
                 
-                poolScript.Initialize(obj, quaternion, numObj);
+                poolScript.Initialize(obj, quaternion, numObj, network);
                 Destroy(poolData[namePool].gameObject);
                 poolData[namePool] = poolScript;
             }
 
+            serializeData.Clear();           
         }
         public void PushToPool(GameObject obj, PoolID namePool, bool checkContain = true)
         {
             if (!poolData.ContainsKey(namePool))
             {
-                CreatePool(obj, namePool);
+                switch (mode)
+                {
+                    case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                        CreatePool(obj, namePool, default, 10, true);
+                        break;
+                    case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                        CreatePool(obj, namePool);
+                        break;
+                }
+                
             }
 
             poolData[namePool].Push(obj, checkContain);
@@ -209,8 +216,10 @@ namespace MoveStopMove.Manager
             return poolData[namePool].Pop();
         }
 
-        public void SpawnPoolPvP()
+        public void SpawnObjectPvP()
         {
+            PrefabPool = Instantiate(pool);
+            PrefabPool.name = "PrefabPoolPvp";
             CreatePool(Bullet_Axe1Pvp, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0), 10, true);
             CreatePool(Bullet_Knife1Pvp, PoolID.Bullet_Knife1, Quaternion.Euler(0, 0, 0), 10, true);
             CreatePool(Bullet_Axe2Pvp, PoolID.Bullet_Axe2, Quaternion.Euler(0, 0, 0), 10, true);
@@ -220,10 +229,37 @@ namespace MoveStopMove.Manager
             CreatePool(Weapon_Knife1Pvp, PoolID.Weapon_Knife1, Quaternion.Euler(0, 0, 0), 10, true);
             CreatePool(Weapon_Axe2Pvp, PoolID.Weapon_Axe2, Quaternion.Euler(0, 0, 0), 10, true);
             CreatePool(Weapon_ArrowPvp, PoolID.Weapon_Arrow, Quaternion.Euler(0, 0, 0), 10, true);
+
+            CreatePool(Hair_Arrow, PoolID.Hair_Arrow);
+            CreatePool(Hair_Cowboy, PoolID.Hair_Cowboy);
+            CreatePool(Hair_Headphone, PoolID.Hair_Headphone);
+            CreatePool(Hair_Ear, PoolID.Hair_Ear);
+            CreatePool(Hair_Crown, PoolID.Hair_Crown);
+            CreatePool(Hair_Horn, PoolID.Hair_Horn);
+            CreatePool(Hair_Beard, PoolID.Hair_Beard);
+
+            CreatePool(UIItem, PoolID.UIItem);
+            CreatePool(UIIndicator, PoolID.UITargetIndicator);
+            CreatePool(Obstance, PoolID.Obstance);
+            CreatePool(Gift, PoolID.Gift);
+            CreatePool(BaseWeapon, PoolID.BaseWeapon, Quaternion.identity, 5);
+            CreatePool(ObjectCreateWeapon, PoolID.ObjectCreateWeapon, Quaternion.identity, 50);
+            foreach (var i in poolData)
+            {
+                PhotonView photonView = i.Value.gameObject.GetComponent<PhotonView>();
+                if (photonView != null)
+                {
+                    serializeData.Add(new KeyValuePair<int, int>((int)i.Key, photonView.ViewID));
+                }
+            }
+
+            DontDestroyOnLoad(PrefabPool);
         }
 
-        public void SpawnPoolPvE()
+        public void SpawnObjectPvE()
         {
+            PrefabPool = Instantiate(pool);
+            PrefabPool.name = "PrefabPool";
             CreatePool(Character, PoolID.Character, Quaternion.Euler(0, 0, 0), 15);
             CreatePool(Bullet_Axe1, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0));
             CreatePool(Bullet_Knife1, PoolID.Bullet_Knife1, Quaternion.Euler(0, 0, 0));
@@ -234,6 +270,43 @@ namespace MoveStopMove.Manager
             CreatePool(Weapon_Knife1, PoolID.Weapon_Knife1, Quaternion.Euler(0, 0, 0));
             CreatePool(Weapon_Axe2, PoolID.Weapon_Axe2, Quaternion.Euler(0, 0, 0));
             CreatePool(Weapon_Arrow, PoolID.Weapon_Arrow, Quaternion.Euler(0, 0, 0));
+
+            CreatePool(Hair_Arrow, PoolID.Hair_Arrow);
+            CreatePool(Hair_Cowboy, PoolID.Hair_Cowboy);
+            CreatePool(Hair_Headphone, PoolID.Hair_Headphone);
+            CreatePool(Hair_Ear, PoolID.Hair_Ear);
+            CreatePool(Hair_Crown, PoolID.Hair_Crown);
+            CreatePool(Hair_Horn, PoolID.Hair_Horn);
+            CreatePool(Hair_Beard, PoolID.Hair_Beard);
+
+            CreatePool(UIItem, PoolID.UIItem);
+            CreatePool(UIIndicator, PoolID.UITargetIndicator);
+            CreatePool(Obstance, PoolID.Obstance);
+            CreatePool(Gift, PoolID.Gift);
+            CreatePool(BaseWeapon, PoolID.BaseWeapon, Quaternion.identity, 5);
+            CreatePool(ObjectCreateWeapon, PoolID.ObjectCreateWeapon, Quaternion.identity, 50);
+
+            DontDestroyOnLoad(PrefabPool);
+        }
+
+        public void ChangeMode(GAMECONST.GAMEPLAY_MODE mode)
+        {
+            if (this.mode == mode) return;
+            switch (mode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    inst = pvePrefabManager;
+                    pvePrefabManager.gameObject.SetActive(true);
+                    Destroy(gameObject);
+                    break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    PrefabManager pvpPrefabManager = NetworkManager.Inst.Instantiate(gameObject.name).GetComponent<PrefabManager>();
+                    pvpPrefabManager.SpawnObjectPvP();
+                    pvpPrefabManager.pvePrefabManager = this;
+                    gameObject.SetActive(false);
+                    
+                    break;
+            }
         }
     }
 }

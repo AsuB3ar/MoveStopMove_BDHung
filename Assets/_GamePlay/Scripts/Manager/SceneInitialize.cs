@@ -5,6 +5,7 @@ using CustomAttribute;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 [DefaultExecutionOrder(-100)]
 public class SceneInitialize : MonoBehaviour
@@ -64,7 +65,8 @@ public class SceneInitialize : MonoBehaviour
                 break;
             case SCENE_TYPE.STANDARD_PVP:              
                 GameplayManager.Inst.GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVP;
-                PrefabManager.Inst.SpawnPoolPvP();
+                if(PhotonNetwork.IsMasterClient)
+                    PrefabManager.Inst.ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVP);
                 GameplayManager.Inst.PlayerCamera = playerCamera;
                 GameplayManager.Inst.TargetIndicator = targetIndicator;
                 GameplayManager.Inst.CameraMove = cameraMove;

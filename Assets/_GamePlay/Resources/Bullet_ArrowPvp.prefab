@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2054201637825101640}
   - component: {fileID: -1915160961595994281}
   - component: {fileID: 5843520916697854713}
+  - component: {fileID: -308517124156984414}
   m_Layer: 0
   m_Name: Bullet_ArrowPvp
   m_TagString: Untagged
@@ -91,6 +92,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5843520916697854713}
+  - {fileID: -308517124156984414}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -127,6 +129,20 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-308517124156984414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054201637825101391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 541c735ba59fc304390884cbbbc6f034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncActive: 1
+  SyncName: 1
 --- !u!1001 &3007023687308938995
 PrefabInstance:
   m_ObjectHideFlags: 0
