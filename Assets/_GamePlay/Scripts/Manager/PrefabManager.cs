@@ -131,6 +131,7 @@ namespace MoveStopMove.Manager
         [SerializeField]
         GameObject pool;
         [Separator]
+        [ConditionalField(nameof(mode), false, GAMECONST.GAMEPLAY_MODE.STANDARD_PVP)]
         [SerializeField]
         PhotonPrefabManager photon;
         private PrefabManager pvePrefabManager;       
@@ -144,6 +145,7 @@ namespace MoveStopMove.Manager
                 inst = null;              
                 Debug.Log("Prefab Manager PvP Instantiate!");
                 photon.SetSerializeData(ref serializeData);
+                DontDestroyOnLoad(gameObject);
             }
             base.Awake();
 

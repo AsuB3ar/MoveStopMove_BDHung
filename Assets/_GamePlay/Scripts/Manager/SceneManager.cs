@@ -24,7 +24,7 @@ namespace MoveStopMove.Manager
             await Task.Delay(500);
             scene.allowSceneActivation = true;
             Debug.Log($"<color=green>SCENE</color>: Complete Loading Scene");
-            _OnSceneLoaded.Invoke(sceneName);
+            _OnSceneLoaded?.Invoke(sceneName);
         }
 
         public void LoadScene(string sceneName, Action destructScene)
@@ -33,9 +33,12 @@ namespace MoveStopMove.Manager
             LoadScene(sceneName);
         }
 
-        public void LoadPhotonScene(string name)
+        public async void LoadPhotonScene(string name)
         {
             PhotonNetwork.LoadLevel(name);
+            await Task.Delay(1000);
+            Debug.Log($"<color=green>SCENE</color>: Complete Loading Scene Photon");
+            _OnSceneLoaded?.Invoke(name);
         }
     }
 }

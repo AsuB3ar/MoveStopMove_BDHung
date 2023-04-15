@@ -16,6 +16,7 @@ public class SceneInitialize : MonoBehaviour
         LOAD_START = 1,
         STANDARD_PVE = 2,
         STANDARD_PVP = 3,
+        INIT_PVP_RESOURCES = 4,
     }
     [SerializeField]
     SCENE_TYPE type;
@@ -44,7 +45,7 @@ public class SceneInitialize : MonoBehaviour
         {
             case SCENE_TYPE.INIT:
                 SceneManager.Inst.LoadScene(GAMECONST.LOAD_START_SCENE);
-                SceneManager.Inst._OnSceneLoaded += (name) =>
+                SceneManager.Inst._OnSceneLoaded += (name) => //DEV: Need to optimize, may be error here
                 {
                     if (string.Compare(name, GAMECONST.LOAD_START_SCENE) == 0)
                     {
@@ -63,10 +64,20 @@ public class SceneInitialize : MonoBehaviour
                 gameData.OnInitData();
                 
                 break;
-            case SCENE_TYPE.STANDARD_PVP:              
+            case SCENE_TYPE.INIT_PVP_RESOURCES:
+                SceneManager.Inst._OnSceneLoaded += (name) => //DEV: Need to optimize, may be error here
+                {
+                    if (string.Compare(name, GAMECONST.INIT_PVP_RESOUCRCES_SCENE) == 0)
+                    {
+                        SceneManager.Inst.LoadPhotonScene(GAMECONST.STANDARD_PVP_SCENE);
+                    }
+                };
                 GameplayManager.Inst.GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVP;
-                if(PhotonNetwork.IsMasterClient)
+                if (PhotonNetwork.IsMasterClient)
                     PrefabManager.Inst.ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVP);
+                
+                break;
+            case SCENE_TYPE.STANDARD_PVP:                              
                 GameplayManager.Inst.PlayerCamera = playerCamera;
                 GameplayManager.Inst.TargetIndicator = targetIndicator;
                 GameplayManager.Inst.CameraMove = cameraMove;

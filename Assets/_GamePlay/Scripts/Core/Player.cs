@@ -52,6 +52,7 @@ namespace MoveStopMove.Core
 
         protected void Start()
         {
+            Debug.Log(PrefabManager.Inst);
             LevelManager.Inst.OnWinLevel += Win;
             VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
             VFX_AddStatus = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_AddStatus));
