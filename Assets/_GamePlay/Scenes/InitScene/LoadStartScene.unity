@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6919841215682026334, guid: 90d5327ca5963e44997166f6ae683078, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6919841216036282514, guid: 90d5327ca5963e44997166f6ae683078, type: 3}
       propertyPath: m_Name
       value: Manager

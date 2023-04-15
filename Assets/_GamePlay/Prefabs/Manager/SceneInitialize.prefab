@@ -43,9 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7668370c81f42b441be85c40e3631003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 3
   gameData: {fileID: 11400000, guid: fcfd6173098dcc4499bed58ddbdcd864, type: 2}
   playerCamera: {fileID: 0}
   playerScript: {fileID: 0}
   targetIndicator: {fileID: 0}
   cameraMove: {fileID: 0}
+  playerPvp: {fileID: 231660901292055206, guid: 2e9ab5603c437914283fe29b88c67f2b, type: 3}

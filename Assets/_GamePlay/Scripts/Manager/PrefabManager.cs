@@ -143,13 +143,31 @@ namespace MoveStopMove.Manager
                 pvePrefabManager = inst;
                 inst = null;              
                 Debug.Log("Prefab Manager PvP Instantiate!");
-                photon.SetDataSerialize(ref serializeData);
+                photon.SetSerializeData(ref serializeData);
             }
             base.Awake();
 
             if (mode == GAMECONST.GAMEPLAY_MODE.STANDARD_PVE)
                 SpawnObjectPvE();
 
+        }
+        public void UpdatePhotonData()
+        {
+            NetworkManager.InitPhotonObjectData();
+            for (int i = 0; i < serializeData.Count; i++)
+            {
+                PoolID id = (PoolID)serializeData[i].Key;
+                Pool value = NetworkManager.PhotonData[serializeData[i].Value].gameObject.GetComponent<Pool>();
+                if (poolData.ContainsKey(id))
+                {
+                    poolData[id] = value;
+                }
+                else
+                {
+                    poolData.Add(id, value);
+                }
+                value.transform.parent = transform;
+            }
         }
         public void CreatePool(GameObject obj, PoolID namePool, Quaternion quaternion = default, int numObj = 10, bool network = false)
         {
@@ -180,9 +198,7 @@ namespace MoveStopMove.Manager
                 poolScript.Initialize(obj, quaternion, numObj, network);
                 Destroy(poolData[namePool].gameObject);
                 poolData[namePool] = poolScript;
-            }
-
-            serializeData.Clear();           
+            }                    
         }
         public void PushToPool(GameObject obj, PoolID namePool, bool checkContain = true)
         {
@@ -215,11 +231,11 @@ namespace MoveStopMove.Manager
 
             return poolData[namePool].Pop();
         }
-
         public void SpawnObjectPvP()
         {
             PrefabPool = Instantiate(pool);
             PrefabPool.name = "PrefabPoolPvp";
+            
             CreatePool(Bullet_Axe1Pvp, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0), 10, true);
             CreatePool(Bullet_Knife1Pvp, PoolID.Bullet_Knife1, Quaternion.Euler(0, 0, 0), 10, true);
             CreatePool(Bullet_Axe2Pvp, PoolID.Bullet_Axe2, Quaternion.Euler(0, 0, 0), 10, true);
@@ -230,20 +246,22 @@ namespace MoveStopMove.Manager
             CreatePool(Weapon_Axe2Pvp, PoolID.Weapon_Axe2, Quaternion.Euler(0, 0, 0), 10, true);
             CreatePool(Weapon_ArrowPvp, PoolID.Weapon_Arrow, Quaternion.Euler(0, 0, 0), 10, true);
 
-            CreatePool(Hair_Arrow, PoolID.Hair_Arrow);
-            CreatePool(Hair_Cowboy, PoolID.Hair_Cowboy);
-            CreatePool(Hair_Headphone, PoolID.Hair_Headphone);
-            CreatePool(Hair_Ear, PoolID.Hair_Ear);
-            CreatePool(Hair_Crown, PoolID.Hair_Crown);
-            CreatePool(Hair_Horn, PoolID.Hair_Horn);
-            CreatePool(Hair_Beard, PoolID.Hair_Beard);
+            CreatePool(Hair_Arrow, PoolID.Hair_Arrow, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Hair_Cowboy, PoolID.Hair_Cowboy, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Hair_Headphone, PoolID.Hair_Headphone, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Hair_Ear, PoolID.Hair_Ear, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Hair_Crown, PoolID.Hair_Crown, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Hair_Horn, PoolID.Hair_Horn, Quaternion.Euler(0, 0, 0), 10, true);
+            CreatePool(Hair_Beard, PoolID.Hair_Beard, Quaternion.Euler(0, 0, 0), 10, true);
 
             CreatePool(UIItem, PoolID.UIItem);
             CreatePool(UIIndicator, PoolID.UITargetIndicator);
             CreatePool(Obstance, PoolID.Obstance);
-            CreatePool(Gift, PoolID.Gift);
+            CreatePool(Gift, PoolID.Gift, Quaternion.Euler(0, 0, 0), 10, true);
             CreatePool(BaseWeapon, PoolID.BaseWeapon, Quaternion.identity, 5);
             CreatePool(ObjectCreateWeapon, PoolID.ObjectCreateWeapon, Quaternion.identity, 50);
+
+            serializeData.Clear();
             foreach (var i in poolData)
             {
                 PhotonView photonView = i.Value.gameObject.GetComponent<PhotonView>();
@@ -252,10 +270,8 @@ namespace MoveStopMove.Manager
                     serializeData.Add(new KeyValuePair<int, int>((int)i.Key, photonView.ViewID));
                 }
             }
-
             DontDestroyOnLoad(PrefabPool);
         }
-
         public void SpawnObjectPvE()
         {
             PrefabPool = Instantiate(pool);
@@ -288,7 +304,6 @@ namespace MoveStopMove.Manager
 
             DontDestroyOnLoad(PrefabPool);
         }
-
         public void ChangeMode(GAMECONST.GAMEPLAY_MODE mode)
         {
             if (this.mode == mode) return;

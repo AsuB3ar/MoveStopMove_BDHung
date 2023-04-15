@@ -684,14 +684,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5161443022837097950, guid: b34c0e20557d1cc4eba537de4fa71d24, type: 3}
-      propertyPath: type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5161443022837097950, guid: b34c0e20557d1cc4eba537de4fa71d24, type: 3}
-      propertyPath: playerPvp
-      value: 
-      objectReference: {fileID: 870338678254615286, guid: 4bb4c4e09b90b614eb100bd60c22c456, type: 3}
-    - target: {fileID: 5161443022837097950, guid: b34c0e20557d1cc4eba537de4fa71d24, type: 3}
       propertyPath: cameraMove
       value: 
       objectReference: {fileID: 675559048}
@@ -699,10 +691,6 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 675559050}
-    - target: {fileID: 5161443022837097950, guid: b34c0e20557d1cc4eba537de4fa71d24, type: 3}
-      propertyPath: playerScript
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5161443022837097950, guid: b34c0e20557d1cc4eba537de4fa71d24, type: 3}
       propertyPath: targetIndicator
       value: 

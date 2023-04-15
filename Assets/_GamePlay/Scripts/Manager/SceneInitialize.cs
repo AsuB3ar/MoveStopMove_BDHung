@@ -9,7 +9,7 @@ using Photon.Pun;
 
 [DefaultExecutionOrder(-100)]
 public class SceneInitialize : MonoBehaviour
-{
+{   
     public enum SCENE_TYPE
     {
         INIT = 0,
@@ -89,11 +89,10 @@ public class SceneInitialize : MonoBehaviour
             case SCENE_TYPE.STANDARD_PVE:
                 UIManager.Inst.OpenUI(UIID.UICMainMenu);
                 break;
-            case SCENE_TYPE.STANDARD_PVP:
+            case SCENE_TYPE.STANDARD_PVP:              
                 UIManager.Inst.OpenUI(UIID.UICPvpMainMenu);
                 break;
         }
     }
-
-
+   
 }

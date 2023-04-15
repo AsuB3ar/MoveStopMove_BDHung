@@ -7,6 +7,9 @@ using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    public static Dictionary<int, PhotonView> PhotonData = new Dictionary<int, PhotonView>();
+    private static bool isInitPhotonData = false;
+    public static bool IsInitPhotonData => isInitPhotonData;
     public event Action _OnJoinedRoom;
     public event Action _OnConnectedToMaster;
     public event Action _OnJoinedLobby;
@@ -81,5 +84,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _OnConnectedToMaster = null;
         _OnJoinedLobby = null;
         _OnJoinedRoom = null;
+    }
+
+    public static void InitPhotonObjectData()
+    {
+        if (isInitPhotonData) return;
+
+        PhotonView[] data = FindObjectsOfType<PhotonView>();
+        for (int i = 0; i < data.Length; i++)
+        {
+            PhotonData.Add(data[i].ViewID, data[i]);
+        }
+        isInitPhotonData = true;
     }
 }

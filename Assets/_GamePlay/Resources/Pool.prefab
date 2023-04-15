@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8032948615741147839}
   - component: {fileID: -7830189113836935768}
   - component: {fileID: 1479773491697322327}
+  - component: {fileID: 1798276145155131034}
   m_Layer: 0
   m_Name: Pool
   m_TagString: Untagged
@@ -45,8 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fcf0698e9832ea4f9bac908e324cf79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   mainPool: {fileID: 8032948615741147824}
   IsSetParent: 1
+  photon: {fileID: 1798276145155131034}
 --- !u!114 &-7830189113836935768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +68,9 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1479773491697322327}
+  - {fileID: 1798276145155131034}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -83,3 +88,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SyncActive: 1
   SyncName: 1
+--- !u!114 &1798276145155131034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8032948615741147824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ae0fad525ecd74f81e475167f14db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pool: {fileID: 8032948615741147839}

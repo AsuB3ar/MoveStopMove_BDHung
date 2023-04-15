@@ -4,9 +4,12 @@ using UnityEngine;
 using Photon.Pun;
 using Utilitys;
 using System;
+using MoveStopMove.Manager;
 
 public class PhotonPrefabManager : MonoBehaviourPun, IPunObservable
 {
+    [SerializeField]
+    PrefabManager prefabManager;
     List<KeyValuePair<int, int>> pools;
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -27,12 +30,13 @@ public class PhotonPrefabManager : MonoBehaviourPun, IPunObservable
             for(int i = 0; i < count; i++)
             {
                 pools.Add(new KeyValuePair<int, int>((int)stream.ReceiveNext(), (int)stream.ReceiveNext()));
-            }
+            }          
+            PrefabManager.Inst.UpdatePhotonData();
         }
         Debug.Log("ON PREFAB MANAGER SERIALIZE");
     }
 
-    public void SetDataSerialize(ref List<KeyValuePair<int, int>> pools)
+    public void SetSerializeData(ref List<KeyValuePair<int, int>> pools)
     {
         this.pools = pools;
     }

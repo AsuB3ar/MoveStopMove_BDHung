@@ -43,5 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fcf0698e9832ea4f9bac908e324cf79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
   mainPool: {fileID: 7117338696727486318}
   IsSetParent: 1
+  photon: {fileID: 0}
