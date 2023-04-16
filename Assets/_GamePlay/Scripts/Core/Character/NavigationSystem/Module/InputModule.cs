@@ -55,6 +55,7 @@ namespace MoveStopMove.Core.Character.NavigationSystem
 
         private void OnDisable()
         {
+            if (joyStick == null) return;
             joyStick.OnMove -= UpdateMoveDirection;
         }
     }

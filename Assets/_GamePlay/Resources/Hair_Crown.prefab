@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6953076629286810873}
   - component: {fileID: 6786791327913207802}
   - component: {fileID: -8172259830606524686}
+  - component: {fileID: -4742499222929282396}
   m_Layer: 0
   m_Name: Hair_Crown
   m_TagString: Untagged
@@ -103,6 +104,21 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-4742499222929282396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30826399817357105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 541c735ba59fc304390884cbbbc6f034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  SyncActive: 1
+  SyncName: 1
 --- !u!1001 &1747150907045512212
 PrefabInstance:
   m_ObjectHideFlags: 0

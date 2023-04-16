@@ -9,16 +9,18 @@ public class PhotonPool : MonoBehaviourPun, IPunObservable
     List<int> data;
     [SerializeField]
     Pool pool;
+    public bool IsChange = true;
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (data == null) return;
-        if (stream.IsWriting)
+        if (stream.IsWriting && IsChange)
         {
             stream.SendNext(data.Count);
             for (int i = 0; i < data.Count; i++)
             {
                 stream.SendNext(data[i]);
             }
+            IsChange = false;
         }
         else if (stream.IsReading)
         {
@@ -29,7 +31,9 @@ public class PhotonPool : MonoBehaviourPun, IPunObservable
                 data.Add((int)stream.ReceiveNext());
             }
             pool.UpdatePhotonData();
+            Debug.Log("ON POOL SERIALIZE");
         }
+        
     }
 
     public void SetSerializeData(List<int> data)

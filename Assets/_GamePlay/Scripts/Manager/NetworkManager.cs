@@ -7,9 +7,7 @@ using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    public static Dictionary<int, PhotonView> PhotonData = new Dictionary<int, PhotonView>();
-    private static bool isInitPhotonData = false;
-    public static bool IsInitPhotonData => isInitPhotonData;
+    public event Action<Player, bool> _OnPlayerStatusRoomChange;
     public event Action _OnJoinedRoom;
     public event Action _OnConnectedToMaster;
     public event Action _OnJoinedLobby;
@@ -59,9 +57,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(name);
         Debug.Log($"<color=green>NETWORK</color>: Join Room");
     }
-
     public override void OnJoinedRoom()
-    {
+    {       
         _OnJoinedRoom?.Invoke();
         Debug.Log($"<color=green>NETWORK</color>: Joined Room");
     }
@@ -75,6 +72,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        _OnPlayerStatusRoomChange?.Invoke(newPlayer, true);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        _OnPlayerStatusRoomChange?.Invoke(otherPlayer, false);
+    }
     public GameObject Instantiate(string name, Vector3 position = default, Quaternion rotation = default)
     {
         return PhotonNetwork.Instantiate(name, position, rotation);
@@ -84,17 +90,5 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _OnConnectedToMaster = null;
         _OnJoinedLobby = null;
         _OnJoinedRoom = null;
-    }
-
-    public static void InitPhotonObjectData()
-    {
-        if (isInitPhotonData) return;
-
-        PhotonView[] data = FindObjectsOfType<PhotonView>();
-        for (int i = 0; i < data.Length; i++)
-        {
-            PhotonData.Add(data[i].ViewID, data[i]);
-        }
-        isInitPhotonData = true;
     }
 }

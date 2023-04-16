@@ -19,6 +19,14 @@ public static class GAMECONST
         STANDARD_PVE = 1,
     }
 
+    public enum NETWORK_OBJECT_TYPE
+    {
+        NONE = -1,
+        MANAGER = 0,
+        RESOURCE = 1,
+        GAMEPLAY = 2,
+    }
+
     #region GAME_PLAY
     public static readonly string ANIM_IS_IDLE = "IsIdle";
     public static readonly string ANIM_IS_DEAD = "IsDead";

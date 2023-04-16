@@ -52,8 +52,16 @@ namespace MoveStopMove.Core
 
         protected void Start()
         {
-            Debug.Log(PrefabManager.Inst);
-            LevelManager.Inst.OnWinLevel += Win;
+            switch (GameplayManager.Inst.GameMode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    Initialize();
+                    break;
+            }   
+        }
+
+        public void Initialize()
+        {
             VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
             VFX_AddStatus = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_AddStatus));
             VFX_Hit.Init(transform, Vector3.up * 0.5f, Quaternion.Euler(Vector3.zero), Vector3.one * 0.3f);

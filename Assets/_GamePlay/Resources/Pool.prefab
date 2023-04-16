@@ -69,7 +69,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 1479773491697322327}
   - {fileID: 1798276145155131034}
   sceneViewId: 0
   InstantiationId: 0
@@ -86,6 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 541c735ba59fc304390884cbbbc6f034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   SyncActive: 1
   SyncName: 1
 --- !u!114 &1798276145155131034
@@ -101,3 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool: {fileID: 8032948615741147839}
+  IsChange: 1

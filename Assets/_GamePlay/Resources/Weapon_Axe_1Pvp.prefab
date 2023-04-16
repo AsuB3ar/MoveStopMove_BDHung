@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 541c735ba59fc304390884cbbbc6f034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
   SyncActive: 1
   SyncName: 1
 --- !u!114 &-2368874670915093839
@@ -256,7 +257,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: -4043794330810025751}
   - {fileID: -2368874670915093839}
   sceneViewId: 0
   InstantiationId: 0

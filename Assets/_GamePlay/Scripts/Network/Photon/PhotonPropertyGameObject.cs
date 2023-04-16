@@ -2,30 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class PhotonPropertyGameObject : MonoBehaviourPun,IPunObservable
+public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCallback
 {
+    [SerializeField]
+    GAMECONST.NETWORK_OBJECT_TYPE type;
     [SerializeField]
     bool SyncActive = true;
     [SerializeField]
     bool SyncName = true;
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    private void Awake()
     {
-        if (stream.IsWriting)
+        NetworkManager.Inst._OnPlayerStatusRoomChange += OnPlayerEnterRoom;
+    }
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        switch (type)
         {
-            if(SyncActive)
-                stream.SendNext(gameObject.activeInHierarchy);
-            if (SyncName)
-                stream.SendNext(gameObject.name);
-            Debug.Log($"<color=green>NETWORK: SEND DATA </color>");
+            case GAMECONST.NETWORK_OBJECT_TYPE.MANAGER:
+                gameObject.SetActive(true);
+                break;
+            case GAMECONST.NETWORK_OBJECT_TYPE.RESOURCE:
+            case GAMECONST.NETWORK_OBJECT_TYPE.GAMEPLAY:
+                gameObject.SetActive(false);
+                break;
         }
-        else if (stream.IsReading)
+        
+    }
+
+    [PunRPC]
+    void RPC_SetActive(bool active, string name)
+    {
+        gameObject.SetActive(active);
+        gameObject.name = name;
+    }
+
+    private void OnEnable()
+    {
+
+    }
+    private void OnDisable()
+    {
+
+    }
+    private void OnPlayerEnterRoom(Player player, bool value)
+    {
+        if (value && SyncActive)
         {
-            if (SyncActive)
-                gameObject.SetActive((bool)stream.ReceiveNext());
-            if (SyncName)
-                gameObject.name = (string)stream.ReceiveNext();
-            Debug.Log($"<color=green>NETWORK: RECEIVE DATA </color>");
+            photonView.RPC(nameof(RPC_SetActive), player, gameObject.activeInHierarchy, gameObject.name);
         }
     }
 }

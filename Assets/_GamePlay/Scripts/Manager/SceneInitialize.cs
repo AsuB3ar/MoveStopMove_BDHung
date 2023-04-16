@@ -64,17 +64,14 @@ public class SceneInitialize : MonoBehaviour
                 gameData.OnInitData();
                 
                 break;
-            case SCENE_TYPE.INIT_PVP_RESOURCES:
+            case SCENE_TYPE.INIT_PVP_RESOURCES:               
                 SceneManager.Inst._OnSceneLoaded += (name) => //DEV: Need to optimize, may be error here
                 {
                     if (string.Compare(name, GAMECONST.INIT_PVP_RESOUCRCES_SCENE) == 0)
                     {
                         SceneManager.Inst.LoadPhotonScene(GAMECONST.STANDARD_PVP_SCENE);
                     }
-                };
-                GameplayManager.Inst.GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVP;
-                if (PhotonNetwork.IsMasterClient)
-                    PrefabManager.Inst.ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVP);
+                };               
                 
                 break;
             case SCENE_TYPE.STANDARD_PVP:                              
@@ -92,7 +89,6 @@ public class SceneInitialize : MonoBehaviour
                 break;
         }
     }
-
     private void Start()
     {
         switch (type)

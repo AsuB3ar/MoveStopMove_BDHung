@@ -102,7 +102,7 @@ namespace Utilitys
         {
             for(int i = 0; i < serializeData.Count; i++)
             {
-                GameObject gObject = NetworkManager.PhotonData[serializeData[i]].gameObject;
+                GameObject gObject = PhotonView.Find(serializeData[i]).gameObject;
                 objects.Enqueue(gObject);
                 gObject.transform.parent = transform;
             }

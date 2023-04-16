@@ -155,11 +155,10 @@ namespace MoveStopMove.Manager
         }
         public void UpdatePhotonData()
         {
-            NetworkManager.InitPhotonObjectData();
             for (int i = 0; i < serializeData.Count; i++)
             {
                 PoolID id = (PoolID)serializeData[i].Key;
-                Pool value = NetworkManager.PhotonData[serializeData[i].Value].gameObject.GetComponent<Pool>();
+                Pool value = PhotonView.Find(serializeData[i].Value).gameObject.GetComponent<Pool>();
                 if (poolData.ContainsKey(id))
                 {
                     poolData[id] = value;

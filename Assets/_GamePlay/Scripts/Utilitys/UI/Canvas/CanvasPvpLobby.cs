@@ -28,14 +28,24 @@ public class CanvasPvpLobby : UICanvas
         joinButton.onClick.AddListener(OnClickJoinRoom);
         startButton.onClick.AddListener(OnClickStartGame);
         NetworkManager.Inst.ClearEvent();
-        //NetworkManager.Inst._OnJoinedRoom += () => SceneManager.Inst.LoadPhotonScene(GAMECONST.INIT_PVP_RESOUCRCES_SCENE);
-        GameplayManager.Inst.GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVP;       
+
         NetworkManager.Inst._OnJoinedRoom += () =>
         {
+            GameplayManager.Inst.GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVP;           
             if (PhotonNetwork.IsMasterClient)
                 PrefabManager.Inst.ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVP);
-            statusTxt.text = "Status: Room";           
-        };       
+            else
+            {
+                //foreach (var item in PhotonNetwork.PhotonViewCollection)
+                //{
+                //    if (!item.IsMine)
+                //    {
+                //        item.gameObject.SetActive(false);
+                //    }
+                //}
+            }
+            statusTxt.text = "Status: Room";
+        };
     }
 
     private void OnClickJoinRoom()
@@ -50,6 +60,6 @@ public class CanvasPvpLobby : UICanvas
 
     protected void OnClickStartGame()
     {
-        SceneManager.Inst.LoadPhotonScene(GAMECONST.STANDARD_PVP_SCENE);
+        SceneManager.Inst.LoadPhotonScene(GAMECONST.INIT_PVP_RESOUCRCES_SCENE);
     }
 }
