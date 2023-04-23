@@ -32,7 +32,7 @@ namespace Utilitys.Input
                 out offset);
 
             offset = Vector2.ClampMagnitude(offset, dragOffsetDistance) / dragOffsetDistance;
-            //Debug.Log(offset);
+            
             joystickTransform.anchoredPosition = offset * dragMovementDistance;
 
             Vector2 inputVector = CalculateMovementInput(offset);

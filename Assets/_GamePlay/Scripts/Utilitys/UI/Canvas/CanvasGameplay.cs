@@ -77,7 +77,6 @@ public class CanvasGameplay : UICanvas
         indicators.Add(character, indicatorScript);
         characters.Add(character);
     }
-
     public void UnsubcribeTarget(BaseCharacter character)
     {
         if (!indicators.ContainsKey(character)) return; //DEV: Need to optimize
@@ -90,7 +89,6 @@ public class CanvasGameplay : UICanvas
         UIManager.Inst.OpenUI(UIID.UICSetting);
         SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
     }
-
     public override void Open()
     {
         base.Open();

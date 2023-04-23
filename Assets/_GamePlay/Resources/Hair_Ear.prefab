@@ -118,7 +118,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   SyncActive: 1
-  SyncName: 1
 --- !u!1001 &3395862861340958915
 PrefabInstance:
   m_ObjectHideFlags: 0

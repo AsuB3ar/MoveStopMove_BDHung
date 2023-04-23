@@ -187,7 +187,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   SyncActive: 1
-  SyncName: 1
 --- !u!114 &2330284244264480779
 MonoBehaviour:
   m_ObjectHideFlags: 0

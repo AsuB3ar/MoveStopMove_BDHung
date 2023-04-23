@@ -6,6 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.Linq;
+using System.Threading.Tasks;
 
 [DefaultExecutionOrder(-100)]
 public class SceneInitialize : MonoBehaviour
@@ -39,6 +41,7 @@ public class SceneInitialize : MonoBehaviour
     [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
     [SerializeField]
     GameObject playerPvp;
+    
     private void Awake()
     {
         switch (type)
@@ -64,15 +67,8 @@ public class SceneInitialize : MonoBehaviour
                 gameData.OnInitData();
                 
                 break;
-            case SCENE_TYPE.INIT_PVP_RESOURCES:               
-                SceneManager.Inst._OnSceneLoaded += (name) => //DEV: Need to optimize, may be error here
-                {
-                    if (string.Compare(name, GAMECONST.INIT_PVP_RESOUCRCES_SCENE) == 0)
-                    {
-                        SceneManager.Inst.LoadPhotonScene(GAMECONST.STANDARD_PVP_SCENE);
-                    }
-                };               
-                
+            case SCENE_TYPE.INIT_PVP_RESOURCES:
+                WaitingInitResource();          
                 break;
             case SCENE_TYPE.STANDARD_PVP:                              
                 GameplayManager.Inst.PlayerCamera = playerCamera;
@@ -84,8 +80,16 @@ public class SceneInitialize : MonoBehaviour
                 BaseCharacter characterScript = Cache.GetBaseCharacter(character);
                 GameplayManager.Inst.PlayerScript = characterScript;
                 GameplayManager.Inst.SetCameraFollow(GameplayManager.Inst.Player.transform);
-                GameplayManager.Inst.Player.transform.parent = gameObject.transform;
                 GameplayManager.Inst.PlayerScript.OnInit();
+                //GameplayManager.Inst.Player.transform.parent = gameObject.transform;
+
+                IReadOnlyList<PhotonPropertyGameObject> datas = PhotonPropertyGameObject.AllObjects;
+                for (int i = 0; i < datas.Count; i++)
+                {
+                     datas[i].OnCompleteInit();
+                }
+                Debug.Log("DATA COUNT: " + datas.Count);
+                
                 break;
         }
     }
@@ -101,5 +105,30 @@ public class SceneInitialize : MonoBehaviour
                 break;
         }
     }
-   
+    async void WaitingInitResource()
+    {     
+        var IsyncStates = FindObjectsOfType<MonoBehaviourPun>().OfType<ISyncState>();
+        List<ISyncState> syncStates = new List<ISyncState>(IsyncStates);
+        bool isCompleteInit;
+        do
+        {
+            isCompleteInit = true;
+            for(int i = 0; i < syncStates.Count; i++)
+            {
+                switch (syncStates[i].State)
+                {
+                    case ISyncState.STATE.ON_INIT:
+                        isCompleteInit = false;
+                        break;
+                    case ISyncState.STATE.READY:
+                        syncStates.RemoveAt(i);
+                        i--;
+                        break;
+                }
+            }
+            await Task.Delay(500);
+        } while (!isCompleteInit);
+        Debug.Log("INIT RESOURCE: COMPLETE");
+        SceneManager.Inst.LoadPhotonScene(GAMECONST.STANDARD_PVP_SCENE);
+    }
 }

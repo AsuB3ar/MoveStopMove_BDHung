@@ -81,8 +81,10 @@ namespace Utilitys
             }
             obj.SetActive(false);
             obj.transform.position = Vector3.zero;
-            if(network)
+            if (network)
+            {
                 serializeData.Add(obj.GetComponent<PhotonView>().ViewID);
+            }
         }
 
         public GameObject Pop()
@@ -98,7 +100,7 @@ namespace Utilitys
                 serializeData.Remove(returnObj.GetComponent<PhotonView>().ViewID);
             return returnObj;
         }
-        public void UpdatePhotonData()
+        public void InitPhotonData()
         {
             for(int i = 0; i < serializeData.Count; i++)
             {

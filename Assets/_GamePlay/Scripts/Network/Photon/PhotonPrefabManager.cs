@@ -5,39 +5,66 @@ using Photon.Pun;
 using Utilitys;
 using System;
 using MoveStopMove.Manager;
+using Photon.Realtime;
 
-public class PhotonPrefabManager : MonoBehaviourPun, IPunObservable
+public class PhotonPrefabManager : MonoBehaviourPun, IPunObservable, ISyncState
 {
     [SerializeField]
     PrefabManager prefabManager;
     List<KeyValuePair<int, int>> pools;
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    ISyncState.STATE state = ISyncState.STATE.ON_INIT;
+    public ISyncState.STATE State => state;
+    private void Awake()
     {
-        if (pools == null) return;
-        if (stream.IsWriting)
+        if (PhotonNetwork.IsMasterClient)
         {
-            stream.SendNext(pools.Count);
-            for(int i = 0; i < pools.Count; i++)
-            {
-                stream.SendNext(pools[i].Key);
-                stream.SendNext(pools[i].Value);
-            }
+            state = ISyncState.STATE.READY;          
         }
-        else if (stream.IsReading)
-        {
-            int count = (int)stream.ReceiveNext();
-            pools.Clear();
-            for(int i = 0; i < count; i++)
-            {
-                pools.Add(new KeyValuePair<int, int>((int)stream.ReceiveNext(), (int)stream.ReceiveNext()));
-            }          
-            PrefabManager.Inst.UpdatePhotonData();
-        }
-        Debug.Log("ON PREFAB MANAGER SERIALIZE");
+        if(PhotonNetwork.IsMasterClient)
+            NetworkManager.Inst._OnPlayerStatusRoomChange += OnPlayerEnterRoom;
     }
-
     public void SetSerializeData(ref List<KeyValuePair<int, int>> pools)
     {
         this.pools = pools;
+    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+       
+    }
+
+    [PunRPC]
+    protected void RPC_Init_Data(object[] data)
+    {
+        int count = (int)data[0];
+        pools.Clear();
+        for (int i = 0; i < count; i++)
+        {
+            pools.Add(new KeyValuePair<int, int>((int)data[i * 2 + 1], (int)data[i * 2 + 2]));
+        }
+        PrefabManager.Inst.InitPhotonData();
+        Debug.Log("ON PREFAB MANAGER SERIALIZE DATA");
+        state = ISyncState.STATE.READY;
+    }
+
+
+    private void OnPlayerEnterRoom(Player player, bool value)
+    {      
+        if (value)
+        {
+            object[] data = new object[pools.Count * 2 + 1];
+            data[0] = pools.Count;
+            for (int i = 0; i < pools.Count; i++)
+            {
+                data[i * 2 + 1] = pools[i].Key;
+                data[i * 2 + 2] = pools[i].Value;
+            }
+            photonView.RPC(nameof(RPC_Init_Data), player, data as object);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if(PhotonNetwork.IsMasterClient)
+            NetworkManager.Inst._OnPlayerStatusRoomChange -= OnPlayerEnterRoom;
     }
 }

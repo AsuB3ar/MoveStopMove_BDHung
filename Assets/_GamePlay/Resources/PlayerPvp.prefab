@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1234612114, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+      propertyPath: photonView
+      value: 
+      objectReference: {fileID: 7972954965816083899}
     - target: {fileID: 619714245882869173, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
       propertyPath: hair
       value: 
@@ -137,7 +141,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   SyncActive: 1
-  SyncName: 1
 --- !u!114 &86058710726591587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +247,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &4129521705470157334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231660901292055206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f321cecc1d57b54b81d3eab8630f3cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2883453754837105226
 MonoBehaviour:
   m_ObjectHideFlags: 0

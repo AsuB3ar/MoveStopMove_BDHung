@@ -28,7 +28,7 @@ namespace MoveStopMove.Core.Character
             module.FixedUpdateData();
         }
         public void Run()
-        {
+        {          
             UpdateData();
             InvokeOnUpdateData();
         }

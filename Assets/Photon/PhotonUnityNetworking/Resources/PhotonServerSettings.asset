@@ -40,6 +40,11 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - RPC_SetActive
+  - RPC_Init
+  - RPC_Receive_Data
+  - OnCompleteInit
+  - RPC_OnInit
+  - RPC_Init_Data
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -32,18 +32,7 @@ public class CanvasPvpLobby : UICanvas
         NetworkManager.Inst._OnJoinedRoom += () =>
         {
             GameplayManager.Inst.GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVP;           
-            if (PhotonNetwork.IsMasterClient)
-                PrefabManager.Inst.ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVP);
-            else
-            {
-                //foreach (var item in PhotonNetwork.PhotonViewCollection)
-                //{
-                //    if (!item.IsMine)
-                //    {
-                //        item.gameObject.SetActive(false);
-                //    }
-                //}
-            }
+            PrefabManager.Inst.ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVP);
             statusTxt.text = "Status: Room";
         };
     }

@@ -5,12 +5,15 @@ using UnityEngine;
 namespace MoveStopMove.Core.Character.NavigationSystem
 {
     using MoveStopMove.Manager;
+    using Photon.Pun;
     using Utilitys.Input;
     public class InputModule : AbstractNavigationModule
     {
         JoyStick joyStick;
         Vector2 moveDirection = Vector2.zero;
         private bool active = false;
+        [SerializeField]
+        PhotonView photonView;
         public bool Active
         {
             set
@@ -26,23 +29,29 @@ namespace MoveStopMove.Core.Character.NavigationSystem
 
         private void Start()
         {
-            CanvasGameplay gameplay = (CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay);
-            joyStick = gameplay.joyStick;
-            joyStick.OnMove += UpdateMoveDirection;
-            gameplay.Close();
-        }
-        public override void UpdateData()
-        {
+            CanvasGameplay gameplay;
             switch (GameplayManager.Inst.GameMode)
             {
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
-                    if (!active) return;                   
+                    gameplay = (CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay);
+                    joyStick = gameplay.joyStick;
+                    joyStick.OnMove += UpdateMoveDirection;
+                    gameplay.Close();
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-
-                    if (!active) return;
+                    if (photonView.IsMine)
+                    {
+                        gameplay = (CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay);
+                        joyStick = gameplay.joyStick;
+                        joyStick.OnMove += UpdateMoveDirection;
+                        gameplay.Close();
+                    }
                     break;
             }
+            
+        }
+        public override void UpdateData()
+        {
             Vector3 move = (Vector3.right * moveDirection.x + Vector3.forward * moveDirection.y).normalized;
             Data.MoveDirection = move;
         }
@@ -53,7 +62,7 @@ namespace MoveStopMove.Core.Character.NavigationSystem
             this.moveDirection = moveDirection;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             if (joyStick == null) return;
             joyStick.OnMove -= UpdateMoveDirection;

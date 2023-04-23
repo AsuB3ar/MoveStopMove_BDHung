@@ -118,7 +118,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   SyncActive: 1
-  SyncName: 1
 --- !u!1 &3003254067887494522
 GameObject:
   m_ObjectHideFlags: 0

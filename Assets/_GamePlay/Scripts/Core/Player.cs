@@ -26,12 +26,15 @@ namespace MoveStopMove.Core
 
         [SerializeField]
         private AttackIndicator attackIndicator;
+        [SerializeField]
+        private PhotonCharacter photonCharacter;
 
         private GameData GameData;
 
         protected override void Awake()
         {
             base.Awake();
+            DontDestroyOnLoad(gameObject);
             LogicSystem.SetCharacterInformation(Data, gameObject.transform);
             WorldInterfaceSystem.SetCharacterInformation(Data);
             GameData = GameManager.Inst.GameData;
@@ -65,7 +68,7 @@ namespace MoveStopMove.Core
             VFX_Hit = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_Hit));
             VFX_AddStatus = Cache.GetVisualEffectController(VisualEffectManager.Inst.PopFromPool(VisualEffect.VFX_AddStatus));
             VFX_Hit.Init(transform, Vector3.up * 0.5f, Quaternion.Euler(Vector3.zero), Vector3.one * 0.3f);
-            VFX_AddStatus.Init(transform, Vector3.up * -0.5f, Quaternion.Euler(-90, 0, 0), Vector3.one);
+            VFX_AddStatus.Init(transform, Vector3.up * -0.5f, Quaternion.Euler(-90, 0, 0), Vector3.one);   
             LoadData();
         }
 
@@ -144,15 +147,39 @@ namespace MoveStopMove.Core
 
         private void LoadData()
         {
-            
+
             //Data.Speed = GameData.Speed;
-            Data.Weapon = GameData.Weapon;
+            switch (GameplayManager.Inst.GameMode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    Data.Weapon = GameData.Weapon;
+                    Data.Color = GameData.Color;
+                    Data.Hair = GameData.Hair;
+                    Data.Pant = GameData.Pant;
+                    Data.Set = GameData.Set;
+                    UpdateCharacter();
+                    break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    if (photonCharacter.photonView.IsMine)
+                    {
+                        Data.Weapon = GameData.Weapon;
+                        Data.Color = GameData.Color;
+                        Data.Hair = GameData.Hair;
+                        Data.Pant = GameData.Pant;
+                        Data.Set = GameData.Set;
+                        UpdateCharacter();
+                    }
+                    break;
+            }         
+        }
 
-            Data.Color = GameData.Color;
-            Data.Hair = GameData.Hair;
-            Data.Pant = GameData.Pant;
-            Data.Set = GameData.Set;
+        private void LoadData(int[] data)
+        {
 
+        }
+
+        private void UpdateCharacter()
+        {
             ChangeColor((GameColor)Data.Color);
             ChangeHair((PoolID)Data.Hair);
             ChangePant((PantSkin)Data.Pant);
