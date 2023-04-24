@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 
 public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCallback
 {
     static List<PhotonPropertyGameObject> allObjects = new List<PhotonPropertyGameObject>();
+    public event Action _OnCompleteInit;
     public static IReadOnlyList<PhotonPropertyGameObject> AllObjects => allObjects.AsReadOnly();
     [SerializeField]
     GAMECONST.NETWORK_OBJECT_TYPE type;
@@ -35,6 +37,8 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
             case GAMECONST.NETWORK_OBJECT_TYPE.RESOURCE:
             case GAMECONST.NETWORK_OBJECT_TYPE.GAMEPLAY:
                 gameObject.SetActive(false);
+                if (photonView.IsMine)
+                    lastActiveState = true;
                 break;
         }
         
@@ -63,16 +67,14 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
         if (type == GAMECONST.NETWORK_OBJECT_TYPE.GAMEPLAY)
         {
             if (photonView.IsMine)
-            {
-                lastActiveState = true;
                 photonView.RPC(nameof(RPC_OnInit), RpcTarget.Others, gameObject.name);
-            }
-            gameObject.GetComponent<MoveStopMove.Core.Player>().Initialize();
+            //gameObject.GetComponent<MoveStopMove.Core.Player>().Initialize(); //DEV: Cache
         }
         isOnInit = false;
         isRpcCall = true;
         gameObject.SetActive(lastActiveState);
         isRpcCall = false;
+        _OnCompleteInit?.Invoke();
     }
     [PunRPC]
     private void RPC_OnInit(string name)
@@ -101,8 +103,7 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
         photonView.RPC(nameof(RPC_SetActive), RpcTarget.Others, gameObject.activeInHierarchy, gameObject.name);
     }
     private void OnPlayerEnterRoom(Player player, bool value)
-    {
-        
+    {        
         if (value && SyncActive)
         {
             photonView.RPC(nameof(RPC_SetActive), player, gameObject.activeInHierarchy, gameObject.name);

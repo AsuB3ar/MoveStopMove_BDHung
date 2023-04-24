@@ -24,28 +24,7 @@ public class PhotonPool : MonoBehaviourPun, IPunObservable, ISyncState
     }   
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        //if (data == null) return;
-        //if (stream.IsWriting && IsChange)
-        //{
-        //    stream.SendNext(data.Count);
-        //    for (int i = 0; i < data.Count; i++)
-        //    {
-        //        stream.SendNext(data[i]);
-        //    }
-        //    IsChange = false;
-        //}
-        //else if (stream.IsReading)
-        //{
-        //    int count = (int)stream.ReceiveNext();
-        //    data.Clear();
-        //    for (int i = 0; i < count; i++)
-        //    {
-        //        data.Add((int)stream.ReceiveNext());
-        //    }
-        //    pool.UpdatePhotonData();            
-        //    Debug.Log("ON POOL SERIALIZE");
-        //    state = ISyncState.STATE.READY;
-        //}
+
     }
     [PunRPC]
     protected void RPC_Init_Data(object[] data)

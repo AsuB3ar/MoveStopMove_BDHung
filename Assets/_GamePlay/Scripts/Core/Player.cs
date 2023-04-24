@@ -38,6 +38,18 @@ namespace MoveStopMove.Core
             LogicSystem.SetCharacterInformation(Data, gameObject.transform);
             WorldInterfaceSystem.SetCharacterInformation(Data);
             GameData = GameManager.Inst.GameData;
+            switch (GameplayManager.Inst.GameMode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    photonCharacter._OnInitialize += Initialize;
+                    if (!photonCharacter.photonView.IsMine)
+                    {
+                        photonCharacter._OnInitData += LoadData;
+                        photonCharacter._OnUpdateCharacter += UpdateCharacter;
+                    }
+                    break;
+            }
+
         }
 
         protected override void OnEnable()
@@ -147,7 +159,8 @@ namespace MoveStopMove.Core
 
         private void LoadData()
         {
-
+            GameObject newWeapon;
+            GameObject newHair;
             //Data.Speed = GameData.Speed;
             switch (GameplayManager.Inst.GameMode)
             {
@@ -157,17 +170,27 @@ namespace MoveStopMove.Core
                     Data.Hair = GameData.Hair;
                     Data.Pant = GameData.Pant;
                     Data.Set = GameData.Set;
-                    UpdateCharacter();
+                    newWeapon = PrefabManager.Inst.PopFromPool((PoolID)Data.Weapon);
+                    UpdateCharacter(newWeapon);
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
                     if (photonCharacter.photonView.IsMine)
                     {
+                        int[] data = new int[7];
                         Data.Weapon = GameData.Weapon;
+                        data[2] = GameData.Weapon;
                         Data.Color = GameData.Color;
+                        data[3] = GameData.Color;
                         Data.Hair = GameData.Hair;
+                        data[4] = GameData.Hair;
                         Data.Pant = GameData.Pant;
+                        data[5] = GameData.Pant;
                         Data.Set = GameData.Set;
-                        UpdateCharacter();
+                        data[6] = GameData.Set;
+                        newWeapon = PrefabManager.Inst.PopFromPool((PoolID)Data.Weapon);
+                        newHair = PrefabManager.Inst.PopFromPool((PoolID)Data.Hair);
+                        UpdateCharacter(newWeapon, newHair);
+                        photonCharacter.SetNetworkData(newWeapon,newHair,ref data);
                     }
                     break;
             }         
@@ -175,21 +198,26 @@ namespace MoveStopMove.Core
 
         private void LoadData(int[] data)
         {
-
+            Data.Weapon = data[0];
+            Data.Color = data[1];
+            Data.Hair = data[2];
+            Data.Pant = data[3];
+            Data.Set = data[4];
         }
 
-        private void UpdateCharacter()
+        private void UpdateCharacter(GameObject newWeapon, GameObject hairObject = null)
         {
             ChangeColor((GameColor)Data.Color);
-            ChangeHair((PoolID)Data.Hair);
+            if (hairObject == null)
+                ChangeHair((PoolID)Data.Hair);
+            else
+                ChangeHair(hairObject);
             ChangePant((PantSkin)Data.Pant);
 
             if (Weapon != null)
             {
                 PrefabManager.Inst.PushToPool(Weapon.gameObject, Weapon.Name);
             }
-
-            GameObject newWeapon = PrefabManager.Inst.PopFromPool((PoolID)Data.Weapon);
             ChangeWeapon(Cache.GetBaseWeapon(newWeapon));
         }
     }

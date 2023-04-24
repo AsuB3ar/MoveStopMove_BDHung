@@ -45,6 +45,15 @@ namespace Utilitys
         }
         public void AddObject()
         {
+            switch (type)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:                    
+                    break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    if (!PhotonNetwork.IsMasterClient) return; //DEV: This case has to implement
+                    break;
+            }
+
             for (int i = 0; i < numObj; i++)
             {
                 GameObject obj;
@@ -54,14 +63,13 @@ namespace Utilitys
                 {
                     obj = NetworkManager.Inst.Instantiate(this.obj.name);
                     obj.transform.parent = transform;
-                    if(network)
+                    if (network)
                         serializeData.Add(obj.GetComponent<PhotonView>().ViewID);
                 }
-                    
+
                 obj.SetActive(false);
                 objects.Enqueue(obj);
             }
-            
         }
         public void Push(GameObject obj,bool checkContain = true)
         {
@@ -76,15 +84,12 @@ namespace Utilitys
           
             if (IsSetParent)
             {
-                //obj.transform.parent = mainPool.transform;
                 obj.transform.SetParent(mainPool.transform);
             }
             obj.SetActive(false);
             obj.transform.position = Vector3.zero;
             if (network)
-            {
                 serializeData.Add(obj.GetComponent<PhotonView>().ViewID);
-            }
         }
 
         public GameObject Pop()

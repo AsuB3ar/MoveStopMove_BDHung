@@ -256,6 +256,18 @@ namespace MoveStopMove.Core
             }
             Data.Hair = (int)hair;
         }
+
+        public virtual void ChangeHair(GameObject hairObject)
+        {
+            hairObject.transform.parent = ContainHairTF;
+            Cache.GetItem(hairObject).SetTranformData();
+
+            if (this.hair != null)
+            {
+                Cache.GetItem(this.hair).OnDespawn();
+            }
+            this.hair = hairObject;
+        }
         public virtual void ChangeWeapon(BaseWeapon weapon)
         {
             if(weapon != null)
