@@ -36,8 +36,6 @@ public class PhotonCharacter : MonoBehaviourPun
         }
         weapon = PhotonView.Find((int)data[0]).gameObject;
         hair = PhotonView.Find((int)data[1]).gameObject;
-        weapon.transform.parent = NetworkManager.Inst.transform;
-        hair.transform.parent = NetworkManager.Inst.transform;
 
         _OnInitData?.Invoke(lastData);
         isInit = true;

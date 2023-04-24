@@ -36,6 +36,7 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
                 break;
             case GAMECONST.NETWORK_OBJECT_TYPE.RESOURCE:
             case GAMECONST.NETWORK_OBJECT_TYPE.GAMEPLAY:
+                gameObject.transform.parent = NetworkManager.Inst.transform;
                 gameObject.SetActive(false);
                 if (photonView.IsMine)
                     lastActiveState = true;

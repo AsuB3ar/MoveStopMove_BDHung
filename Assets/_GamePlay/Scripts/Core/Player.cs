@@ -34,7 +34,6 @@ namespace MoveStopMove.Core
         protected override void Awake()
         {
             base.Awake();
-            DontDestroyOnLoad(gameObject);
             LogicSystem.SetCharacterInformation(Data, gameObject.transform);
             WorldInterfaceSystem.SetCharacterInformation(Data);
             GameData = GameManager.Inst.GameData;
