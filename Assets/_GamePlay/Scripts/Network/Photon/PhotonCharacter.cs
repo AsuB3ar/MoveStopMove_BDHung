@@ -9,7 +9,7 @@ public class PhotonCharacter : MonoBehaviourPun
 {
     // Start is called before the first frame update
     public event Action<int[]> _OnInitData;
-    public event Action<GameObject, GameObject> _OnUpdateCharacter;
+    public event Action<GameObject, GameObject, bool> _OnUpdateCharacter;
     public event Action _OnInitialize;
     [SerializeField]
     PhotonPropertyGameObject propertyPhoton;
@@ -40,8 +40,7 @@ public class PhotonCharacter : MonoBehaviourPun
         _OnInitData?.Invoke(lastData);
         isInit = true;
         if (isInit && isPropertyInit && !photonView.IsMine)
-            _OnUpdateCharacter?.Invoke(weapon,hair);
-
+            _OnUpdateCharacter?.Invoke(weapon,hair, false);
     }
 
     public void SetNetworkData(GameObject weapon,GameObject hair,ref int[] data)
@@ -70,6 +69,6 @@ public class PhotonCharacter : MonoBehaviourPun
         _OnInitialize?.Invoke();
         isPropertyInit = true;
         if (isInit && isPropertyInit && !photonView.IsMine)
-            _OnUpdateCharacter?.Invoke(weapon, hair);
+            _OnUpdateCharacter?.Invoke(weapon, hair, false);
     }
 }

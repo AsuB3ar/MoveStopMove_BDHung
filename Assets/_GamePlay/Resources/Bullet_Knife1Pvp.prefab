@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -7247264591366888331}
   - component: {fileID: -4210616107570505747}
   - component: {fileID: -3744631815020985616}
+  - component: {fileID: 3363173147989919383}
   m_Layer: 0
   m_Name: Bullet_Knife1Pvp
   m_TagString: Untagged
@@ -58,6 +59,7 @@ MonoBehaviour:
   poolName: 2
   rotationSpeed: 0
   speed: 0.1
+  photon: {fileID: 3363173147989919383}
   SelfCharacterCollider: {fileID: 0}
 --- !u!65 &6705574684389302503
 BoxCollider:
@@ -142,6 +144,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   SyncActive: 1
+--- !u!114 &3363173147989919383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6705574684389302752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78f99ebab814d6408c145d9616e6877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8018010908215606987
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -1915160961595994281}
   - component: {fileID: 5843520916697854713}
   - component: {fileID: -308517124156984414}
+  - component: {fileID: 8545916053774477403}
   m_Layer: 0
   m_Name: Bullet_ArrowPvp
   m_TagString: Untagged
@@ -58,6 +59,7 @@ MonoBehaviour:
   poolName: 4
   rotationSpeed: 0
   speed: 0.1
+  photon: {fileID: 8545916053774477403}
   SelfCharacterCollider: {fileID: 0}
 --- !u!65 &2054201637825101640
 BoxCollider:
@@ -142,6 +144,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   SyncActive: 1
+--- !u!114 &8545916053774477403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054201637825101391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78f99ebab814d6408c145d9616e6877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3007023687308938995
 PrefabInstance:
   m_ObjectHideFlags: 0

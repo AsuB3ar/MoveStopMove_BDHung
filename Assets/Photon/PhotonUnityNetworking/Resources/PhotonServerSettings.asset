@@ -45,6 +45,7 @@ MonoBehaviour:
   - OnCompleteInit
   - RPC_OnInit
   - RPC_Init_Data
+  - RPC_OnFire
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

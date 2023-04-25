@@ -204,7 +204,7 @@ namespace MoveStopMove.Core
             Data.Set = data[4];
         }
 
-        private void UpdateCharacter(GameObject newWeapon, GameObject hairObject = null)
+        private void UpdateCharacter(GameObject newWeapon, GameObject hairObject = null, bool isMine = true)
         {
             ChangeColor((GameColor)Data.Color);
             if (hairObject == null)
@@ -213,11 +213,10 @@ namespace MoveStopMove.Core
                 ChangeHair(hairObject);
             ChangePant((PantSkin)Data.Pant);
 
-            if (Weapon != null)
-            {
-                PrefabManager.Inst.PushToPool(Weapon.gameObject, Weapon.Name);
-            }
-            ChangeWeapon(Cache.GetBaseWeapon(newWeapon));
+            if (isMine)
+                ChangeWeapon(Cache.GetBaseWeapon(newWeapon)); //Has Save Data
+            else
+                base.ChangeWeapon(Cache.GetBaseWeapon(newWeapon)); //Not Have Save Data
         }
     }
 }

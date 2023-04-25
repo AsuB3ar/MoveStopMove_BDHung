@@ -31,6 +31,8 @@ namespace MoveStopMove.ContentCreation.Weapon
         float rotationSpeed = 30f;
         [SerializeField]
         float speed = 0.1f;
+        [SerializeField]
+        PhotonBaseBullet photon;
         float speedRatio = 1f;
         
 
@@ -51,6 +53,8 @@ namespace MoveStopMove.ContentCreation.Weapon
         private void Awake()
         {
             currentSpeed = speed;
+            if (photon != null)
+                photon._OnFire += OnFire;
         }
         private void FixedUpdate()
         {
@@ -79,10 +83,7 @@ namespace MoveStopMove.ContentCreation.Weapon
             if(direction.sqrMagnitude > 0.001)
             {
                 transform.Translate(direction * lastSpeed,Space.World);
-            }
-
-            
-            
+            }                   
         }
         public void OnHit(BaseCharacter character)
         {
@@ -98,7 +99,7 @@ namespace MoveStopMove.ContentCreation.Weapon
             }
         }
 
-        public void OnFire(Vector3 direction, float range, BaseCharacter parentCharacter, bool isSpecial = false, float speedRatio = 1)
+        public void OnFire(Vector3 direction, float range, BaseCharacter parentCharacter, bool isSpecial = false, float speedRatio = 1, bool isRpcCall = false)
         {
             direction.y = 0;
             this.direction = direction.normalized;          
@@ -121,6 +122,10 @@ namespace MoveStopMove.ContentCreation.Weapon
             {
                 direction.y = 1;
                 transform.localRotation = Quaternion.LookRotation(Vector3.up,-direction);
+            }
+            if (photon != null && !isRpcCall)
+            {
+                photon.SetNetworkData(direction, range, parentCharacter.gameObject, isSpecial, speedRatio);
             }
         }
 

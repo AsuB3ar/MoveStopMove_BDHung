@@ -49,7 +49,7 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
     {
         if(!isRpcCall && !isOnInit)
         {
-            SyncActiveState();
+            SyncActiveState(true);
         }
     }
 
@@ -57,7 +57,7 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
     {
         if (!isRpcCall && !isOnInit)
         {
-            SyncActiveState();
+            SyncActiveState(false);
         }
     }
 
@@ -97,11 +97,11 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
             gameObject.SetActive(active);           
             isRpcCall = false;
         }
-        Debug.Log("ON SYNC ACTIVE");
+        Debug.Log("ON SYNC ACTIVE: " + active);
     }    
-    private void SyncActiveState()
+    private void SyncActiveState(bool value)
     {
-        photonView.RPC(nameof(RPC_SetActive), RpcTarget.Others, gameObject.activeInHierarchy, gameObject.name);
+        photonView.RPC(nameof(RPC_SetActive), RpcTarget.Others, value, gameObject.name);
     }
     private void OnPlayerEnterRoom(Player player, bool value)
     {        
