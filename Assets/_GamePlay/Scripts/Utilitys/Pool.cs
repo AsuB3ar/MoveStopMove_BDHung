@@ -50,7 +50,7 @@ namespace Utilitys
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:                    
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    if (!PhotonNetwork.IsMasterClient) return; //DEV: This case has to implement
+                    if (!photon.photonView.IsMine) return; //DEV: This case has to implement
                     break;
             }
 

@@ -140,26 +140,33 @@ namespace MoveStopMove.Manager
         protected override void Awake()
         {          
             if(mode == GAMECONST.GAMEPLAY_MODE.STANDARD_PVP)
-            {               
-                pvePrefabManager = inst;
-                inst = null;              
-                Debug.Log("Prefab Manager PvP Instantiate!");
-                photon.SetSerializeData(ref serializeData);
-                DontDestroyOnLoad(gameObject);
-
-                PrefabPool = Instantiate(pool);
+            {
+                PrefabPool = Instantiate(pool, Vector3.zero, Quaternion.identity);
                 PrefabPool.name = "PrefabPoolPvp";
-                CreatePool(UIItem, PoolID.UIItem);
-                CreatePool(UIIndicator, PoolID.UITargetIndicator);
-                CreatePool(Obstance, PoolID.Obstance);                
-                CreatePool(BaseWeapon, PoolID.BaseWeapon, Quaternion.identity, 5);
-                CreatePool(ObjectCreateWeapon, PoolID.ObjectCreateWeapon, Quaternion.identity, 50);
                 DontDestroyOnLoad(PrefabPool);
+                DontDestroyOnLoad(gameObject);
+                photon.SetSerializeData(ref serializeData);
+
+                if (photon.photonView.IsMine)
+                {
+                    pvePrefabManager = inst;
+                    inst = this;
+                    Debug.Log("Prefab Manager PvP Instantiate!");
+                    SpawnObjectPvP();
+                    CreatePool(UIItem, PoolID.UIItem);
+                    CreatePool(UIIndicator, PoolID.UITargetIndicator);
+                    CreatePool(Obstance, PoolID.Obstance);
+                    CreatePool(BaseWeapon, PoolID.BaseWeapon, Quaternion.identity, 5);
+                    CreatePool(ObjectCreateWeapon, PoolID.ObjectCreateWeapon, Quaternion.identity, 50);
+                }
+                
             }
-            base.Awake();
 
             if (mode == GAMECONST.GAMEPLAY_MODE.STANDARD_PVE)
+            {
                 SpawnObjectPvE();
+                base.Awake();
+            }
 
         }
         public void InitPhotonData()
@@ -275,7 +282,7 @@ namespace MoveStopMove.Manager
         }
         public void SpawnObjectPvE()
         {
-            PrefabPool = Instantiate(pool);
+            PrefabPool = Instantiate(pool,Vector3.zero,Quaternion.identity);
             PrefabPool.name = "PrefabPool";
             CreatePool(Character, PoolID.Character, Quaternion.Euler(0, 0, 0), 15);
             CreatePool(Bullet_Axe1, PoolID.Bullet_Axe1, Quaternion.Euler(0, 0, 0));
@@ -316,12 +323,11 @@ namespace MoveStopMove.Manager
                     Destroy(gameObject);
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        PrefabManager pvpPrefabManager = NetworkManager.Inst.Instantiate(gameObject.name).GetComponent<PrefabManager>();
-                        pvpPrefabManager.SpawnObjectPvP();
+                    //if (PhotonNetwork.IsMasterClient)
+                    //{
+                        PrefabManager pvpPrefabManager = NetworkManager.Inst.Instantiate(gameObject.name, Vector3.zero, Quaternion.identity).GetComponent<PrefabManager>();
                         pvpPrefabManager.pvePrefabManager = this;
-                    }
+                    //}
                     Destroy(PrefabPool);
                     gameObject.SetActive(false);
                     break;

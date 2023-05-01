@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utilitys;
 
-public class PhotonPool : MonoBehaviourPun, IPunObservable, ISyncState
+public class PhotonPool : MonoBehaviourPun, ISyncState
 {
     List<int> data;
     [SerializeField]
@@ -15,17 +15,13 @@ public class PhotonPool : MonoBehaviourPun, IPunObservable, ISyncState
     public ISyncState.STATE State => state;
     private void Awake()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (photonView.IsMine)
         {
             state = ISyncState.STATE.READY;
         }
         if (PhotonNetwork.IsMasterClient)
             NetworkManager.Inst._OnPlayerStatusRoomChange += OnPlayerEnterRoom;
     }   
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-    }
     [PunRPC]
     protected void RPC_Init_Data(object[] data)
     {

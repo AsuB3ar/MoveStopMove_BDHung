@@ -7,7 +7,7 @@ using System;
 using MoveStopMove.Manager;
 using Photon.Realtime;
 
-public class PhotonPrefabManager : MonoBehaviourPun, IPunObservable, ISyncState
+public class PhotonPrefabManager : MonoBehaviourPun, ISyncState
 {
     [SerializeField]
     PrefabManager prefabManager;
@@ -16,7 +16,7 @@ public class PhotonPrefabManager : MonoBehaviourPun, IPunObservable, ISyncState
     public ISyncState.STATE State => state;
     private void Awake()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (photonView.IsMine)
         {
             state = ISyncState.STATE.READY;          
         }
@@ -25,11 +25,7 @@ public class PhotonPrefabManager : MonoBehaviourPun, IPunObservable, ISyncState
     }
     public void SetSerializeData(ref List<KeyValuePair<int, int>> pools)
     {
-        this.pools = pools;
-    }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-       
+        this.pools = pools;             
     }
 
     [PunRPC]
@@ -41,7 +37,7 @@ public class PhotonPrefabManager : MonoBehaviourPun, IPunObservable, ISyncState
         {
             pools.Add(new KeyValuePair<int, int>((int)data[i * 2 + 1], (int)data[i * 2 + 2]));
         }
-        PrefabManager.Inst.InitPhotonData();
+        prefabManager.InitPhotonData();
         Debug.Log("ON PREFAB MANAGER SERIALIZE DATA");
         state = ISyncState.STATE.READY;
     }
@@ -51,15 +47,22 @@ public class PhotonPrefabManager : MonoBehaviourPun, IPunObservable, ISyncState
     {      
         if (value)
         {
-            object[] data = new object[pools.Count * 2 + 1];
-            data[0] = pools.Count;
-            for (int i = 0; i < pools.Count; i++)
-            {
-                data[i * 2 + 1] = pools[i].Key;
-                data[i * 2 + 2] = pools[i].Value;
-            }
+            object[] data = GetObjectData();
             photonView.RPC(nameof(RPC_Init_Data), player, data as object);
         }
+    }
+
+    private object[] GetObjectData()
+    {
+        object[] data = new object[pools.Count * 2 + 1];
+        data[0] = pools.Count;
+        for (int i = 0; i < pools.Count; i++)
+        {
+            data[i * 2 + 1] = pools[i].Key;
+            data[i * 2 + 2] = pools[i].Value;
+        }
+
+        return data;
     }
 
     private void OnDestroy()

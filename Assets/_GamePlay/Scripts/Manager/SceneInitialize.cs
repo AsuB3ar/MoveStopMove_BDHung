@@ -41,7 +41,9 @@ public class SceneInitialize : MonoBehaviour
     [ConditionalField(nameof(type), false, SCENE_TYPE.STANDARD_PVE, SCENE_TYPE.STANDARD_PVP)]
     [SerializeField]
     GameObject playerPvp;
-    
+    private static bool isCompleteInit = false;
+    public static bool IsCompleteInit => isCompleteInit;
+
     private void Awake()
     {
         switch (type)
@@ -86,7 +88,8 @@ public class SceneInitialize : MonoBehaviour
                 IReadOnlyList<PhotonPropertyGameObject> datas = PhotonPropertyGameObject.AllObjects;
                 for (int i = 0; i < datas.Count; i++)
                 {
-                     datas[i].OnCompleteInit();
+                    datas[i].OnCompleteInit();
+                    isCompleteInit = true; 
                 }
                 Debug.Log("DATA COUNT: " + datas.Count);
                 

@@ -56,6 +56,7 @@ namespace MoveStopMove.Manager
             int height = Screen.currentResolution.height;
             int width = Mathf.RoundToInt(ratio * height);
             Screen.SetResolution(width, height, true);
+            Screen.fullScreen = false;
         }
 
         public void SetFullScreen()
