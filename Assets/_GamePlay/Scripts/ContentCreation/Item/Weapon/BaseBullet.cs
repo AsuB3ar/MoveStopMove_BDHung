@@ -60,7 +60,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         {
             if (range < 0)
             {
-                PrefabManager.Inst.PushToPool(this.gameObject, poolName, false);
+                CheckPushToPool();
             }
             else
             {
@@ -85,6 +85,18 @@ namespace MoveStopMove.ContentCreation.Weapon
                 transform.Translate(direction * lastSpeed,Space.World);
             }                   
         }
+
+        private void CheckPushToPool()
+        {
+            if (!photon)
+                PrefabManager.Inst.PushToPool(this.gameObject, poolName, false);
+            else
+            {
+                if (photon.photonView.IsMine)
+                    PrefabManager.Inst.PushToPool(this.gameObject, poolName, false);
+            }
+        }
+
         public void OnHit(BaseCharacter character)
         {
             if (parentCharacter == null) return;
@@ -92,7 +104,7 @@ namespace MoveStopMove.ContentCreation.Weapon
             {
                 if (!character.IsDie)
                 {
-                    PrefabManager.Inst.PushToPool(this.gameObject, poolName, false);
+                    CheckPushToPool();
                     character.TakeDamage(1);
                     parentCharacter.AddStatus(); 
                 }               
