@@ -42,6 +42,11 @@ public class PhotonPrefabManager : MonoBehaviourPun, ISyncState
         state = ISyncState.STATE.READY;
     }
 
+    public void UpdatePhotonData()
+    {
+        object[] data = GetObjectData();
+        photonView.RPC(nameof(RPC_Init_Data), RpcTarget.Others, data as object);
+    }
 
     private void OnPlayerEnterRoom(Player player, bool value)
     {      

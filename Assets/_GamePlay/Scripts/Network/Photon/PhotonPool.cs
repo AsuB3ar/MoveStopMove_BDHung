@@ -36,19 +36,32 @@ public class PhotonPool : MonoBehaviourPun, ISyncState
         state = ISyncState.STATE.READY;
     }
 
+    public void UpdatePhotonData()
+    {
+        object[] data = GetObjectData();
+        photonView.RPC(nameof(RPC_Init_Data), RpcTarget.Others, data as object);
+    }
     private void OnPlayerEnterRoom(Player player, bool value)
     {
         if (value)
         {
-            object[] data = new object[this.data.Count + 1];
-            data[0] = this.data.Count;
-            for (int i = 0; i < this.data.Count; i++)
-            {
-                data[i + 1] = this.data[i];
-            }
+            object[] data = GetObjectData();
             photonView.RPC(nameof(RPC_Init_Data), player, data as object);
         }
     }
+
+    private object[] GetObjectData()
+    {
+        object[] data = new object[this.data.Count + 1];
+        data[0] = this.data.Count;
+        for (int i = 0; i < this.data.Count; i++)
+        {
+            data[i + 1] = this.data[i];
+        }
+
+        return data;
+    }
+
     public void SetSerializeData(List<int> data)
     {
         this.data = data;

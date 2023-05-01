@@ -158,6 +158,7 @@ namespace MoveStopMove.Manager
                     CreatePool(Obstance, PoolID.Obstance);
                     CreatePool(BaseWeapon, PoolID.BaseWeapon, Quaternion.identity, 5);
                     CreatePool(ObjectCreateWeapon, PoolID.ObjectCreateWeapon, Quaternion.identity, 50);
+                    photon.UpdatePhotonData();
                 }
                 
             }

@@ -42,6 +42,8 @@ namespace Utilitys
             this.obj = obj;
             this.initQuaternion = initQuaternion;
             AddObject();
+            if(network)
+                photon.UpdatePhotonData();
         }
         public void AddObject()
         {
@@ -70,6 +72,8 @@ namespace Utilitys
                 obj.SetActive(false);
                 objects.Enqueue(obj);
             }
+            if (network)
+                photon.UpdatePhotonData();
         }
         public void Push(GameObject obj,bool checkContain = true)
         {

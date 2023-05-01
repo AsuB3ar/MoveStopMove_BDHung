@@ -33,15 +33,11 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
             case GAMECONST.NETWORK_OBJECT_TYPE.MANAGER:
                 lastActiveState = true;
                 gameObject.SetActive(true);
-                if (SceneInitialize.IsCompleteInit)
-                    OnCompleteInit();
                 break;
             case GAMECONST.NETWORK_OBJECT_TYPE.RESOURCE:
                 gameObject.transform.parent = NetworkManager.Inst.transform;
                 gameObject.SetActive(false);
                 lastActiveState = false;
-                if (SceneInitialize.IsCompleteInit)
-                    OnCompleteInit();
                 break;
             case GAMECONST.NETWORK_OBJECT_TYPE.GAMEPLAY:
                 gameObject.transform.parent = NetworkManager.Inst.transform;
@@ -72,12 +68,8 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
 
     public void OnCompleteInit()
     {
-        if (type == GAMECONST.NETWORK_OBJECT_TYPE.GAMEPLAY)
-        {
-            if (photonView.IsMine)
-                photonView.RPC(nameof(RPC_OnInit), RpcTarget.Others, gameObject.name);
-            //gameObject.GetComponent<MoveStopMove.Core.Player>().Initialize(); //DEV: Cache
-        }
+        if (photonView.IsMine)
+            photonView.RPC(nameof(RPC_OnInit), RpcTarget.Others, gameObject.name);
         isOnInit = false;
         isRpcCall = true;
         gameObject.SetActive(lastActiveState);
