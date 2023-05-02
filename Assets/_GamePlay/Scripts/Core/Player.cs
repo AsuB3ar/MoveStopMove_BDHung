@@ -27,7 +27,7 @@ namespace MoveStopMove.Core
         [SerializeField]
         private AttackIndicator attackIndicator;
         [SerializeField]
-        private PhotonCharacter photonCharacter;
+        private PhotonCharacter photon;
 
         private GameData GameData;
 
@@ -40,11 +40,13 @@ namespace MoveStopMove.Core
             switch (GameplayManager.Inst.GameMode)
             {
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    photonCharacter._OnInitialize += Initialize;
-                    if (!photonCharacter.photonView.IsMine)
+                    photon._OnInitialize += Initialize;
+                    photon._OnAddDamage += TakeDamage;
+                    photon._OnAddStatus += AddStatus;
+                    if (!photon.photonView.IsMine)
                     {
-                        photonCharacter._OnInitData += LoadData;
-                        photonCharacter._OnUpdateCharacter += UpdateCharacter;
+                        photon._OnInitData += LoadData;
+                        photon._OnUpdateCharacter += UpdateCharacter;
                     }
                     break;
             }
@@ -119,10 +121,24 @@ namespace MoveStopMove.Core
             base.ChangeWeapon(weapon);
             GameData.SetIntData(P_WEAPON, ref GameData.Weapon, (int)weapon.Name);
         }
-        public override void AddStatus()
+
+        public override void TakeDamage(int damage, bool isRpcCall = false)
+        {
+            base.TakeDamage(damage, isRpcCall);
+            if (!isRpcCall)
+            {
+                photon.UpdateNetworkEvent(PhotonCharacter.EVENT.TAKE_DAMAGE, new object[1] { 1 });
+            }
+        }
+        public override void AddStatus(bool isRpcCall = false)
         {
             base.AddStatus();
             GameplayManager.Inst.SetCameraPosition(Data.Size);
+
+            if (!isRpcCall)
+            {
+                photon.UpdateNetworkEvent(PhotonCharacter.EVENT.LEVEL_UP);
+            }
         }
 
         public void Win()
@@ -173,7 +189,7 @@ namespace MoveStopMove.Core
                     UpdateCharacter(newWeapon);
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    if (photonCharacter.photonView.IsMine)
+                    if (photon.photonView.IsMine)
                     {
                         int[] data = new int[7];
                         Data.Weapon = GameData.Weapon;
@@ -189,7 +205,7 @@ namespace MoveStopMove.Core
                         newWeapon = PrefabManager.Inst.PopFromPool((PoolID)Data.Weapon);
                         newHair = PrefabManager.Inst.PopFromPool((PoolID)Data.Hair);
                         UpdateCharacter(newWeapon, newHair);
-                        photonCharacter.SetNetworkData(newWeapon,newHair,ref data);
+                        photon.SetNetworkData(newWeapon,newHair,ref data);
                     }
                     break;
             }         

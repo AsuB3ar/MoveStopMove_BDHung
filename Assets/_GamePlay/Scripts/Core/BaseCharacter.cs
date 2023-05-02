@@ -292,7 +292,7 @@ namespace MoveStopMove.Core
             #endregion
         }
 
-        public void TakeDamage(int damage)
+        public virtual void TakeDamage(int damage, bool isRpcCall = false)
         {
             Data.Hp -= damage;
             VFX_Hit.Play();
@@ -305,7 +305,7 @@ namespace MoveStopMove.Core
         }
 
         //TODO: Combat Function(Covert to a system)
-        public virtual void AddStatus()
+        public virtual void AddStatus(bool isRpcCall = false)
         {
             //TODO: Increase Size of character
             //TODO: Increase Size of Attack Range Indicator

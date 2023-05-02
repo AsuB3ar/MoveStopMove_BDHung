@@ -8,9 +8,16 @@ using UnityEngine;
 public class PhotonCharacter : MonoBehaviourPun
 {
     // Start is called before the first frame update
+    public enum EVENT
+    {
+        TAKE_DAMAGE = 0,
+        LEVEL_UP = 1,
+    }
     public event Action<int[]> _OnInitData;
     public event Action<GameObject, GameObject, bool> _OnUpdateCharacter;
     public event Action _OnInitialize;
+    public event Action<int, bool> _OnAddDamage;
+    public event Action<bool> _OnAddStatus;
     [SerializeField]
     PhotonPropertyGameObject propertyPhoton;
 
@@ -42,7 +49,25 @@ public class PhotonCharacter : MonoBehaviourPun
         if (isInit && isPropertyInit && !photonView.IsMine)
             _OnUpdateCharacter?.Invoke(weapon,hair, false);
     }
+    [PunRPC]
+    protected void RPC_Event(int eventcode, object[] data)
+    {
+        switch ((EVENT)eventcode)
+        {
+            case EVENT.TAKE_DAMAGE:
+                _OnAddDamage?.Invoke((int)data[0], true);
+                break;
+            case EVENT.LEVEL_UP:
+                _OnAddStatus?.Invoke(true);
+                break;
+        }
+        Debug.Log($"<color=yellow>EVENT</color> - Player: {(EVENT)eventcode}");
+    }
 
+    public void UpdateNetworkEvent(EVENT eventcode,object[] data = null)
+    {
+        photonView.RPC(nameof(RPC_Event), RpcTarget.Others, (int)eventcode, data as object);       
+    }
     public void SetNetworkData(GameObject weapon,GameObject hair,ref int[] data)
     {
         if (!photonView.IsMine) return;
@@ -56,7 +81,6 @@ public class PhotonCharacter : MonoBehaviourPun
         }
         photonView.RPC(nameof(RPC_OnInit), RpcTarget.Others, characterData as object);
     }
-
     private void OnPlayerEnterRoom(Player player, bool value)
     {
         if (value)

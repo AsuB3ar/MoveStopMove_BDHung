@@ -58,6 +58,7 @@ namespace MoveStopMove.ContentCreation.Weapon
         }
         private void FixedUpdate()
         {
+            //if (photon && !photon.photonView.IsMine) return;
             if (range < 0)
             {
                 CheckPushToPool();
@@ -99,6 +100,7 @@ namespace MoveStopMove.ContentCreation.Weapon
 
         public void OnHit(BaseCharacter character)
         {
+            if (photon && !photon.photonView.IsMine) return;
             if (parentCharacter == null) return;
             if(character != parentCharacter)
             {
