@@ -266,10 +266,11 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 0
+  observableSearch: 2
   ObservedComponents:
   - {fileID: 86058710726591587}
   - {fileID: 1285314707479694935}
+  - {fileID: 2883453754837105226}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -306,7 +307,7 @@ MonoBehaviour:
     InterpolateOption: 1
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
---- !u!114 &5706188573184254421
+--- !u!114 &6340132955283705813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -323,7 +324,7 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 0
+  observableSearch: 2
   ObservedComponents:
   - {fileID: 2883453754837105226}
   sceneViewId: 0

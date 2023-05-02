@@ -119,6 +119,12 @@ namespace MoveStopMove.Manager
             return Cache.GetBaseWeapon(weapon);
         }
 
+        public PoolID GetRandomWeaponName()
+        {
+            int index = Random.Range(0, WeaponNames.Count);
+            PoolID weaponName = WeaponNames[index];
+            return weaponName;
+        }
         public void SetCameraPosition(CameraPosition position)
         {          
             cameraMove.MoveTo(position);

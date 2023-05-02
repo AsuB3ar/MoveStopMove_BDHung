@@ -10,6 +10,8 @@ namespace MoveStopMove.Manager
     using ContentCreation;
     using Utilitys;
     using Utilitys.Timer;
+    using MoveStopMove.ContentCreation.Weapon;
+
     public class LevelManager : Singleton<LevelManager>,IInit
     {
         public event Action OnWinLevel;
@@ -327,7 +329,7 @@ namespace MoveStopMove.Manager
             }
 
             numOfSpawnPlayers -= 1;
-            GameObject character = GameplayManager.Inst.Player;
+            GameObject character = NetworkManager.Inst.Instantiate("EnemyPvp");
             character.transform.parent = Level;
 
             BaseCharacter characterScript = GameplayManager.Inst.PlayerScript;
@@ -360,17 +362,15 @@ namespace MoveStopMove.Manager
             {
                 characterScript.Stop();
             }
-            characterScript.ChangeWeapon(GameplayManager.Inst.GetRandomWeapon());
+            
             characterScript.OnDie += OnEnemyDie;
 
 
-
+            PoolID weapon = GameplayManager.inst.GetRandomWeaponName();
             GameColor color = GameplayManager.Inst.GetRandomColor();
-            characterScript.ChangeColor(color);
-            PantSkin pantName = GameplayManager.Inst.GetRandomPantSkin();
-            characterScript.ChangePant(pantName);
-            PoolID hairname = GameplayManager.Inst.GetRandomHair();
-            characterScript.ChangeHair(hairname);
+            PantSkin pant = GameplayManager.Inst.GetRandomPantSkin();
+            PoolID hair = GameplayManager.Inst.GetRandomHair();
+            ((NormalEnemy)characterScript).SetUpCharacter(color, hair, pant, weapon);
 
             characters.Add(characterScript);
             return characterScript;

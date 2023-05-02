@@ -137,7 +137,7 @@ namespace MoveStopMove.ContentCreation.Weapon
                 direction.y = 1;
                 transform.localRotation = Quaternion.LookRotation(Vector3.up,-direction);
             }
-            if (photon != null && !isRpcCall)
+            if (photon && !isRpcCall)
             {
                 photon.SetNetworkData(direction, range, parentCharacter.gameObject, isSpecial, speedRatio);
             }

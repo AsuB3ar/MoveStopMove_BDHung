@@ -134,7 +134,7 @@ namespace MoveStopMove.Core
         public override void TakeDamage(int damage, bool isRpcCall = false)
         {
             base.TakeDamage(damage, isRpcCall);
-            if (!isRpcCall)
+            if (photon && !isRpcCall)
             {
                 photon.UpdateNetworkEvent(PhotonCharacter.EVENT.TAKE_DAMAGE, new object[1] { 1 });
             }
@@ -144,7 +144,7 @@ namespace MoveStopMove.Core
             base.AddStatus();
             GameplayManager.Inst.SetCameraPosition(Data.Size);
 
-            if (!isRpcCall)
+            if (photon && !isRpcCall)
             {
                 photon.UpdateNetworkEvent(PhotonCharacter.EVENT.LEVEL_UP);
             }
