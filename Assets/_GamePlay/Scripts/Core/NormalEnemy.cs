@@ -72,10 +72,19 @@ namespace MoveStopMove.Core
             //Debug.Log($"<color=red> On Despawn </color>");
             VFXRecalling();
             ((CharacterLogicModule)LogicModule).StopStateMachine();
-            PrefabManager.Inst.PushToPool(this.gameObject, PoolID.Character);
+            switch (GameplayManager.Inst.GameMode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    PrefabManager.Inst.PushToPool(this.gameObject, PoolID.Character);
+                    VFX_AddStatus = null;
+                    VFX_Hit = null;
+                    break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    NetworkManager.Inst.Destroy(gameObject);
+                    break;
+            }
 
-            VFX_AddStatus = null;
-            VFX_Hit = null;
+            
         }
         private void VFXInit()
         {

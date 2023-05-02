@@ -296,7 +296,7 @@ namespace MoveStopMove.Core
         public virtual void TakeDamage(int damage, bool isRpcCall = false)
         {
             Data.Hp -= damage;
-            VFX_Hit.Play();
+            VFX_Hit?.Play();
             SoundManager.Inst.PlaySound(SoundManager.Sound.Character_Hit,transform.position);
             if(Data.Hp <= 0)
             {
@@ -312,7 +312,7 @@ namespace MoveStopMove.Core
             //TODO: Increase Size of Attack Range Indicator
             Data.Level += 1;
             SoundManager.Inst.PlaySound(SoundManager.Sound.Character_SizeUp, transform.position);           
-            VFX_AddStatus.Play();
+            VFX_AddStatus?.Play();
             PhysicModule.SetScale(GAMECONST.PHYSIC_OTYPE.Character, Vector3.one * Data.Size);          
         }
 

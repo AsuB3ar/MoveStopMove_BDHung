@@ -89,6 +89,7 @@ namespace MoveStopMove.Manager
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
                     GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
+                    GameManager.Inst.OnStartGame += RunLevel;
                     //OpenLevel(0);
                     break;
             }             
@@ -126,6 +127,15 @@ namespace MoveStopMove.Manager
                     }
                     GameplayManager.Inst.PlayerScript.OnInit();
                     break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    if (NetworkManager.Inst.IsMasterClient)
+                    {
+                        for (int i = 0; i < 2; i++)
+                        {
+                            gameplay.SubscribeTarget(SpawnPvpCharacter());
+                        }
+                    }                 
+                    break;
             }                       
             ConstructLevel();           
         }
@@ -143,7 +153,7 @@ namespace MoveStopMove.Manager
                     OnInit();
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    GameplayManager.Inst.PlayerScript.transform.position = RandomPlayerPosition();
+                    GameplayManager.Inst.PlayerScript.transform.position = RandomPlayerPvpPosition();
                     OnInit();
                     break;
             }
@@ -153,7 +163,7 @@ namespace MoveStopMove.Manager
         public void RevivePlayer()
         {
             GameplayManager.inst.PlayerScript.Reset();
-            GameplayManager.Inst.PlayerScript.transform.position = RandomPlayerPosition();
+            GameplayManager.Inst.PlayerScript.transform.position = RandomPlayerPvpPosition();
         }
         public void RunLevel()
         {
@@ -242,7 +252,15 @@ namespace MoveStopMove.Manager
             //NOTE: UI Target Indicator
             if(NumOfRemainingPlayers > 0)
             {
-                gameplay.SubscribeTarget(SpawnCharacter());
+                switch (GameplayManager.Inst.GameMode)
+                {
+                    case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                        gameplay.SubscribeTarget(SpawnCharacter());
+                        break;
+                    case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                        gameplay.SubscribeTarget(SpawnPvpCharacter());
+                        break;
+                }
             }
             else
             {
@@ -332,12 +350,12 @@ namespace MoveStopMove.Manager
             GameObject character = NetworkManager.Inst.Instantiate("EnemyPvp");
             character.transform.parent = Level;
 
-            BaseCharacter characterScript = GameplayManager.Inst.PlayerScript;
+            BaseCharacter characterScript = Cache.GetBaseCharacter(character);
             Vector3 randomPos;
-            do
-            {
-                randomPos = RandomCharacterPosition();
-            } while ((randomPos - GameplayManager.Inst.Player.transform.position).sqrMagnitude < 2 * GameplayManager.Inst.PlayerScript.AttackRange);
+            //do
+            //{
+                randomPos = RandomPlayerPvpPosition();
+            //} while ((randomPos - GameplayManager.Inst.Player.transform.position).sqrMagnitude < 2 * GameplayManager.Inst.PlayerScript.AttackRange);
 
 
             characterScript.SetPosition(randomPos);
@@ -365,17 +383,19 @@ namespace MoveStopMove.Manager
             
             characterScript.OnDie += OnEnemyDie;
 
+            NormalEnemy enemy = ((NormalEnemy)characterScript);
 
             PoolID weapon = GameplayManager.inst.GetRandomWeaponName();
             GameColor color = GameplayManager.Inst.GetRandomColor();
             PantSkin pant = GameplayManager.Inst.GetRandomPantSkin();
             PoolID hair = GameplayManager.Inst.GetRandomHair();
-            ((NormalEnemy)characterScript).SetUpCharacter(color, hair, pant, weapon);
+            enemy.GetComponent<PhotonPropertyGameObject>().OnCompleteInit();
+            enemy.SetUpCharacter(color, hair, pant, weapon);
 
             characters.Add(characterScript);
             return characterScript;
         }
-        private Vector3 RandomPlayerPosition()
+        private Vector3 RandomPlayerPvpPosition()
         {
             float vecX = UnityEngine.Random.Range(-(currentLevelData.Size - MARGIN) + position.x, currentLevelData.Size - MARGIN + position.x);
             float vecZ = UnityEngine.Random.Range(-(currentLevelData.Size - MARGIN) + position.z, currentLevelData.Size - MARGIN + position.z);

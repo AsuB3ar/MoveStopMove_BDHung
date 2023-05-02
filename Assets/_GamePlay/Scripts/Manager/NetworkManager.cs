@@ -85,6 +85,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         return PhotonNetwork.Instantiate(name, position, rotation);
     }
+    public void Destroy(GameObject gameObject)
+    {
+        PhotonNetwork.Destroy(gameObject);
+    }
+    public bool IsMasterClient => PhotonNetwork.IsMasterClient;
     public void ClearEvent()
     {
         _OnConnectedToMaster = null;
