@@ -184,11 +184,12 @@ namespace MoveStopMove.Core
             AnimModule.UpdateEventAnimationState -= LogicSystem.ReceiveInformation;
             #endregion
         }
-        public void Reset()
+        public virtual void Reset(bool isRpcCall = false)
         {
             SetLevel(1);
             SetPosition(new Vector3(0, GAMECONST.INIT_CHARACTER_HEIGHT, 0));
             OnInit();
+            Data.Hp = 1;
         }
 
         public void SetPosition(Vector3 position)

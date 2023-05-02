@@ -12,12 +12,15 @@ public class PhotonCharacter : MonoBehaviourPun
     {
         TAKE_DAMAGE = 0,
         LEVEL_UP = 1,
+        REVIVE = 2,
     }
     public event Action<int[]> _OnInitData;
     public event Action<GameObject, GameObject, bool> _OnUpdateCharacter;
     public event Action _OnInitialize;
     public event Action<int, bool> _OnAddDamage;
     public event Action<bool> _OnAddStatus;
+    public event Action<bool> _OnReset;
+
     [SerializeField]
     PhotonPropertyGameObject propertyPhoton;
 
@@ -59,6 +62,9 @@ public class PhotonCharacter : MonoBehaviourPun
                 break;
             case EVENT.LEVEL_UP:
                 _OnAddStatus?.Invoke(true);
+                break;
+            case EVENT.REVIVE:
+                _OnReset?.Invoke(true);
                 break;
         }
         Debug.Log($"<color=yellow>EVENT</color> - Player: {(EVENT)eventcode}");

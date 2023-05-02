@@ -14,12 +14,12 @@ public class PhotonBaseBullet : MonoBehaviourPun
     {
         BaseCharacter character = PhotonView.Find(characterId).GetComponent<BaseCharacter>(); //DEV: Cache
         _OnFire?.Invoke(direction, range, character, isSpecial, speedRatio, true);
-        Debug.Log("Sync On Fire");
+        //Debug.Log("Sync On Fire");
     }
     public void SetNetworkData(Vector3 direction, float range, GameObject parentCharacter, bool isSpecial, float speedRatio)
     {
         int characterId = parentCharacter.GetComponent<PhotonView>().ViewID;
         photonView.RPC(nameof(RPC_OnFire), RpcTarget.Others, direction, range, characterId, isSpecial, speedRatio);
-        Debug.Log("Call RPC Fire");
+        //Debug.Log("Call RPC Fire");
     }
 }

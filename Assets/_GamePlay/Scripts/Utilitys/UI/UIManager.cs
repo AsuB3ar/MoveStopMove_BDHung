@@ -17,7 +17,8 @@ public enum UIID
     UICVictory = 5,
     UICShopSkin = 6,
     UICShopWeapon = 7,
-    UICPvpMainMenu = 8,      
+    UICPvpMainMenu = 8,     
+    UICPvpFail = 9,
 }
 
 [DefaultExecutionOrder(-15)]

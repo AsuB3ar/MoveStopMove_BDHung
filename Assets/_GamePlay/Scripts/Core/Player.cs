@@ -43,6 +43,7 @@ namespace MoveStopMove.Core
                     photon._OnInitialize += Initialize;
                     photon._OnAddDamage += TakeDamage;
                     photon._OnAddStatus += AddStatus;
+                    photon._OnReset += Reset;
                     if (!photon.photonView.IsMine)
                     {
                         photon._OnInitData += LoadData;
@@ -122,6 +123,14 @@ namespace MoveStopMove.Core
             GameData.SetIntData(P_WEAPON, ref GameData.Weapon, (int)weapon.Name);
         }
 
+        public override void Reset(bool isRpcCall = false)
+        {
+            base.Reset(isRpcCall);
+            if (photon && !isRpcCall)
+            {
+                photon.UpdateNetworkEvent(PhotonCharacter.EVENT.REVIVE);
+            }
+        }
         public override void TakeDamage(int damage, bool isRpcCall = false)
         {
             base.TakeDamage(damage, isRpcCall);

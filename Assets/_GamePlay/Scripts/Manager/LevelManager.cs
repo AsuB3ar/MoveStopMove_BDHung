@@ -32,9 +32,6 @@ namespace MoveStopMove.Manager
         [ConditionalField(nameof(Mode), false, GAMECONST.GAMEPLAY_MODE.STANDARD_PVE)]
         [SerializeField]
         int difficulty = 3;
-        [ConditionalField(nameof(Mode), false, GAMECONST.GAMEPLAY_MODE.STANDARD_PVP)]
-        [SerializeField]
-        GameObject playerPvp;
         [SerializeField]
         List<LevelData> levelDatas;
         
@@ -89,6 +86,7 @@ namespace MoveStopMove.Manager
                     OpenLevel(GameManager.Inst.GameData.CurrentRegion);
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
                     //OpenLevel(0);
                     break;
             }             
@@ -149,6 +147,12 @@ namespace MoveStopMove.Manager
             }
             
         }
+
+        public void RevivePlayer()
+        {
+            GameplayManager.inst.PlayerScript.Reset();
+            GameplayManager.Inst.PlayerScript.transform.position = RandomPlayerPosition();
+        }
         public void RunLevel()
         {
             for (int i = 0; i < characters.Count; i++)
@@ -208,15 +212,25 @@ namespace MoveStopMove.Manager
         #region Character 
         private void OnPlayerDie(BaseCharacter player)
         {
-            CanvasFail fail = ((CanvasFail)UIManager.Inst.OpenUI(UIID.UICFail));
-            fail.SetRank(NumOfRemainingPlayers + 1);
+            switch (Mode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    CanvasFail fail = (CanvasFail)UIManager.Inst.OpenUI(UIID.UICFail);
+                    fail.SetRank(NumOfRemainingPlayers + 1);
 
-            int bonusCash = GameplayManager.Inst.PlayerScript.Level * 3 + UnityEngine.Random.Range(10, 20);
-            GameData.SetIntData(Player.P_CASH, ref GameData.Cash, GameData.Cash + bonusCash);
-            fail.SetCash(bonusCash);
+                    int bonusCash = GameplayManager.Inst.PlayerScript.Level * 3 + UnityEngine.Random.Range(10, 20);
+                    GameData.SetIntData(Player.P_CASH, ref GameData.Cash, GameData.Cash + bonusCash);
+                    fail.SetCash(bonusCash);
 
-            UIManager.Inst.CloseUI(UIID.UICGamePlay);            
-            OnLoseLevel?.Invoke();          
+                    UIManager.Inst.CloseUI(UIID.UICGamePlay);
+                    OnLoseLevel?.Invoke();
+                    break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    CanvasPvpFail pvpFail = (CanvasPvpFail)UIManager.Inst.OpenUI(UIID.UICPvpFail);
+                    UIManager.Inst.CloseUI(UIID.UICGamePlay);
+                    break;
+            }
+                    
         }
         private void OnEnemyDie(BaseCharacter character)
         {
@@ -305,7 +319,7 @@ namespace MoveStopMove.Manager
             return characterScript;
                      
         }
-        private BaseCharacter SpawnPlayer()
+        private BaseCharacter SpawnPvpCharacter()
         {
             if (numOfSpawnPlayers <= 0)
             {

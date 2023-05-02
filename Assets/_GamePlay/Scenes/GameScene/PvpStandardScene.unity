@@ -252,7 +252,6 @@ MonoBehaviour:
   StaticEnvironment: {fileID: 914025758}
   Mode: 0
   difficulty: 3
-  playerPvp: {fileID: 870338678254615286, guid: 4bb4c4e09b90b614eb100bd60c22c456, type: 3}
   levelDatas:
   - {fileID: 11400000, guid: 703fa0898061efc4083935161a5e49ca, type: 2}
   - {fileID: 11400000, guid: 95d2a9500912d4e4abd0f82dfa7754d9, type: 2}
