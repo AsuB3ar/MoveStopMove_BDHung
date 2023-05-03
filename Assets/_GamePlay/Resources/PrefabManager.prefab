@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 0
   Character: {fileID: 7335153693828646459, guid: b83f21ee2e98db64aadf2a61bea824a7, type: 3}
+  CharacterPvp: {fileID: 5096564353883946063, guid: 45e46ef59c358da41954a82d22101538, type: 3}
   Bullet_Axe1: {fileID: 6022436429646713834, guid: 13ac9a0ebd1debc48934a67c60f2db6f, type: 3}
   Bullet_Knife1: {fileID: 3624077002375939049, guid: 0eb98e3e4dd11b846aec847cd7d7ebee, type: 3}
   Bullet_Axe2: {fileID: 6022436429646713834, guid: 6d1bd9372f78f864f9aaf33e21f5aeb7, type: 3}

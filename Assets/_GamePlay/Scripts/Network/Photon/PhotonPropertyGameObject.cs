@@ -74,10 +74,10 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
         isRpcCall = false;
         _OnCompleteInit?.Invoke();
         if (photonView.IsMine)
-            photonView.RPC(nameof(RPC_OnInit), RpcTarget.Others, gameObject.activeInHierarchy, gameObject.name);
+            photonView.RPC(nameof(RPC_Active_OnInit), RpcTarget.Others, gameObject.activeInHierarchy, gameObject.name);
     }
     [PunRPC]
-    private void RPC_OnInit(bool active,string name)
+    private void RPC_Active_OnInit(bool active,string name)
     {
         RPC_SetActive(active, name);
         OnCompleteInit();

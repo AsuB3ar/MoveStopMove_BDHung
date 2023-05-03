@@ -38,15 +38,13 @@ public class PhotonCharacter : MonoBehaviourPun
             NetworkManager.Inst._OnPlayerStatusRoomChange += OnPlayerEnterRoom;
     }
     [PunRPC]
-    protected void RPC_OnInit(object[] data)
-    {       
+    protected void RPC_Character_OnInit(object[] data)
+    {
         int[] lastData = new int[data.Length - 2];
         for(int i = 0; i < data.Length - 2; i++)
         {
             lastData[i] = (int)data[i + 2];
         }
-        Debug.Log(data[0].ToString());
-        Debug.Log(gameObject.name);
         weapon = PhotonView.Find((int)data[0]).gameObject;
         hair = PhotonView.Find((int)data[1]).gameObject;
         level = (int)data[7];
@@ -57,7 +55,7 @@ public class PhotonCharacter : MonoBehaviourPun
             _OnUpdateCharacter?.Invoke(weapon,hair,level, false);
     }
     [PunRPC]
-    protected void RPC_Event(int eventcode, object[] data)
+    protected void RPC_Character_Event(int eventcode, object[] data)
     {
         switch ((EVENT)eventcode)
         {
@@ -76,7 +74,7 @@ public class PhotonCharacter : MonoBehaviourPun
 
     public void UpdateNetworkEvent(EVENT eventcode,object[] data = null)
     {
-        photonView.RPC(nameof(RPC_Event), RpcTarget.Others, (int)eventcode, data as object);       
+        photonView.RPC(nameof(RPC_Character_Event), RpcTarget.Others, (int)eventcode, data as object);       
     }
     public void SetNetworkData(GameObject weapon,GameObject hair,ref int[] data)
     {
@@ -89,13 +87,13 @@ public class PhotonCharacter : MonoBehaviourPun
         {
             characterData[i] = data[i];
         }
-        photonView.RPC(nameof(RPC_OnInit), RpcTarget.Others, characterData as object);
+        photonView.RPC(nameof(RPC_Character_OnInit), RpcTarget.Others, characterData as object);
     }
     private void OnPlayerEnterRoom(Player player, bool value)
     {
         if (value)
         {
-            photonView.RPC(nameof(RPC_OnInit), player, characterData as object);
+            photonView.RPC(nameof(RPC_Character_OnInit), player, characterData as object);
         }
     }
     private void OnPropertyInitComplete()

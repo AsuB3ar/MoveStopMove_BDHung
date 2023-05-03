@@ -86,7 +86,7 @@ namespace MoveStopMove.Core
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
                     if (photon && !photon.photonView.IsMine)
                         ((CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay)).UnsubcribeTarget(this);
-                    if(NetworkManager.Inst.IsMasterClient)
+                    if (NetworkManager.Inst.IsMasterClient)
                         NetworkManager.Inst.Destroy(gameObject);
                     break;
             }

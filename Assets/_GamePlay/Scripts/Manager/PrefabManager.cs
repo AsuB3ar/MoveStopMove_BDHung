@@ -37,7 +37,8 @@ public enum PoolID
     Obstance = 10003,
     Gift = 10004,
     BaseWeapon = 10005,
-    ObjectCreateWeapon = 10006
+    ObjectCreateWeapon = 10006,
+    CharacterPvp = 10007,
 
     
 }
@@ -56,6 +57,8 @@ namespace MoveStopMove.Manager
         private GameObject PrefabPool;
         [SerializeField]
         GameObject Character;
+        [SerializeField]
+        GameObject CharacterPvp;
         #region Bullet
         [SerializeField]
         GameObject Bullet_Axe1;
