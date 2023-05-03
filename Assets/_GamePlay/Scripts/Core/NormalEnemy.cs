@@ -13,6 +13,7 @@ namespace MoveStopMove.Core
 
     public class NormalEnemy : BaseCharacter
     {
+        static int index = 0;
         [SerializeField]
         PhotonCharacter photon;
         protected override void Awake()
@@ -39,7 +40,10 @@ namespace MoveStopMove.Core
 
         public void Initialize()
         {
+            gameObject.name = "Enemy" + index;
+            index++;
             VFXInit();
+            OnInit();           
         }
 
         public override void OnInit()
@@ -80,7 +84,10 @@ namespace MoveStopMove.Core
                     VFX_Hit = null;
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    NetworkManager.Inst.Destroy(gameObject);
+                    if (photon && !photon.photonView.IsMine)
+                        ((CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay)).UnsubcribeTarget(this);
+                    if(NetworkManager.Inst.IsMasterClient)
+                        NetworkManager.Inst.Destroy(gameObject);
                     break;
             }
 
@@ -137,19 +144,21 @@ namespace MoveStopMove.Core
                 photon.UpdateNetworkEvent(PhotonCharacter.EVENT.LEVEL_UP);
             }
         }
-        public void SetUpCharacter(GameColor color, PoolID hair, PantSkin pant, PoolID weapon)
+        public void SetUpCharacter(GameColor color, PoolID hair, PantSkin pant, PoolID weapon, int level)
         {         
             Data.Weapon = (int)weapon;
             Data.Color = (int)color;
             Data.Hair = (int)hair;
             Data.Pant = (int)pant;
+            SetLevel(level);
 
-            int[] data = new int[7];
+            int[] data = new int[8];
             data[2] = Data.Weapon;
             data[3] = Data.Color;
             data[4] = Data.Hair;
             data[5] = Data.Pant;
             data[6] = Data.Set;
+            data[7] = level;
             GameObject newHair = PrefabManager.Inst.PopFromPool(hair);
             GameObject newWeapon = PrefabManager.Inst.PopFromPool(weapon);
             UpdateCharacter(newWeapon, newHair);
@@ -164,7 +173,7 @@ namespace MoveStopMove.Core
             Data.Set = data[4];
         }
 
-        private void UpdateCharacter(GameObject newWeapon, GameObject hairObject = null, bool isMine = true)
+        private void UpdateCharacter(GameObject newWeapon, GameObject hairObject = null, int level = 1, bool isMine = true)
         {
             ChangeColor((GameColor)Data.Color);
             if (hairObject == null)
@@ -177,6 +186,9 @@ namespace MoveStopMove.Core
                 ChangeWeapon(Cache.GetBaseWeapon(newWeapon)); //Has Save Data
             else
                 base.ChangeWeapon(Cache.GetBaseWeapon(newWeapon)); //Not Have Save Data
+            SetLevel(level);
+            if (photon && !photon.photonView.IsMine)
+                ((CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay)).SubscribeTarget(this);
         }
     }
 }

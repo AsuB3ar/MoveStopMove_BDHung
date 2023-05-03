@@ -15,7 +15,7 @@ public class PhotonCharacter : MonoBehaviourPun
         REVIVE = 2,
     }
     public event Action<int[]> _OnInitData;
-    public event Action<GameObject, GameObject, bool> _OnUpdateCharacter;
+    public event Action<GameObject, GameObject, int, bool> _OnUpdateCharacter;
     public event Action _OnInitialize;
     public event Action<int, bool> _OnAddDamage;
     public event Action<bool> _OnAddStatus;
@@ -28,6 +28,7 @@ public class PhotonCharacter : MonoBehaviourPun
     bool isPropertyInit = false;
     GameObject weapon;
     GameObject hair;
+    int level = 1;
 
     object[] characterData;
     private void Awake()
@@ -38,19 +39,22 @@ public class PhotonCharacter : MonoBehaviourPun
     }
     [PunRPC]
     protected void RPC_OnInit(object[] data)
-    {
+    {       
         int[] lastData = new int[data.Length - 2];
         for(int i = 0; i < data.Length - 2; i++)
         {
             lastData[i] = (int)data[i + 2];
         }
+        Debug.Log(data[0].ToString());
+        Debug.Log(gameObject.name);
         weapon = PhotonView.Find((int)data[0]).gameObject;
         hair = PhotonView.Find((int)data[1]).gameObject;
+        level = (int)data[7];
 
         _OnInitData?.Invoke(lastData);
         isInit = true;
         if (isInit && isPropertyInit && !photonView.IsMine)
-            _OnUpdateCharacter?.Invoke(weapon,hair, false);
+            _OnUpdateCharacter?.Invoke(weapon,hair,level, false);
     }
     [PunRPC]
     protected void RPC_Event(int eventcode, object[] data)
@@ -99,6 +103,6 @@ public class PhotonCharacter : MonoBehaviourPun
         _OnInitialize?.Invoke();
         isPropertyInit = true;
         if (isInit && isPropertyInit && !photonView.IsMine)
-            _OnUpdateCharacter?.Invoke(weapon, hair, false);
+            _OnUpdateCharacter?.Invoke(weapon, hair, level, false);
     }
 }

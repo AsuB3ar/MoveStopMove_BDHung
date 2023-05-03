@@ -258,7 +258,10 @@ namespace MoveStopMove.Manager
                         gameplay.SubscribeTarget(SpawnCharacter());
                         break;
                     case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                        gameplay.SubscribeTarget(SpawnPvpCharacter());
+                        if (NetworkManager.Inst.IsMasterClient)
+                        {
+                            gameplay.SubscribeTarget(SpawnPvpCharacter());
+                        }
                         break;
                 }
             }
@@ -370,16 +373,7 @@ namespace MoveStopMove.Manager
                 level = UnityEngine.Random.Range(GameplayManager.Inst.PlayerScript.Level - difficulty, GameplayManager.Inst.PlayerScript.Level + difficulty);
             }
 
-            characterScript.SetLevel(level);
-            characterScript.OnInit();
-            if (GameManager.Inst.GameIsRun)
-            {
-                characterScript.Run();
-            }
-            else
-            {
-                characterScript.Stop();
-            }
+            
             
             characterScript.OnDie += OnEnemyDie;
 
@@ -390,8 +384,18 @@ namespace MoveStopMove.Manager
             PantSkin pant = GameplayManager.Inst.GetRandomPantSkin();
             PoolID hair = GameplayManager.Inst.GetRandomHair();
             enemy.GetComponent<PhotonPropertyGameObject>().OnCompleteInit();
-            enemy.SetUpCharacter(color, hair, pant, weapon);
-
+            enemy.SetUpCharacter(color, hair, pant, weapon, level);
+           
+            enemy.SetLevel(level);
+            enemy.OnInit();
+            if (GameManager.Inst.GameIsRun)
+            {
+                characterScript.Run();
+            }
+            else
+            {
+                characterScript.Stop();
+            }
             characters.Add(characterScript);
             return characterScript;
         }

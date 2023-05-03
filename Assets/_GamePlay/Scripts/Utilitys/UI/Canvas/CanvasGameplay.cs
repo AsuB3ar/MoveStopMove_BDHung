@@ -32,6 +32,7 @@ public class CanvasGameplay : UICanvas
     {
         for(int i = 0; i < characters.Count; i++)
         {
+            if (characters[i] == null) continue;
             indicators[characters[i]].SetLevel(characters[i].Level);
             Vector3 pos = GameplayManager.Inst.PlayerCamera.WorldToScreenPoint(characters[i].transform.position + TARGET_INDICATOR_UP * characters[i].Size);
 

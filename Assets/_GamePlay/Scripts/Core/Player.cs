@@ -84,6 +84,8 @@ namespace MoveStopMove.Core
             VFX_Hit.Init(transform, Vector3.up * 0.5f, Quaternion.Euler(Vector3.zero), Vector3.one * 0.3f);
             VFX_AddStatus.Init(transform, Vector3.up * -0.5f, Quaternion.Euler(-90, 0, 0), Vector3.one);   
             LoadData();
+            if(photon && !photon.photonView.IsMine)
+                ((CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay)).SubscribeTarget(this);
         }
 
         public override void OnInit()
@@ -138,6 +140,8 @@ namespace MoveStopMove.Core
             {
                 photon.UpdateNetworkEvent(PhotonCharacter.EVENT.TAKE_DAMAGE, new object[1] { 1 });
             }
+            if (photon && !photon.photonView.IsMine)
+                ((CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay)).UnsubcribeTarget(this);
         }
         public override void AddStatus(bool isRpcCall = false)
         {
@@ -200,7 +204,7 @@ namespace MoveStopMove.Core
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
                     if (photon.photonView.IsMine)
                     {
-                        int[] data = new int[7];
+                        int[] data = new int[8];
                         Data.Weapon = GameData.Weapon;
                         data[2] = GameData.Weapon;
                         Data.Color = GameData.Color;
@@ -211,6 +215,7 @@ namespace MoveStopMove.Core
                         data[5] = GameData.Pant;
                         Data.Set = GameData.Set;
                         data[6] = GameData.Set;
+                        data[7] = Data.Level;
                         newWeapon = PrefabManager.Inst.PopFromPool((PoolID)Data.Weapon);
                         newHair = PrefabManager.Inst.PopFromPool((PoolID)Data.Hair);
                         UpdateCharacter(newWeapon, newHair);
@@ -229,7 +234,7 @@ namespace MoveStopMove.Core
             Data.Set = data[4];
         }
 
-        private void UpdateCharacter(GameObject newWeapon, GameObject hairObject = null, bool isMine = true)
+        private void UpdateCharacter(GameObject newWeapon, GameObject hairObject = null, int level = 1, bool isMine = true)
         {
             ChangeColor((GameColor)Data.Color);
             if (hairObject == null)
@@ -242,6 +247,8 @@ namespace MoveStopMove.Core
                 ChangeWeapon(Cache.GetBaseWeapon(newWeapon)); //Has Save Data
             else
                 base.ChangeWeapon(Cache.GetBaseWeapon(newWeapon)); //Not Have Save Data
+
+            SetLevel(level);
         }
     }
 }
