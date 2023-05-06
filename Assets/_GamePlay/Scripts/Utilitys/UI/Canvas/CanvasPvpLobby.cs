@@ -17,8 +17,6 @@ public class CanvasPvpLobby : UICanvas
     [SerializeField]
     protected Button joinButton;
     [SerializeField]
-    protected Button startButton;
-    [SerializeField]
     protected Button leaveButton;
     [SerializeField]
     protected Text statusTxt;
@@ -28,7 +26,6 @@ public class CanvasPvpLobby : UICanvas
         statusTxt.text = "Status: Lobby";
         createButton.onClick.AddListener(OnClickCreateRoom);
         joinButton.onClick.AddListener(OnClickJoinRoom);
-        startButton.onClick.AddListener(OnClickStartGame);
         leaveButton.onClick.AddListener(OnClickLeavePvp);
         NetworkManager.Inst.ClearEvent();
 
@@ -36,6 +33,7 @@ public class CanvasPvpLobby : UICanvas
         {
             GameplayManager.Inst.GameMode = GAMECONST.GAMEPLAY_MODE.STANDARD_PVP;           
             PrefabManager.Inst.ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVP);
+            SceneManager.Inst.LoadPhotonScene(GAMECONST.INIT_PVP_RESOUCRCES_SCENE);
             statusTxt.text = "Status: Room";
         };
     }
@@ -48,11 +46,6 @@ public class CanvasPvpLobby : UICanvas
     protected void OnClickCreateRoom()
     {
         NetworkManager.Inst.CreateRoom(createInput.text);
-    }
-
-    protected void OnClickStartGame()
-    {
-        SceneManager.Inst.LoadPhotonScene(GAMECONST.INIT_PVP_RESOUCRCES_SCENE);
     }
 
     protected void OnClickLeavePvp()

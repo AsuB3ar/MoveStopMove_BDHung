@@ -336,15 +336,5 @@ namespace MoveStopMove.Manager
                     break;
             }
         }
-
-        private void OnDestroy()
-        {
-            switch (mode)
-            {
-                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVE);
-                    break;
-            }
-        }
     }
 }

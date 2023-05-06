@@ -18,6 +18,7 @@ public class CanvasSetting : UICanvas
                     UIManager.Inst.GetUI(UIID.UICGamePlay).Close();
                 break;
             case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                PrefabManager.Inst.ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVE);
                 NetworkManager.Inst.LeaveRoom();
                 NetworkManager.Inst._OnLeftRoom += LeftRoom;
                 break;

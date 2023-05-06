@@ -21,7 +21,11 @@ public class CanvasPvpFail : UICanvas
     {
         timer = TimerManager.Inst.PopSTimer();
         NetworkManager.Inst._OnLeftRoom += LeftRoom;
-        leaveButton.onClick.AddListener(() => NetworkManager.Inst.LeaveRoom());
+        leaveButton.onClick.AddListener(() =>
+        {
+            PrefabManager.Inst.ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVE);
+            NetworkManager.Inst.LeaveRoom();
+        });
     }
     public override void Open()
     {

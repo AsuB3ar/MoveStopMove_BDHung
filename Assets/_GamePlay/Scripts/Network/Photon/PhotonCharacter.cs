@@ -23,6 +23,8 @@ public class PhotonCharacter : MonoBehaviourPun
 
     [SerializeField]
     PhotonPropertyGameObject propertyPhoton;
+    [SerializeField]
+    AudioListener audioListener;
 
     bool isInit = false;
     bool isPropertyInit = false;
@@ -34,8 +36,10 @@ public class PhotonCharacter : MonoBehaviourPun
     private void Awake()
     {
         propertyPhoton._OnCompleteInit += OnPropertyInitComplete;
-        if(photonView.IsMine)
+        if (photonView.IsMine)
             NetworkManager.Inst._OnPlayerStatusRoomChange += OnPlayerEnterRoom;
+        else
+            audioListener.enabled = false;
     }
     [PunRPC]
     protected void RPC_Character_OnInit(object[] data)

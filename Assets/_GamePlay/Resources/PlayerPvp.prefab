@@ -92,13 +92,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 1705399963, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
     - {fileID: 3498892711340079917, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
     - {fileID: 1500859743411118674, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
 --- !u!1 &231660901292055206 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3968126923357204953, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
+  m_PrefabInstance: {fileID: 3757858294291671935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!81 &3757858292725251556 stripped
+AudioListener:
+  m_CorrespondingSourceObject: {fileID: 1705399963, guid: 836e6a9749976d04093014fbffa98e47, type: 3}
   m_PrefabInstance: {fileID: 3757858294291671935}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &252923274415687691 stripped
@@ -249,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   propertyPhoton: {fileID: -5740967959944607905}
+  audioListener: {fileID: 3757858292725251556}
 --- !u!114 &7972954965816083899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +275,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 86058710726591587}
   - {fileID: 1285314707479694935}
-  - {fileID: 2883453754837105226}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

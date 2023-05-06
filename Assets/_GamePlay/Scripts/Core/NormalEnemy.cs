@@ -137,8 +137,6 @@ namespace MoveStopMove.Core
         public override void AddStatus(bool isRpcCall = false)
         {
             base.AddStatus();
-            GameplayManager.Inst.SetCameraPosition(Data.Size);
-
             if (photon && !isRpcCall)
             {
                 photon.UpdateNetworkEvent(PhotonCharacter.EVENT.LEVEL_UP);

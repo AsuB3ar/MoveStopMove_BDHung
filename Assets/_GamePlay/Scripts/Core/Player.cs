@@ -164,7 +164,7 @@ namespace MoveStopMove.Core
             if (col)
             {
                 attackIndicator.ScaleUp(GIFT_BONUS);
-                GameplayManager.Inst.SetCameraPosition(Data.Size * GIFT_BONUS);
+                SetCameraPosition(Data.Size * GIFT_BONUS);
             }           
         }
 
@@ -172,8 +172,23 @@ namespace MoveStopMove.Core
         {
             base.OnEndGiftBonus();
             attackIndicator.ScaleUp(1);
-            GameplayManager.Inst.SetCameraPosition(Data.Size);
+            SetCameraPosition(Data.Size);
         }
+
+        private void SetCameraPosition(float value)
+        {
+            switch (GameplayManager.Inst.GameMode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    GameplayManager.Inst.SetCameraPosition(value);
+                    break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    if (photon.photonView.IsMine)
+                        GameplayManager.Inst.SetCameraPosition(value);
+                    break;
+            }
+        }
+
         private void SetIndicatorPosition(BaseCharacter character, bool active)
         {
             
