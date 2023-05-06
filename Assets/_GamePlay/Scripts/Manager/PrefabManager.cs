@@ -324,7 +324,7 @@ namespace MoveStopMove.Manager
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
                     inst = pvePrefabManager;
                     pvePrefabManager.gameObject.SetActive(true);
-                    Destroy(gameObject);
+                    Destroy(PrefabPool);
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
                     //if (PhotonNetwork.IsMasterClient)
@@ -332,8 +332,17 @@ namespace MoveStopMove.Manager
                         PrefabManager pvpPrefabManager = NetworkManager.Inst.Instantiate(gameObject.name, Vector3.zero, Quaternion.identity).GetComponent<PrefabManager>();
                         pvpPrefabManager.pvePrefabManager = this;
                     //}
-                    Destroy(PrefabPool);
                     gameObject.SetActive(false);
+                    break;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            switch (mode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVE);
                     break;
             }
         }

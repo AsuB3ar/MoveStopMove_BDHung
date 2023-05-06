@@ -8,6 +8,8 @@ using Photon.Realtime;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public event Action<Player, bool> _OnPlayerStatusRoomChange;
+    public event Action _OnDisconnectServer;
+    public event Action _OnLeftRoom;
     public event Action _OnJoinedRoom;
     public event Action _OnConnectedToMaster;
     public event Action _OnJoinedLobby;
@@ -57,12 +59,34 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(name);
         Debug.Log($"<color=green>NETWORK</color>: Join Room");
     }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public void DisconnectMaster()
+    {
+        PhotonNetwork.Disconnect();
+    }
+
     public override void OnJoinedRoom()
     {       
         _OnJoinedRoom?.Invoke();
         Debug.Log($"<color=green>NETWORK</color>: Joined Room");
     }
-
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        _OnLeftRoom?.Invoke();
+        Debug.Log($"<color=green>NETWORK</color>: Leaved Room");
+    }
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        _OnDisconnectServer?.Invoke();
+        Debug.Log($"<color=green>NETWORK</color>: Disconnected Server");
+    }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         for(int i = 0; i < roomList.Count; i++)
@@ -95,5 +119,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _OnConnectedToMaster = null;
         _OnJoinedLobby = null;
         _OnJoinedRoom = null;
+        _OnDisconnectServer = null;
+        _OnLeftRoom = null;
     }
 }

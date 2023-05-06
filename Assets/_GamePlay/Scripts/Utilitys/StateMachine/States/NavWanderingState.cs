@@ -79,7 +79,11 @@ namespace Utilitys.AI
             Vector2 newDirection;
             if (value < 3.5)
             {
-                Vector3 direction = GameplayManager.Inst.Player.transform.position - Parameter.CharacterTF.position;
+                Vector3 direction;
+                if (GameplayManager.Inst.PlayerScript != null)
+                    direction = GameplayManager.Inst.Player.transform.position - Parameter.CharacterTF.position;
+                else
+                    direction = MathHelper.GetRandomDirection();
                 float angle = Vector3.SignedAngle(Vector3.forward, direction, Vector3.up) + 90;
                 newDirection = MathHelper.GetRandomDirection(angle - 45,angle + 45);
             }

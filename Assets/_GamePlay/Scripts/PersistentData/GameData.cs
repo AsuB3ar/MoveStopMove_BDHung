@@ -33,6 +33,7 @@ namespace MoveStopMove.Core.Data
 
         public Dictionary<PoolID, int> PoolID2State = new Dictionary<PoolID, int>();
         public Dictionary<PantSkin, int> PantSkin2State = new Dictionary<PantSkin, int>();
+        private bool isDirty = false;
         #endregion
         #endregion
 
@@ -95,6 +96,8 @@ namespace MoveStopMove.Core.Data
         }
         public void OnInitData()
         {
+            if (isDirty) return;
+            isDirty = true;
             #region Player Data
             #region Stats
             Speed = PlayerPrefs.GetFloat(Player.P_SPEED,3);

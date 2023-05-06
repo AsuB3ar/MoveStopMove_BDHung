@@ -169,6 +169,12 @@ namespace MoveStopMove.Manager
         {
             for (int i = 0; i < characters.Count; i++)
             {
+                if(characters[i] == null)
+                {
+                    characters.RemoveAt(i);
+                    i--;
+                    continue;
+                }
                 characters[i].Run();
             }
         }
@@ -502,7 +508,7 @@ namespace MoveStopMove.Manager
         /// </summary>
         private void TransparentObstance()
         {
-            if (GameplayManager.Inst.PlayerCamera == null) return;
+            if (GameplayManager.Inst.PlayerCamera == null || !GameplayManager.Inst.PlayerScript) return;
             Vector3 pos1 = GameplayManager.Inst.PlayerCamera.transform.position;
             Vector3 pos2 = GameplayManager.Inst.Player.transform.position + Vector3.up * 0.5f;
             Vector3 direction = pos2 - pos1;

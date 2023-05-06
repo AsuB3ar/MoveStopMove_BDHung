@@ -95,4 +95,18 @@ public class CanvasGameplay : UICanvas
         base.Open();
         GameplayManager.Inst.SetCameraPosition(CameraPosition.Gameplay);
     }
+
+    public override void Close()
+    {
+        base.Close();    
+    }
+
+    public void ClearTargets()
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            UnsubcribeTarget(characters[i]);
+            i--;
+        }
+    }
 }

@@ -19,6 +19,8 @@ public class CanvasPvpLobby : UICanvas
     [SerializeField]
     protected Button startButton;
     [SerializeField]
+    protected Button leaveButton;
+    [SerializeField]
     protected Text statusTxt;
 
     private void Awake()
@@ -27,6 +29,7 @@ public class CanvasPvpLobby : UICanvas
         createButton.onClick.AddListener(OnClickCreateRoom);
         joinButton.onClick.AddListener(OnClickJoinRoom);
         startButton.onClick.AddListener(OnClickStartGame);
+        leaveButton.onClick.AddListener(OnClickLeavePvp);
         NetworkManager.Inst.ClearEvent();
 
         NetworkManager.Inst._OnJoinedRoom += () =>
@@ -50,5 +53,15 @@ public class CanvasPvpLobby : UICanvas
     protected void OnClickStartGame()
     {
         SceneManager.Inst.LoadPhotonScene(GAMECONST.INIT_PVP_RESOUCRCES_SCENE);
+    }
+
+    protected void OnClickLeavePvp()
+    {
+        NetworkManager.Inst.DisconnectMaster();
+        NetworkManager.Inst._OnDisconnectServer += () =>
+        {
+            SceneManager.Inst.LoadScene(GAMECONST.STANDARD_PVE_SCENE);
+            NetworkManager.Inst.ClearEvent();
+        };
     }
 }

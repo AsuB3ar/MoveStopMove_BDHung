@@ -100,7 +100,6 @@ namespace MoveStopMove.Core
             LogicSystem = new CharacterLogicSystem(LogicModule);
             PhysicSystem = new CharacterPhysicSystem(PhysicModule);
 
-                       
             NavigationSystem.SetCharacterInformation(transform, SensorTF, GetInstanceID());
             dieTimer = TimerManager.Inst.PopSTimer();
             CalculateActionAndTime();
