@@ -130,7 +130,7 @@ namespace MoveStopMove.Manager
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
                     if (NetworkManager.Inst.IsMasterClient)
                     {
-                        for (int i = 0; i < 2; i++)
+                        for (int i = 0; i < 10; i++)
                         {
                             gameplay.SubscribeTarget(SpawnPvpCharacter());
                         }
