@@ -39,7 +39,10 @@ public class PhotonCharacter : MonoBehaviourPun
         if (photonView.IsMine)
             NetworkManager.Inst._OnPlayerStatusRoomChange += OnPlayerEnterRoom;
         else
-            audioListener.enabled = false;
+        {
+            if(audioListener)
+                audioListener.enabled = false;
+        }
     }
     [PunRPC]
     protected void RPC_Character_OnInit(object[] data)

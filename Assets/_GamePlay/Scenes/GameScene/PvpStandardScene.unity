@@ -213,7 +213,6 @@ GameObject:
   m_Component:
   - component: {fileID: 435945792}
   - component: {fileID: 435945793}
-  - component: {fileID: 435945794}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -261,14 +260,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
---- !u!81 &435945794
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 435945791}
-  m_Enabled: 1
 --- !u!1 &593069393
 GameObject:
   m_ObjectHideFlags: 0
