@@ -162,9 +162,7 @@ public class CanvasShopSkin : UICanvas
     }
 
     private void LoadData()
-    {
-        
-
+    {     
         for(int i = 0; i < hairItemDatas.Count; i++)
         {
             hairItemDatas[i].state = (ItemState)Data.PoolID2State[hairItemDatas[i].poolID];
