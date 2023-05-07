@@ -161,7 +161,6 @@ namespace MoveStopMove.Manager
                     CreatePool(Obstance, PoolID.Obstance);
                     CreatePool(BaseWeapon, PoolID.BaseWeapon, Quaternion.identity, 5);
                     CreatePool(ObjectCreateWeapon, PoolID.ObjectCreateWeapon, Quaternion.identity, 50);
-                    photon.UpdatePhotonData();
                 }
                 
             }
@@ -172,6 +171,18 @@ namespace MoveStopMove.Manager
                 base.Awake();
             }
 
+        }
+        private void Start()
+        {
+            switch(mode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    if (photon.photonView.IsMine)
+                    {
+                        photon.UpdatePhotonData();
+                    }
+                    break;
+            }
         }
         public void InitPhotonData()
         {

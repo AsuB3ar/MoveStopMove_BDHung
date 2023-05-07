@@ -21,16 +21,22 @@ public class CanvasGameplay : UICanvas
     Transform canvasIndicatorTF;
     [SerializeField]
     TMP_Text remainingPlayersNum;
+    [SerializeField]
+    List<UITargetIndicator> targetIndicators;
+    Queue<UITargetIndicator> notUseIndicator = new Queue<UITargetIndicator>();
     Dictionary<BaseCharacter, UITargetIndicator> indicators = new Dictionary<BaseCharacter, UITargetIndicator>();
     List<BaseCharacter> characters = new List<BaseCharacter>();
 
-    private void Start()
+    private void Awake()
     {
-        //SubscribeTarget(GameplayManager.Inst.PlayerScript,true);
+        for (int i = 0; i < targetIndicators.Count; i++)
+        {
+            notUseIndicator.Enqueue(targetIndicators[i]);
+        }
     }
     public void FixedUpdate()
     {
-        for(int i = 0; i < characters.Count; i++)
+        for (int i = 0; i < characters.Count; i++)
         {
             if (characters[i] == null) continue;
             indicators[characters[i]].SetLevel(characters[i].Level);
@@ -47,7 +53,7 @@ public class CanvasGameplay : UICanvas
             pos.x = Mathf.Clamp(pos.x, minX, maxX);
             pos.y = Mathf.Clamp(pos.y, minY, maxY);
             pos.z = 0;
-            indicators[characters[i]].transform.position = pos;           
+            indicators[characters[i]].transform.position = pos;
             indicators[characters[i]].SetDirection();
 
         }
@@ -58,12 +64,11 @@ public class CanvasGameplay : UICanvas
     }
     public void SubscribeTarget(BaseCharacter character, bool isPlayer = false)
     {
-        if (character == null)
+        if (character == null && indicators.ContainsKey(character))
             return;
 
-        GameObject uiIndicator = PrefabManager.Inst.PopFromPool(PoolID.UITargetIndicator);
-        UITargetIndicator indicatorScript = Cache.GetUIIndicator(uiIndicator);
-
+        UITargetIndicator indicatorScript = notUseIndicator.Dequeue();
+        indicatorScript.gameObject.SetActive(true);
         //indicatorScript.SetColor(new UnityEngine.Color(1f, 107f/255, 107f/255, 1f));
         indicatorScript.SetColor(GameplayManager.Inst.GetColor(character.Color));
         if (isPlayer)
@@ -71,17 +76,15 @@ public class CanvasGameplay : UICanvas
             indicatorScript.SetActiveDirection(false);
         }
 
-        Vector2 initLocalScale = uiIndicator.transform.localScale;
-        uiIndicator.transform.SetParent(canvasIndicatorTF);
-        uiIndicator.transform.localScale = initLocalScale;
-
         indicators.Add(character, indicatorScript);
         characters.Add(character);
     }
     public void UnsubcribeTarget(BaseCharacter character)
     {
         if (!indicators.ContainsKey(character)) return; //DEV: Need to optimize
-        PrefabManager.Inst.PushToPool(indicators[character].gameObject, PoolID.UITargetIndicator);
+
+        indicators[character].gameObject.SetActive(false);
+        notUseIndicator.Enqueue(indicators[character]);
         indicators.Remove(character);
         characters.Remove(character);
     }
@@ -98,7 +101,7 @@ public class CanvasGameplay : UICanvas
 
     public override void Close()
     {
-        base.Close();    
+        base.Close();
     }
 
     public void ClearTargets()

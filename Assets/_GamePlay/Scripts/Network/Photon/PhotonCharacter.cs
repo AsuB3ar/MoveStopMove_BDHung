@@ -110,4 +110,10 @@ public class PhotonCharacter : MonoBehaviourPun
         if (isInit && isPropertyInit && !photonView.IsMine)
             _OnUpdateCharacter?.Invoke(weapon, hair, level, false);
     }
+
+    private void OnDestroy()
+    {
+        if (photonView.IsMine)
+            NetworkManager.Inst._OnPlayerStatusRoomChange -= OnPlayerEnterRoom;
+    }
 }
