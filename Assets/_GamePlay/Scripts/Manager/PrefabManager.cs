@@ -249,7 +249,18 @@ namespace MoveStopMove.Manager
                 
             }
 
-            poolData[namePool].Push(obj, checkContain);
+            switch (GameplayManager.Inst.GameMode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    if (obj.GetComponent<PhotonView>().IsMine)
+                    {
+                        poolData[namePool].Push(obj, checkContain);
+                    }
+                    break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    poolData[namePool].Push(obj, checkContain);
+                    break;
+            }
         }
         public GameObject PopFromPool(PoolID namePool, GameObject obj = null)
         {
@@ -335,7 +346,7 @@ namespace MoveStopMove.Manager
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
                     inst = pvePrefabManager;
                     pvePrefabManager.gameObject.SetActive(true);
-                    Destroy(PrefabPool);
+                    NetworkManager.Inst.Destroy(gameObject);
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
                     //if (PhotonNetwork.IsMasterClient)
@@ -346,6 +357,11 @@ namespace MoveStopMove.Manager
                     gameObject.SetActive(false);
                     break;
             }
+        }
+
+        private void OnDestroy()
+        {
+            Destroy(PrefabPool);
         }
     }
 }

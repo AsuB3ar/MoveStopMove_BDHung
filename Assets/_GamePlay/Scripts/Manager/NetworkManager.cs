@@ -79,6 +79,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         base.OnLeftRoom();
         _OnLeftRoom?.Invoke();
+        for (int i = 0; i < PhotonPropertyGameObject.AllObjects.Count; i++)
+        {
+            if (PhotonPropertyGameObject.AllObjects[i].IsMine)
+                Destroy(PhotonPropertyGameObject.AllObjects[i].gameObject);
+        }
         Debug.Log($"<color=green>NETWORK</color>: Leaved Room");
     }
     public override void OnDisconnected(DisconnectCause cause)

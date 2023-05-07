@@ -20,6 +20,7 @@ public class PhotonPropertyGameObject : MonoBehaviourPun,IPunInstantiateMagicCal
     bool isOnInit = true;
 
     public GAMECONST.NETWORK_OBJECT_TYPE Type => type;
+    public bool IsMine => photonView.IsMine;
     private void Awake()
     {
         allObjects.Add(this);
