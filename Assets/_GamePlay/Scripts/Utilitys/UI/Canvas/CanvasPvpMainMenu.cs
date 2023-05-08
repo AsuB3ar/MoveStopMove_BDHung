@@ -11,20 +11,6 @@ public class CanvasPvpMainMenu : UICanvas
         Close();
     }
 
-    public void SkinShopButton()
-    {
-        UIManager.Inst.OpenUI(UIID.UICShopSkin);
-        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
-        Close();
-    }
-
-    public void WeaponShopButton()
-    {
-        CanvasShopWeapon shopCanvas = UIManager.Inst.OpenUI<CanvasShopWeapon>(UIID.UICShopWeapon, RenderMode.ScreenSpaceCamera);
-        shopCanvas.SetCanvasCamera(GameplayManager.Inst.PlayerCamera);
-        SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
-        Close();
-    }
 
     public void SettingButton()
     {

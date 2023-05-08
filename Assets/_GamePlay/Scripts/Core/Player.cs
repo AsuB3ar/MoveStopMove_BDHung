@@ -146,7 +146,7 @@ namespace MoveStopMove.Core
         public override void AddStatus(bool isRpcCall = false)
         {
             base.AddStatus();
-            GameplayManager.Inst.SetCameraPosition(Data.Size);
+            SetCameraPosition(Data.Size);
 
             if (photon && !isRpcCall)
             {

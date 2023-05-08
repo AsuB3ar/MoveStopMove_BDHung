@@ -74,22 +74,21 @@ namespace MoveStopMove.Manager
             gameplay.Close();
             GameData = GameManager.Inst.GameData;
             giftTimer = TimerManager.Inst.PopSTimer();
+            giftTimer.TimeOut += TimerEvent;
+            GameManager.Inst.OnStartGame += StartSpawnGift;
+            GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
+            GameManager.Inst.OnStartGame += RunLevel;
         }
         private void Start()
         {
             //GameplayManager.Inst.PlayerScript = Cache.GetBaseCharacter(GameplayManager.Inst.Player);
-            giftTimer.TimeOut += TimerEvent;
-            GameManager.Inst.OnStartGame += StartSpawnGift;
+            
             switch (Mode)
             {
-                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
-                    GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
-                    GameManager.Inst.OnStartGame += RunLevel;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:                   
                     OpenLevel(GameManager.Inst.GameData.CurrentRegion);
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
-                    GameManager.Inst.OnStartGame += RunLevel;
                     //OpenLevel(0);
                     break;
             }             
@@ -98,13 +97,8 @@ namespace MoveStopMove.Manager
         {
             giftTimer.TimeOut -= TimerEvent;
             GameManager.Inst.OnStartGame -= StartSpawnGift;
-            switch (Mode)
-            {
-                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
-                    GameplayManager.Inst.PlayerScript.OnDie -= OnPlayerDie;
-                    GameManager.Inst.OnStartGame -= RunLevel;
-                    break;
-            }
+            GameplayManager.Inst.PlayerScript.OnDie -= OnPlayerDie;
+            GameManager.Inst.OnStartGame -= RunLevel;
         }
         private void FixedUpdate()
         {
@@ -274,14 +268,22 @@ namespace MoveStopMove.Manager
             else
             {
                 OnWinLevel?.Invoke();
-                CanvasVictory victory = UIManager.Inst.OpenUI(UIID.UICVictory) as CanvasVictory;
+                switch (GameplayManager.Inst.GameMode)
+                {
+                    case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                        CanvasVictory victory = UIManager.Inst.OpenUI(UIID.UICVictory) as CanvasVictory;
 
-                int bonusCash = GameplayManager.Inst.PlayerScript.Level * 3 + UnityEngine.Random.Range(10, 50);
-                GameData.SetIntData(Player.P_CASH, ref GameData.Cash, GameData.Cash + bonusCash);
+                        int bonusCash = GameplayManager.Inst.PlayerScript.Level * 3 + UnityEngine.Random.Range(10, 50);
+                        GameData.SetIntData(Player.P_CASH, ref GameData.Cash, GameData.Cash + bonusCash);
 
-                victory.SetCash(bonusCash);
-                victory.SetCurrentLevel(currentLevel);
-                currentLevel += 1;
+                        victory.SetCash(bonusCash);
+                        victory.SetCurrentLevel(currentLevel);
+                        currentLevel += 1;
+                        break;
+                    case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                        break;
+                }
+                
                 UIManager.Inst.CloseUI(UIID.UICGamePlay);
             }
         }

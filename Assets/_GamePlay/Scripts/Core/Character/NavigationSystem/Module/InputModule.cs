@@ -44,7 +44,6 @@ namespace MoveStopMove.Core.Character.NavigationSystem
                         gameplay = (CanvasGameplay)UIManager.Inst.GetUI(UIID.UICGamePlay);
                         joyStick = gameplay.joyStick;
                         joyStick.OnMove += UpdateMoveDirection;
-                        gameplay.Close();
                     }
                     break;
             }

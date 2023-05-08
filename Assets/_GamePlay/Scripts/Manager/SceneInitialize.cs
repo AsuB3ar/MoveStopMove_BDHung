@@ -101,7 +101,11 @@ public class SceneInitialize : MonoBehaviour
                 UIManager.Inst.OpenUI(UIID.UICMainMenu);
                 break;
             case SCENE_TYPE.STANDARD_PVP:              
-                UIManager.Inst.OpenUI(UIID.UICPvpMainMenu);
+                GameManager.Inst.StopGame();
+                LevelManager.Inst.OpenLevel(GameManager.Inst.GameData.CurrentRegion);
+                UIManager.Inst.OpenUI(UIID.UICGamePlay);
+                SoundManager.Inst.PlaySound(SoundManager.Sound.Button_Click);
+                GameManager.Inst.StartGame();
                 break;
         }
     }
