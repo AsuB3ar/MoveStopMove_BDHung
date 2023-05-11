@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5618273737373822372, guid: 2502da38ba921e046b980471ca5fb9bd, type: 3}
       propertyPath: m_Name
-      value: Knife_1
+      value: Weapon_Knife_1
       objectReference: {fileID: 0}
     - target: {fileID: 9100544997115978373, guid: 2502da38ba921e046b980471ca5fb9bd, type: 3}
       propertyPath: m_RootOrder
@@ -84,11 +84,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a18d7720cf08545898a44e3746b112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoolName: 101
+  data: {fileID: 11400000, guid: b2373e241a93d004bacb5909a88ac5a3, type: 2}
   BulletPoolName: 2
   WeaponType: 0
   firePoint: {fileID: 1636246876231868127}
-  data: {fileID: 11400000, guid: b2373e241a93d004bacb5909a88ac5a3, type: 2}
   Character: {fileID: 0}
 --- !u!1001 &5169870119173050619
 PrefabInstance:
@@ -100,6 +99,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
       propertyPath: m_Name
       value: knife
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
       propertyPath: m_RootOrder
