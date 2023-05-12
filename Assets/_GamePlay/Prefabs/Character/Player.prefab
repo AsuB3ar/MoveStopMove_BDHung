@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680344163154300117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1981291714557465815}
@@ -1198,7 +1198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5862903821006261929, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: m_Name
-      value: Character
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5990895583703040092, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1801,6 +1801,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4516260988997187901, guid: f6975a3d046b2e44bb74fbb8530cc606, type: 3}
   m_PrefabInstance: {fileID: 7371453194641440624}
   m_PrefabAsset: {fileID: 0}
+--- !u!81 &1705399963
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3968126923357204953}
+  m_Enabled: 1
 --- !u!114 &1234612114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1813,6 +1821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a31ea0f91d330c543be0030eeb7419f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
 --- !u!114 &619714245882869173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1838,14 +1847,7 @@ MonoBehaviour:
   AnimModule: {fileID: 3498892711340079917}
   Weapon: {fileID: 2193068112873909060}
   attackIndicator: {fileID: 520110753}
---- !u!81 &1705399963
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3968126923357204953}
-  m_Enabled: 1
+  photon: {fileID: 0}
 --- !u!1001 &7942242260661931794
 PrefabInstance:
   m_ObjectHideFlags: 0
