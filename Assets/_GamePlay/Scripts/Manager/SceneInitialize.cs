@@ -65,7 +65,7 @@ public class SceneInitialize : MonoBehaviour
                 GameplayManager.Inst.TargetIndicator = targetIndicator;
                 GameplayManager.Inst.CameraMove = cameraMove;
                 gameData.OnInitData();
-                
+                UIManager.Inst.GetUI<CanvasGameplay>(UIID.UICGamePlay).ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVE);
                 break;
             case SCENE_TYPE.INIT_PVP_RESOURCES:
                 WaitingInitResource();          
@@ -89,7 +89,8 @@ public class SceneInitialize : MonoBehaviour
                     datas[i].OnCompleteInit();
                 }
                 Debug.Log("DATA COUNT: " + datas.Count);
-                
+                UIManager.Inst.GetUI<CanvasGameplay>(UIID.UICGamePlay).ChangeMode(GAMECONST.GAMEPLAY_MODE.STANDARD_PVP);
+
                 break;
         }
     }

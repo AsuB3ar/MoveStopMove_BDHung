@@ -13,6 +13,8 @@ public class CanvasPvpLobby : UICanvas
     [SerializeField]
     protected InputField joinInput;
     [SerializeField]
+    protected InputField nameInput;
+    [SerializeField]
     protected Button createButton;
     [SerializeField]
     protected Button joinButton;
@@ -40,12 +42,12 @@ public class CanvasPvpLobby : UICanvas
 
     private void OnClickJoinRoom()
     {
-        NetworkManager.Inst.JoinRoom(joinInput.text);
+        NetworkManager.Inst.JoinRoom(joinInput.text, nameInput.text);
     }
 
     protected void OnClickCreateRoom()
     {
-        NetworkManager.Inst.CreateRoom(createInput.text);
+        NetworkManager.Inst.CreateRoom(createInput.text, nameInput.text);
     }
 
     protected void OnClickLeavePvp()

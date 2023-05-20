@@ -151,6 +151,7 @@ namespace MoveStopMove.Core
             if (photon && !isRpcCall)
             {
                 photon.UpdateNetworkEvent(PhotonCharacter.EVENT.LEVEL_UP);
+                UIManager.Inst.GetUI<CanvasGameplay>(UIID.UICGamePlay).AddLocalPlayerScore(1);
             }
         }
 

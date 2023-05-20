@@ -63,6 +63,10 @@ namespace MoveStopMove.Manager
             {
                 numOfRemainingPlayers = value;
                 gameplay.SetRemainingPlayerNumber(value + 1);
+                if (NetworkManager.Inst.IsMasterClient)
+                {
+                    NetworkManager.Inst.RaiseEvent(NetworkManager.EVENT.ENEMY_COUNT_CHANGE, new object[] { numOfRemainingPlayers });
+                }
             }
         }
 
@@ -78,6 +82,7 @@ namespace MoveStopMove.Manager
             GameManager.Inst.OnStartGame += StartSpawnGift;
             GameplayManager.Inst.PlayerScript.OnDie += OnPlayerDie;
             GameManager.Inst.OnStartGame += RunLevel;
+            NetworkManager.Inst._OnEnemyCountChange += OnEnemyCountChange;
         }
         private void Start()
         {
@@ -96,9 +101,11 @@ namespace MoveStopMove.Manager
         private void OnDestroy()
         {
             giftTimer.TimeOut -= TimerEvent;
+            TimerManager.Inst.PushSTimer(giftTimer);
             GameManager.Inst.OnStartGame -= StartSpawnGift;
             GameplayManager.Inst.PlayerScript.OnDie -= OnPlayerDie;
             GameManager.Inst.OnStartGame -= RunLevel;
+            NetworkManager.Inst._OnEnemyCountChange -= OnEnemyCountChange;
         }
         private void FixedUpdate()
         {
@@ -153,7 +160,6 @@ namespace MoveStopMove.Manager
             }
             
         }
-
         public void RevivePlayer()
         {
             GameplayManager.inst.PlayerScript.Reset();
@@ -541,6 +547,10 @@ namespace MoveStopMove.Manager
                 }
             }
 
+        }
+        private void OnEnemyCountChange(int value)
+        {
+            NumOfRemainingPlayers = value;
         }
         #endregion
     }

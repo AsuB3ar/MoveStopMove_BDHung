@@ -251,8 +251,8 @@ namespace MoveStopMove.Manager
 
             switch (GameplayManager.Inst.GameMode)
             {
-                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    if (obj.GetComponent<PhotonView>().IsMine)
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:                   
+                    if (obj && obj.GetComponent<PhotonView>().IsMine)
                     {
                         poolData[namePool].Push(obj, checkContain);
                     }

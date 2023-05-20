@@ -4,8 +4,9 @@ using UnityEngine;
 using Photon.Pun;
 using System;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class NetworkManager : MonoBehaviourPunCallbacks
+public class NetworkManager : MonoBehaviourPunCallbacks,IOnEventCallback
 {
     public event Action<Player, bool> _OnPlayerStatusRoomChange;
     public event Action _OnDisconnectServer;
@@ -13,10 +14,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public event Action _OnJoinedRoom;
     public event Action _OnConnectedToMaster;
     public event Action _OnJoinedLobby;
+    
+    public event Action<int> _OnEnemyCountChange;
+    public event Action<int[], int[], string[]> _OnPlayerAddPoint;
 
     private static NetworkManager inst = null;
     public static NetworkManager Inst => inst;
-
+    public bool IsMasterClient => PhotonNetwork.IsMasterClient;
+    public Player LocalPlayer => PhotonNetwork.LocalPlayer;
+    RaiseEventOptions RaiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+    public enum EVENT
+    {
+        PLAYER_ADD_POINT = 0,
+        ENEMY_COUNT_CHANGE = 1,
+    }
     private void Awake()
     {
         if(inst != null)
@@ -29,7 +40,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
         DontDestroyOnLoad(gameObject);
     }
-
     public void ConnectToServer()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -48,14 +58,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.Log($"<color=green>NETWORK</color>: Joined Lobby");
     }
 
-    public void CreateRoom(string name)
+    public void CreateRoom(string name, string nickname ="")
     {
+        PhotonNetwork.NickName = nickname;
         PhotonNetwork.CreateRoom(name);
         Debug.Log($"<color=green>NETWORK</color>: Create Room");
     }
 
-    public void JoinRoom(string name)
+    public void JoinRoom(string name, string nickname = "")
     {
+        PhotonNetwork.NickName = nickname;
         PhotonNetwork.JoinRoom(name);
         Debug.Log($"<color=green>NETWORK</color>: Join Room");
     }
@@ -118,7 +130,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.Destroy(gameObject);
     }
-    public bool IsMasterClient => PhotonNetwork.IsMasterClient;
     public void ClearEvent()
     {
         _OnConnectedToMaster = null;
@@ -126,5 +137,41 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _OnJoinedRoom = null;
         _OnDisconnectServer = null;
         _OnLeftRoom = null;
+    }  
+    public void OnEvent(EventData photonEvent)
+    {
+        EVENT eventCode = (EVENT)photonEvent.Code;
+        object[] data;
+
+        switch (eventCode)
+        {
+            case EVENT.ENEMY_COUNT_CHANGE:
+                data = (object[])photonEvent.CustomData;
+                _OnEnemyCountChange?.Invoke((int)data[0]);
+                Debug.Log($"<color=yellow>EVENT</color> - Global: {eventCode}");
+                break;
+            case EVENT.PLAYER_ADD_POINT:
+                data = (object[])photonEvent.CustomData;
+                int[] id = new int[data.Length / 3];
+                int[] value = new int[data.Length / 3];
+                string[] name = new string[data.Length / 3];
+                for(int i = 0; i < id.Length; i++)
+                {
+                    id[i] = (int)data[i * 3];
+                    value[i] = (int)data[i * 3 + 1];
+                    name[i] = (string)data[i * 3 + 2];
+                }
+                _OnPlayerAddPoint?.Invoke(id, value, name);
+                Debug.Log($"<color=yellow>EVENT</color> - Global: {eventCode}");
+                break;
+        }
+        
+    }
+    public void RaiseEvent(EVENT eventCode, object[] data)
+    {
+        PhotonNetwork.RaiseEvent((byte)eventCode
+            , data 
+            , RaiseEventOptions
+            , SendOptions.SendUnreliable);
     }
 }

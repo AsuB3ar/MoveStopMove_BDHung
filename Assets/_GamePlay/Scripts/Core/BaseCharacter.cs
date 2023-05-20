@@ -205,7 +205,6 @@ namespace MoveStopMove.Core
         }
         protected virtual void Update()
         {
-            WorldInterfaceSystem.Run();
             NavigationSystem.Run();
             LogicSystem.Run();
             PhysicSystem.Run();
@@ -213,6 +212,7 @@ namespace MoveStopMove.Core
 
         protected virtual void FixedUpdate()
         {
+            WorldInterfaceSystem.Run();
             LogicSystem.FixedUpdateData();
         }
 
