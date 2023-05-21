@@ -30,7 +30,7 @@ namespace MoveStopMove.Core
         private PhotonCharacter photon;
 
         private GameData GameData;
-
+        private bool undying = false;
         protected override void Awake()
         {
             base.Awake();
@@ -73,6 +73,7 @@ namespace MoveStopMove.Core
             {
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
                     Initialize();
+                    CanvasTest._OnUndying += TestUndying;
                     break;
             }   
         }
@@ -135,6 +136,7 @@ namespace MoveStopMove.Core
         }
         public override void TakeDamage(int damage, bool isRpcCall = false)
         {
+            if (undying) return;
             base.TakeDamage(damage, isRpcCall);
             if (photon && !isRpcCall)
             {
@@ -265,6 +267,22 @@ namespace MoveStopMove.Core
                 base.ChangeWeapon(Cache.GetBaseWeapon(newWeapon)); //Not Have Save Data
 
             SetLevel(level);
+        }
+
+        private void OnDestroy()
+        {
+            switch (GameplayManager.Inst.GameMode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    CanvasTest._OnUndying -= TestUndying;
+                    break;
+
+            }
+        }
+
+        private void TestUndying(bool value)
+        {
+            undying = value;
         }
     }
 }
