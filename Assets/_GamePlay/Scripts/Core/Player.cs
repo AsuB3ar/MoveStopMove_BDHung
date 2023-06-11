@@ -276,6 +276,17 @@ namespace MoveStopMove.Core
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
                     CanvasTest._OnUndying -= TestUndying;
                     break;
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    photon._OnInitialize -= Initialize;
+                    photon._OnAddDamage -= TakeDamage;
+                    photon._OnAddStatus -= AddStatus;
+                    photon._OnReset -= Reset;
+                    if (!photon.photonView.IsMine)
+                    {
+                        photon._OnInitData -= LoadData;
+                        photon._OnUpdateCharacter -= UpdateCharacter;
+                    }
+                    break;
 
             }
         }
