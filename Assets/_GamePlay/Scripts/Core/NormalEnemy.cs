@@ -38,6 +38,23 @@ namespace MoveStopMove.Core
             }
         }
 
+        protected void OnDestroy()
+        {
+            switch (GameplayManager.Inst.GameMode)
+            {
+                case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                    photon._OnInitialize -= Initialize;
+                    photon._OnAddDamage -= TakeDamage;
+                    photon._OnAddStatus -= AddStatus;
+                    photon._OnReset -= Reset;
+                    if (!photon.photonView.IsMine)
+                    {
+                        photon._OnInitData -= LoadData;
+                        photon._OnUpdateCharacter -= UpdateCharacter;
+                    }
+                    break;
+            }
+        }
         public void Initialize()
         {
             gameObject.name = "Enemy" + index;

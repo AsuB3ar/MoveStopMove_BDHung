@@ -239,16 +239,14 @@ namespace MoveStopMove.Manager
                     int bonusCash = GameplayManager.Inst.PlayerScript.Level * 3 + UnityEngine.Random.Range(10, 20);
                     GameData.SetIntData(Player.P_CASH, ref GameData.Cash, GameData.Cash + bonusCash);
                     fail.SetCash(bonusCash);
-
-                    UIManager.Inst.CloseUI(UIID.UICGamePlay);
                     OnLoseLevel?.Invoke();
                     break;
                 case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
-                    CanvasPvpFail pvpFail = (CanvasPvpFail)UIManager.Inst.OpenUI(UIID.UICPvpFail);
-                    UIManager.Inst.CloseUI(UIID.UICGamePlay);
+                    UIManager.Inst.OpenUI(UIID.UICPvpFail);
                     break;
             }
-                    
+            UIManager.Inst.CloseUI(UIID.UICGamePlay);
+            UIManager.Inst.CloseUI(UIID.UICSetting);
         }
         private void OnEnemyDie(BaseCharacter character)
         {
@@ -276,7 +274,7 @@ namespace MoveStopMove.Manager
                 OnWinLevel?.Invoke();
                 switch (GameplayManager.Inst.GameMode)
                 {
-                    case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:
+                    case GAMECONST.GAMEPLAY_MODE.STANDARD_PVE:            
                         CanvasVictory victory = UIManager.Inst.OpenUI(UIID.UICVictory) as CanvasVictory;
 
                         int bonusCash = GameplayManager.Inst.PlayerScript.Level * 3 + UnityEngine.Random.Range(10, 50);
@@ -287,10 +285,12 @@ namespace MoveStopMove.Manager
                         currentLevel += 1;
                         break;
                     case GAMECONST.GAMEPLAY_MODE.STANDARD_PVP:
+                        UIManager.Inst.CloseUI(UIID.UICPvpFail);
                         break;
                 }
                 
                 UIManager.Inst.CloseUI(UIID.UICGamePlay);
+                UIManager.Inst.CloseUI(UIID.UICSetting);
             }
         }
         private void RemoveCharacter(BaseCharacter character)
