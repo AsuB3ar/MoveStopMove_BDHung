@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="BorderFrame" style="height: 733px; width: 911px; align-items: center; justify-content: center;">
+        <ui:IMGUIContainer name="LoadingGIF" style="height: 200px; width: 200px; top: -81px; opacity: 1; background-image: url(&apos;/Assets/_GamePlay/Scenes/UIScence/2000w/loading.png&apos;); -unity-background-scale-mode: stretch-to-fill; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgb(255, 255, 255);" />
+        <ui:VisualElement name="LoadingBarBG" style="height: 72px; width: 758px; bottom: -134px; background-image: url(&apos;/Assets/_GamePlay/Scenes/UIScence/2000w/outside_bar.png&apos;); align-items: flex-start; justify-content: center; overflow: hidden;">
+            <ui:VisualElement name="overlay" style="height: 100%; width: 95%; background-image: url(&apos;/Assets/_GamePlay/Scenes/UIScence/2000w/overlay.png&apos;); left: 20px; flex-direction: column; flex-shrink: 1; opacity: 1; flex-basis: auto; flex-wrap: wrap; border-left-width: 0; -unity-background-scale-mode: scale-to-fit; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-left-radius: 0; flex-grow: 0;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

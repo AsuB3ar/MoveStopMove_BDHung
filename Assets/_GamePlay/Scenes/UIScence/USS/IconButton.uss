@@ -1,0 +1,30 @@
+.IconButton {
+    height: 39px;
+    width: 43px;
+    background-image: url('/Assets/_GamePlay/Scenes/UIScence/2000w/Asset 8.png');
+    -unity-background-scale-mode: scale-to-fit;
+    background-color: rgba(255, 97, 97, 0);
+    display: flex;
+    visibility: visible;
+    overflow: hidden;
+    border-left-color: rgba(241, 241, 241, 0);
+    border-right-color: rgba(241, 241, 241, 0);
+    border-top-color: rgba(241, 241, 241, 0);
+    border-bottom-color: rgba(241, 241, 241, 0);
+}
+
+.IconButton:hover {
+    height: 39px;
+    width: 43px;
+    background-image: url('/Assets/_GamePlay/Scenes/UIScence/2000w/Asset 8.png');
+    -unity-background-scale-mode: scale-to-fit;
+    background-color: rgba(255, 97, 97, 0);
+    display: flex;
+    visibility: visible;
+    overflow: hidden;
+    border-left-color: rgba(241, 241, 241, 0);
+    border-right-color: rgba(241, 241, 241, 0);
+    border-top-color: rgba(241, 241, 241, 0);
+    border-bottom-color: rgba(241, 241, 241, 0);
+    -unity-background-image-tint-color: rgba(221, 133, 133, 255);
+}

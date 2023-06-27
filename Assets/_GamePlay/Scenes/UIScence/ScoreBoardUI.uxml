@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Border" style="height: 634px; align-items: center; justify-content: center; -unity-text-outline-color: rgba(0, 0, 0, 0); border-left-color: rgba(56, 56, 56, 0); border-right-color: rgba(56, 56, 56, 0); border-top-color: rgba(56, 56, 56, 0); border-bottom-color: rgba(56, 56, 56, 0); background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement style="height: 480px; width: 320px;">
+            <ui:VisualElement style="width: 320px; height: 80px; align-items: center; justify-content: center;">
+                <ui:Button text="SCORE" display-tooltip-when-elided="true" style="height: 49px; width: 153px; flex-shrink: 2; background-image: url(&apos;/Assets/_GamePlay/Scenes/UIScence/2000w/Asset 10.png&apos;); background-color: rgba(56, 56, 56, 0); -unity-font: url(&apos;/Packages/com.unity.ui/PackageResources/Fonts/RobotoMono/RobotoMono-Bold.ttf&apos;); -unity-font-style: bold; -unity-font-definition: resource(&apos;FontAssets/DynamicOSFontAssets/Localization/Windows/Yu Gothic UI SDF&apos;); font-size: 30px; margin-top: -9px;" />
+            </ui:VisualElement>
+            <ui:ScrollView style="height: 400px; width: 320px; top: 0; background-image: url(&apos;/Assets/_GamePlay/Scenes/UIScence/2000w/BackFrame.png&apos;);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
